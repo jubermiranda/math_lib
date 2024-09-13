@@ -1,0 +1,6 @@
+*.swp
+.env
+*/*.build/
+.build/
+
+
