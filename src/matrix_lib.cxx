@@ -28,6 +28,18 @@ void Matrix::set_elements(const int *el){
   throw runtime_error("not implemented yet");
 }
 
+void Matrix::set_elements(const vector<int> el) {
+  if(el.size() != (this->lines * this->columns))
+    throw runtime_error("invalid vector");
+  if(this->mtr == nullptr)
+    throw runtime_error("null pointer exception");
+
+  for(int i=0; i < this->lines; i++)
+    for(int j=0; j < this->columns; j++)
+      this->mtr[i][j] = el.at((i*j + j));
+
+}
+
 unsigned Matrix::get_columns() const{
   return this->columns;
 }
