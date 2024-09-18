@@ -48,4 +48,32 @@ TEST_F(MatrixLibFixture, PrintMtrElements) {
 }
 
 
+TEST_F(MatrixLibFixture, MtrClassIdentity) {
+  string lhs = "identity";
+  string rhs;
+  vector<int> mtr_elements;
 
+  Matrix test_mtr = Matrix(4,4);
+  mtr_elements = {
+      1,0,0,0,
+      0,1,0,0,
+      0,0,1,0,
+      0,0,0,1
+  };
+  test_mtr.set_elements(mtr_elements);
+
+  rhs = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(rhs, lhs));
+
+  mtr_elements.clear();
+
+  Matrix test_mtr2 = Matrix(2,2);
+  mtr_elements = {
+    1,0,
+    0,1
+  };
+  test_mtr2.set_elements(mtr_elements);
+
+  rhs = test_mtr2.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(rhs, lhs));
+}
