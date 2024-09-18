@@ -15,3 +15,7 @@ unsigned t_utils::count_ocr(std::string str, std::string sub){
   
   return result;
 }
+
+bool t_utils::is_sub_str(string str, string sub){
+  return (str.find(sub) != string::npos);
+}

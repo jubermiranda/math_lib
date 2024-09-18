@@ -2,12 +2,14 @@
 
 using namespace std;
 
-string mtr_class(int **);
+string mtr_classes(int **, unsigned, unsigned);
+bool is_null(int **, unsigned, unsigned);
+bool is_identity(int **, unsigned, unsigned);
 
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
   this->init_mtr();
-  this->classification = mtr_class(this->mtr);
+  this->classification = mtr_classes(this->mtr, this->lines, this->columns);
 }
 
 Matrix::~Matrix() { this->clear_mtr(); }
@@ -55,6 +57,11 @@ stringstream Matrix::print() const {
   return ss;
 }
 
+stringstream Matrix::print_class() const {
+  stringstream ss(this->classification);
+  return ss;
+}
+
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->lines; i++)
@@ -63,6 +70,35 @@ void Matrix::clear_mtr() {
   }
 }
 
-string mtr_class(int **mtr_vector) {
-  return "TODO";
+string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) { 
+  stringstream ss("");
+
+  if(is_null(mtr_vector, lines, columns))
+    ss << "null" << endl;
+  if(is_identity(mtr_vector, lines, columns))
+    ss << "identity" << endl;
+
+  return ss.str();
 }
+
+bool is_identity(int **mtr, unsigned lines, unsigned columns){
+  for(int i=0; i < lines; i++){
+    for(int j=0; j < columns; j++){
+      int aux = (i == j)?1:0;
+      if(mtr[i][j] != aux)
+        return false;
+    }
+  }
+
+  return true;
+}
+
+bool is_null(int **mtr, unsigned lines, unsigned columns){
+  for(int i=0; i < lines; i++)
+    for(int j=0; j < columns; j++)
+      if(mtr[i][j] != 0)
+        return false;
+
+  return true;
+}
+

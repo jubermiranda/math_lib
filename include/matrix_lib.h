@@ -20,7 +20,7 @@ public:
   unsigned get_columns() const;
   std::stringstream describe() const;//TODO
   std::stringstream print() const;//TODO
-  std::stringstream print_class() const;//TODO
+  std::stringstream print_class() const;
   Matrix tr() const;//TODO
   int stroke() const;//TODO
   long det() const;//TODO
