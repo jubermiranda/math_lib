@@ -66,13 +66,13 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
   mtr_elements.clear();
 
 
-  Matrix test_mtr2 = Matrix(2,2);
+  test_mtr = Matrix(2,2);
   mtr_elements = {
     1,0,
     0,1
   };
-  test_mtr2.set_elements(mtr_elements);
-  result_class = test_mtr2.print_class().str();
+  test_mtr.set_elements(mtr_elements);
+  result_class = test_mtr.print_class().str();
 
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "identity"));
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
@@ -91,13 +91,13 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   string result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
 
-  Matrix test_mtr2 = Matrix(2,4);
+  test_mtr = Matrix(2,4);
   elements.clear();
   elements = {
     0,0,0,0,
     0,0,0,0
   };
-  test_mtr2.set_elements(elements);
-  result_class = test_mtr2.print_class().str();
+  test_mtr.set_elements(elements);
+  result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
 }
