@@ -31,3 +31,12 @@ void Matrix::init_mtr(){
 void Matrix::set_elements(const int *el){
   //TODO
 }
+
+unsigned Matrix::get_columns() const{
+  return this->columns;
+}
+
+unsigned Matrix::get_lines() const{
+  return this->lines;
+}
+

@@ -16,8 +16,8 @@ public:
   void set_elements_stdin();//TODO
   void update_el(unsigned line, unsigned column, int new_el);//TODO
 
-  unsigned get_lines() const;//TODO
-  unsigned get_columns() const;//TODO
+  unsigned get_lines() const;
+  unsigned get_columns() const;
   std::stringstream describe() const;//TODO
   std::stringstream print() const;//TODO
   std::stringstream print_class() const;//TODO
