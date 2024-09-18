@@ -75,6 +75,17 @@ void Matrix::clear_mtr() {
   }
 }
 
+Matrix& Matrix::operator=(const Matrix& other){
+  if(this != &other){
+    this->clear_mtr();
+
+    this->lines = other.lines;
+    this->columns = other.columns;
+    this->init_mtr();
+  }
+  return *this;
+}
+
 string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
   stringstream ss("");
 

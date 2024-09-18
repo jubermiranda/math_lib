@@ -26,6 +26,8 @@ public:
   int stroke() const;//TODO
   long det() const;//TODO
 
+  Matrix& operator=(const Matrix& other);
+
   Matrix operator+(const Matrix& other);//TODO
   Matrix operator-(const Matrix& other);//TODO
   Matrix operator*(const Matrix& other);//TODO
