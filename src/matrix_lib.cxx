@@ -40,14 +40,28 @@ void Matrix::set_elements(const vector<int> el) {
 
 }
 
-unsigned Matrix::get_columns() const{
-  return this->columns;
-}
 
 unsigned Matrix::get_lines() const{
   return this->lines;
 }
 
+unsigned Matrix::get_columns() const{
+  return this->columns;
+}
+
+
+stringstream Matrix::print() const{
+  stringstream ss("");
+  ss << "Matrix " << this->lines << "X" << this->columns << endl;
+  for(int i=0; i < this->lines; i++ ){
+    for(int j=0; j < this->columns; j++)
+      ss << "[" << this->mtr[i][j] << "]";
+    ss << endl;
+  }
+  ss << "----" << endl;
+
+  return ss;
+}
 
 void Matrix::clear_mtr(){
   if(this->mtr != nullptr){
