@@ -80,5 +80,27 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
 
 
 TEST_F(MatrixLibFixture, MtrClassNull) {
-  ASSERT_EQ(4,2);
+  Matrix test_mtr = Matrix(4,2);
+  vector<int> elements = {
+    0,0,
+    0,0,
+    0,0,
+    0,0
+  };
+  test_mtr.set_elements(elements);
+  string result_class = test_mtr.print_class().str();
+
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
+
+
+  test_mtr = Matrix(2,4);
+  elements.clear();
+  elements = {
+    0,0,0,0,
+    0,0,0,0
+  };
+  test_mtr.set_elements(elements);
+  result_class = test_mtr.print_class().str();
+
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
 }
