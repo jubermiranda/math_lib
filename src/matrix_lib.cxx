@@ -1,4 +1,4 @@
-#include "../include/matrix_lib.h"
+#include "matrix_lib.h"
 
 using namespace std;
 
@@ -26,4 +26,8 @@ void Matrix::init_mtr(){
   } else {
     throw runtime_error("null matrix dimentions");
   }
+}
+
+void Matrix::set_elements(const int *el){
+  //TODO
 }
