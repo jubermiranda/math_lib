@@ -11,6 +11,11 @@ Matrix::Matrix(unsigned lines, unsigned columns)
   this->init_mtr();
 }
 
+Matrix::Matrix(const Matrix &other)
+  : lines(other.lines), columns(other.columns) {
+    this->init_mtr();
+}
+
 Matrix::~Matrix() { this->clear_mtr(); }
 
 void Matrix::init_mtr() {
@@ -70,24 +75,24 @@ void Matrix::clear_mtr() {
   }
 }
 
-string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) { 
+string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
   stringstream ss("");
 
-  if(lines == columns)
+  if (lines == columns)
     ss << "square" << endl;
-  if(is_null(mtr_vector, lines, columns))
+  if (is_null(mtr_vector, lines, columns))
     ss << "null" << endl;
-  if(is_identity(mtr_vector, lines, columns))
+  if (is_identity(mtr_vector, lines, columns))
     ss << "identity" << endl;
 
   return ss.str();
 }
 
-bool is_identity(int **mtr, unsigned lines, unsigned columns){
-  for(int i=0; i < lines; i++){
-    for(int j=0; j < columns; j++){
-      int aux = (i == j)?1:0;
-      if(mtr[i][j] != aux)
+bool is_identity(int **mtr, unsigned lines, unsigned columns) {
+  for (int i = 0; i < lines; i++) {
+    for (int j = 0; j < columns; j++) {
+      int aux = (i == j) ? 1 : 0;
+      if (mtr[i][j] != aux)
         return false;
     }
   }
@@ -95,12 +100,11 @@ bool is_identity(int **mtr, unsigned lines, unsigned columns){
   return true;
 }
 
-bool is_null(int **mtr, unsigned lines, unsigned columns){
-  for(int i=0; i < lines; i++)
-    for(int j=0; j < columns; j++)
-      if(mtr[i][j] != 0)
+bool is_null(int **mtr, unsigned lines, unsigned columns) {
+  for (int i = 0; i < lines; i++)
+    for (int j = 0; j < columns; j++)
+      if (mtr[i][j] != 0)
         return false;
 
   return true;
 }
-

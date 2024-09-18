@@ -9,6 +9,7 @@
 class Matrix {
 public:
   Matrix(unsigned lines,unsigned columns);
+  Matrix(const Matrix& other);
   ~Matrix();
 
   void set_elements(const int *el);//TODO
