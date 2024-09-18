@@ -10,11 +10,7 @@ Matrix::Matrix(unsigned lines, unsigned columns) : lines(lines), columns(columns
 }
 
 Matrix::~Matrix() {
-  if (this->mtr != nullptr) {
-    for (int i = 0; i < lines; i++)
-      free(mtr[i]);
-    free(mtr);
-  }
+  this->clear_mtr();
 }
 
 void Matrix::init_mtr(){
@@ -43,9 +39,8 @@ unsigned Matrix::get_lines() const{
 
 void Matrix::clear_mtr(){
   if(this->mtr != nullptr){
-    for(int i=0; i < this->lines; i++){
+    for(int i=0; i < this->lines; i++)
       free(this->mtr[i]);
-    }
     free(this->mtr);
   }
 }
