@@ -33,7 +33,6 @@ public:
 private:
   int lines;
   int columns;
-  std::string classification;
   int **mtr;
 
   void init_mtr();

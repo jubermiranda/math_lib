@@ -9,7 +9,6 @@ bool is_identity(int **, unsigned, unsigned);
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
   this->init_mtr();
-  this->classification = mtr_classes(this->mtr, this->lines, this->columns);
 }
 
 Matrix::~Matrix() { this->clear_mtr(); }
@@ -58,7 +57,8 @@ stringstream Matrix::print() const {
 }
 
 stringstream Matrix::print_class() const {
-  stringstream ss(this->classification);
+  string result = mtr_classes(this->mtr, this->lines, this->columns);
+  stringstream ss(result);
   return ss;
 }
 
