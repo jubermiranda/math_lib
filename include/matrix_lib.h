@@ -37,6 +37,7 @@ private:
   int **mtr;
 
   void init_mtr();
+  void clear_mtr();
 };
 
 #endif

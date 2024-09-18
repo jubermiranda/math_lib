@@ -29,7 +29,7 @@ void Matrix::init_mtr(){
 }
 
 void Matrix::set_elements(const int *el){
-  //TODO
+  throw runtime_error("not implemented yet");
 }
 
 unsigned Matrix::get_columns() const{
@@ -40,3 +40,12 @@ unsigned Matrix::get_lines() const{
   return this->lines;
 }
 
+
+void Matrix::clear_mtr(){
+  if(this->mtr != nullptr){
+    for(int i=0; i < this->lines; i++){
+      free(this->mtr[i]);
+    }
+    free(this->mtr);
+  }
+}
