@@ -89,18 +89,15 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   };
   test_mtr.set_elements(elements);
   string result_class = test_mtr.print_class().str();
-
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
 
-
-  test_mtr = Matrix(2,4);
+  Matrix test_mtr2 = Matrix(2,4);
   elements.clear();
   elements = {
     0,0,0,0,
     0,0,0,0
   };
-  test_mtr.set_elements(elements);
-  result_class = test_mtr.print_class().str();
-
+  test_mtr2.set_elements(elements);
+  result_class = test_mtr2.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
 }
