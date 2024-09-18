@@ -73,6 +73,8 @@ void Matrix::clear_mtr() {
 string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) { 
   stringstream ss("");
 
+  if(lines == columns)
+    ss << "square" << endl;
   if(is_null(mtr_vector, lines, columns))
     ss << "null" << endl;
   if(is_identity(mtr_vector, lines, columns))
