@@ -36,7 +36,7 @@ void Matrix::set_elements(const vector<int> el) {
 
   for (int i = 0; i < this->lines; i++)
     for (int j = 0; j < this->columns; j++)
-      this->mtr[i][j] = el.at((i * j + j));
+      this->mtr[i][j] = el.at((i * columns + j));
 }
 
 unsigned Matrix::get_lines() const { return this->lines; }
