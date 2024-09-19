@@ -135,3 +135,8 @@ TEST_F(MatrixLibFixture, MtrClassSquare) {
   result_class = test_mtr.print_class().str();
   EXPECT_FALSE(t_utils::is_sub_str(result_class, "square"));
 }
+
+
+TEST_F(MatrixLibFixture, MtrTranspose) {
+  //TODO
+}
