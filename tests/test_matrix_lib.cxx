@@ -101,3 +101,37 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
 }
+
+
+TEST_F(MatrixLibFixture, MtrClassSquare) {
+  Matrix test_mtr = Matrix(4,4);
+  test_mtr.set_elements(vector<int>{
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2
+  });
+  string result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+
+
+  test_mtr = Matrix(2,2);
+  test_mtr.set_elements(vector<int>{
+      4,4,
+      4,4
+  });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+
+
+
+  test_mtr = Matrix(4,2);
+  test_mtr.set_elements(vector<int>{
+      4,2,
+      4,2,
+      4,2,
+      4,2
+  });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "square"));
+}

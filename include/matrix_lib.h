@@ -20,14 +20,13 @@ public:
   unsigned get_lines() const;
   unsigned get_columns() const;
   std::stringstream describe() const;//TODO
-  std::stringstream print() const;//TODO
+  std::stringstream print() const;
   std::stringstream print_class() const;
-  Matrix tr() const;//TODO
+  Matrix transpose() const;//TODO
   int stroke() const;//TODO
   long det() const;//TODO
 
   Matrix& operator=(const Matrix& other);
-
   Matrix operator+(const Matrix& other);//TODO
   Matrix operator-(const Matrix& other);//TODO
   Matrix operator*(const Matrix& other);//TODO
