@@ -176,3 +176,129 @@ TEST_F(MatrixLibFixture, MtrStroke) {
       });
   EXPECT_EQ(42, test_mtr.stroke());
 }
+
+
+TEST_F(MatrixLibFixture, MtrSum) {
+  Matrix test_mtr1 = Matrix(4,4);
+  test_mtr1.set_elements(vector<int>{
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2
+      });
+  Matrix test_mtr2 = Matrix(4,4);
+  test_mtr2.set_elements(vector<int>{
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1
+      });
+
+  Matrix sum_result = test_mtr1 + test_mtr2;
+
+  Matrix expected = Matrix(4,4);
+  expected.set_elements(vector<int>{
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3
+      });
+
+  EXPECT_EQ(expected, sum_result);
+
+}
+
+
+TEST_F(MatrixLibFixture, MtrDiff) {
+  Matrix test_mtr1 = Matrix(4,4);
+  test_mtr1.set_elements(vector<int>{
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3
+      });
+  Matrix test_mtr2 = Matrix(4,4);
+  test_mtr2.set_elements(vector<int>{
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1
+      });
+
+  Matrix diff_result = test_mtr1 - test_mtr2;
+
+  Matrix expected = Matrix(4,4);
+  expected.set_elements(vector<int>{
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2
+      });
+
+  EXPECT_EQ(expected, diff_result);
+
+}
+
+
+TEST_F(MatrixLibFixture, MtrMultipl) {
+  Matrix test_mtr = Matrix(6,6);
+  test_mtr.set_elements(vector<int>{
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7
+      });
+
+  Matrix multpl_result = test_mtr * 6;
+
+  Matrix expected = Matrix(6,6);
+  expected.set_elements(vector<int>{
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      });
+
+  EXPECT_EQ(expected, multpl_result);
+}
+
+
+
+TEST_F(MatrixLibFixture, MtrComparator) {
+  Matrix test_mtr1 = Matrix(4,4);
+  Matrix test_mtr2 = Matrix(4,4);
+  Matrix test_mtr3 = Matrix(4,4);
+  Matrix test_mtr4 = Matrix(2,2);
+
+  test_mtr1.set_elements(vector<int>{
+      1,2,3,4,
+      4,3,2,1,
+      1,2,3,4,
+      4,3,2,1,
+      });
+  test_mtr2.set_elements(vector<int>{
+      1,2,3,4,
+      4,3,2,1,
+      1,2,3,4,
+      4,3,2,1,
+      });
+  EXPECT_TRUE(test_mtr1 == test_mtr2);
+
+  test_mtr3.set_elements(vector<int>{
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4,
+      });
+  EXPECT_FALSE(test_mtr1 == test_mtr3);
+
+  test_mtr4.set_elements(vector<int>{
+      1,1,
+      1,1
+      });
+  EXPECT_FALSE(test_mtr1 == test_mtr4);
+}
