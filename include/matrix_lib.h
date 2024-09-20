@@ -28,10 +28,10 @@ public:
   long det() const; // TODO
 
   Matrix &operator=(const Matrix &other);
-  Matrix operator+(const Matrix &other); // TODO
-  Matrix operator-(const Matrix &other); // TODO
-  Matrix operator*(const Matrix &other); // TODO
-  Matrix operator*(const int scalar);    // TODO
+  Matrix operator+(const Matrix &other) const;
+  Matrix operator-(const Matrix &other) const; // TODO
+  Matrix operator*(const Matrix &other) const; // TODO
+  Matrix operator*(const int scalar) const;    // TODO
 
 private:
   int lines;

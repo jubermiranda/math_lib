@@ -124,6 +124,18 @@ Matrix &Matrix::operator=(const Matrix &other) {
   return *this;
 }
 
+Matrix Matrix::operator+(const Matrix& other) const {
+  if(this->lines != other.lines || this->columns != other.columns)
+    throw runtime_error("cannot sum matrix of difeerent order");
+
+  Matrix result = Matrix(this->lines, this->columns);
+  for(int i=0; i < this->lines; i++)
+    for(int j=0; j < this->columns; j++)
+      result.update_el(i, j, this->at(i, j) + other.at(i, j));
+
+  return result;
+}
+
 string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
   stringstream ss("");
 
