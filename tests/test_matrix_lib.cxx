@@ -178,7 +178,7 @@ TEST_F(MatrixLibFixture, MtrStroke) {
 }
 
 
-TEST_F(MatrixLibFixture, MtrAritimeticOpr) {
+TEST_F(MatrixLibFixture, MtrSum) {
   Matrix test_mtr1 = Matrix(4,4);
   test_mtr1.set_elements(vector<int>{
       2,2,2,2,
@@ -194,20 +194,74 @@ TEST_F(MatrixLibFixture, MtrAritimeticOpr) {
       1,1,1,1
       });
 
-  //sum
   Matrix sum_result = test_mtr1 + test_mtr2;
-  for(int i=0; i < 4; i++)
-    for(int j=0; j < 4; j++)
-      EXPECT_EQ(3, sum_result.at(i, j));
 
-  //diff
+  Matrix expected = Matrix(4,4);
+  expected.set_elements(vector<int>{
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3
+      });
+
+  EXPECT_EQ(expected, sum_result);
+
+}
+
+
+TEST_F(MatrixLibFixture, MtrDiff) {
+  Matrix test_mtr1 = Matrix(4,4);
+  test_mtr1.set_elements(vector<int>{
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3,
+      3,3,3,3
+      });
+  Matrix test_mtr2 = Matrix(4,4);
+  test_mtr2.set_elements(vector<int>{
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1
+      });
+
   Matrix diff_result = test_mtr1 - test_mtr2;
-  for(int i=0; i < 4; i++)
-    for(int j=0; j < 4; j++)
-      EXPECT_EQ(1, diff_result.at(i, j));
 
-  Matrix multpl_result = test_mtr1 * 4;
-  for(int i=0; i < 4; i++)
-    for(int j=0; j < 4; j++)
-      EXPECT_EQ(8, diff_result.at(i, j));
+  Matrix expected = Matrix(4,4);
+  expected.set_elements(vector<int>{
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2
+      });
+
+  EXPECT_EQ(expected, diff_result);
+
+}
+
+
+TEST_F(MatrixLibFixture, MtrMultipl) {
+  Matrix test_mtr = Matrix(6,6);
+  test_mtr.set_elements(vector<int>{
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7,
+      7,7,7,7,7,7
+      });
+
+  Matrix multpl_result = test_mtr * 6;
+
+  Matrix expected = Matrix(6,6);
+  expected.set_elements(vector<int>{
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      42,42,42,42,42,42,
+      });
+
+  EXPECT_EQ(expected, multpl_result);
 }
