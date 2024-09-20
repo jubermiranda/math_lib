@@ -176,3 +176,38 @@ TEST_F(MatrixLibFixture, MtrStroke) {
       });
   EXPECT_EQ(42, test_mtr.stroke());
 }
+
+
+TEST_F(MatrixLibFixture, MtrAritimeticOpr) {
+  Matrix test_mtr1 = Matrix(4,4);
+  test_mtr1.set_elements(vector<int>{
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2,
+      2,2,2,2
+      });
+  Matrix test_mtr2 = Matrix(4,4);
+  test_mtr2.set_elements(vector<int>{
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1
+      });
+
+  //sum
+  Matrix sum_result = test_mtr1 + test_mtr2;
+  for(int i=0; i < 4; i++)
+    for(int j=0; j < 4; j++)
+      EXPECT_EQ(3, sum_result.at(i, j));
+
+  //diff
+  Matrix diff_result = test_mtr1 - test_mtr2;
+  for(int i=0; i < 4; i++)
+    for(int j=0; j < 4; j++)
+      EXPECT_EQ(1, diff_result.at(i, j));
+
+  Matrix multpl_result = test_mtr1 * 4;
+  for(int i=0; i < 4; i++)
+    for(int j=0; j < 4; j++)
+      EXPECT_EQ(8, diff_result.at(i, j));
+}
