@@ -12,8 +12,8 @@ Matrix::Matrix(unsigned lines, unsigned columns)
 }
 
 Matrix::Matrix(const Matrix &other)
-  : lines(other.lines), columns(other.columns) {
-    this->init_mtr();
+    : lines(other.lines), columns(other.columns) {
+  this->init_mtr();
 }
 
 Matrix::~Matrix() { this->clear_mtr(); }
@@ -44,17 +44,17 @@ void Matrix::set_elements(const vector<int> el) {
       this->mtr[i][j] = el.at((i * columns + j));
 }
 
-void Matrix::update_el(unsigned line, unsigned column, int new_el){
-  if(this->mtr == nullptr)
+void Matrix::update_el(unsigned line, unsigned column, int new_el) {
+  if (this->mtr == nullptr)
     throw runtime_error("null pointer exception");
-  if(line >= this->lines || column >= this->columns)
+  if (line >= this->lines || column >= this->columns)
     throw runtime_error("index out of range");
 
   this->mtr[line][column] = new_el;
 }
 
 int Matrix::at(unsigned line, unsigned column) const {
-  if(line >= this->lines || column >= this->columns)
+  if (line >= this->lines || column >= this->columns)
     throw runtime_error("index out of range");
 
   return this->mtr[line][column];
@@ -83,10 +83,10 @@ stringstream Matrix::print_class() const {
   return ss;
 }
 
-Matrix Matrix::transpose() const{
+Matrix Matrix::transpose() const {
   Matrix result = Matrix(this->lines, this->columns);
-  for(int i=0; i < this->lines; i++){
-    for(int j=0; j < this->columns; j++){
+  for (int i = 0; i < this->lines; i++) {
+    for (int j = 0; j < this->columns; j++) {
       result.update_el(i, j, this->at(j, i));
     }
   }
@@ -95,11 +95,11 @@ Matrix Matrix::transpose() const{
 }
 
 int Matrix::stroke() const {
-  if(this->lines != this->columns)
+  if (this->lines != this->columns)
     throw runtime_error("mtr not square");
 
   int sum = 0;
-  for(int i=0; i < this->lines; i++)
+  for (int i = 0; i < this->lines; i++)
     sum += this->mtr[i][i];
 
   return sum;
@@ -113,8 +113,8 @@ void Matrix::clear_mtr() {
   }
 }
 
-Matrix& Matrix::operator=(const Matrix& other){
-  if(this != &other){
+Matrix &Matrix::operator=(const Matrix &other) {
+  if (this != &other) {
     this->clear_mtr();
 
     this->lines = other.lines;
