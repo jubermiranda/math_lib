@@ -268,3 +268,37 @@ TEST_F(MatrixLibFixture, MtrMultipl) {
 
 
 
+TEST_F(MatrixLibFixture, MtrComparator) {
+  Matrix test_mtr1 = Matrix(4,4);
+  Matrix test_mtr2 = Matrix(4,4);
+  Matrix test_mtr3 = Matrix(4,4);
+  Matrix test_mtr4 = Matrix(2,2);
+
+  test_mtr1.set_elements(vector<int>{
+      1,2,3,4,
+      4,3,2,1,
+      1,2,3,4,
+      4,3,2,1,
+      });
+  test_mtr2.set_elements(vector<int>{
+      1,2,3,4,
+      4,3,2,1,
+      1,2,3,4,
+      4,3,2,1,
+      });
+  EXPECT_TRUE(test_mtr1 == test_mtr2);
+
+  test_mtr3.set_elements(vector<int>{
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4,
+      });
+  EXPECT_FALSE(test_mtr1 == test_mtr3);
+
+  test_mtr4.set_elements(vector<int>{
+      1,1,
+      1,1
+      });
+  EXPECT_FALSE(test_mtr1 == test_mtr4);
+}
