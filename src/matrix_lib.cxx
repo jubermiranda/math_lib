@@ -160,6 +160,17 @@ Matrix Matrix::operator*(int scalar) const {
   return result;
 }
 
+bool Matrix::operator==(const Matrix& other) const {
+  if(this->lines != other.lines || this->columns != other.columns)
+    return false;
+
+  for(int i=0; i < this->lines; i++)
+    for(int j=0; j < this->columns; j++)
+      if(this->mtr[i][j] != other.mtr[i][j])
+        return false;
+
+  return true;
+}
 
 string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
   stringstream ss("");
