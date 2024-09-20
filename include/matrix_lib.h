@@ -16,6 +16,7 @@ public:
   void set_elements(const std::vector<int>);
   void set_elements_stdin();//TODO
   void update_el(unsigned line, unsigned column, int new_el);//TODO
+  int at(unsigned line, unsigned column) const;
 
   unsigned get_lines() const;
   unsigned get_columns() const;

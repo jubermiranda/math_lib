@@ -44,6 +44,13 @@ void Matrix::set_elements(const vector<int> el) {
       this->mtr[i][j] = el.at((i * columns + j));
 }
 
+int Matrix::at(unsigned line, unsigned column) const {
+  if(line < this->lines || column < this->columns)
+    throw runtime_error("index out of range");
+
+  return this->mtr[line][column];
+}
+
 unsigned Matrix::get_lines() const { return this->lines; }
 
 unsigned Matrix::get_columns() const { return this->columns; }
