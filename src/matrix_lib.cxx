@@ -94,6 +94,17 @@ Matrix Matrix::transpose() const{
   return result;
 }
 
+int Matrix::stroke() const {
+  if(this->lines != this->columns)
+    throw runtime_error("mtr not square");
+
+  int sum = 0;
+  for(int i=0; i < this->lines; i++)
+    sum += this->mtr[i][i];
+
+  return sum;
+}
+
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->lines; i++)

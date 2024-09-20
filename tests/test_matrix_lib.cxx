@@ -158,10 +158,10 @@ TEST_F(MatrixLibFixture, MtrTranspose) {
 TEST_F(MatrixLibFixture, MtrStroke) {
   Matrix test_mtr = Matrix(4,4);
   test_mtr.set_elements(vector<int>{
-      1,0,0,0,
-      0,1,0,0,
-      0,0,1,0,
-      0,0,0,1
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1
       });
   EXPECT_EQ(4, test_mtr.stroke());
 
