@@ -23,7 +23,7 @@ public:
   std::stringstream describe() const;//TODO
   std::stringstream print() const;
   std::stringstream print_class() const;
-  Matrix transpose() const;//TODO
+  Matrix transpose() const;
   int stroke() const;//TODO
   long det() const;//TODO
 

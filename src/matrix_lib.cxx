@@ -44,8 +44,17 @@ void Matrix::set_elements(const vector<int> el) {
       this->mtr[i][j] = el.at((i * columns + j));
 }
 
+void Matrix::update_el(unsigned line, unsigned column, int new_el){
+  if(this->mtr == nullptr)
+    throw runtime_error("null pointer exception");
+  if(line >= this->lines || column >= this->columns)
+    throw runtime_error("index out of range");
+
+  this->mtr[line][column] = new_el;
+}
+
 int Matrix::at(unsigned line, unsigned column) const {
-  if(line < this->lines || column < this->columns)
+  if(line >= this->lines || column >= this->columns)
     throw runtime_error("index out of range");
 
   return this->mtr[line][column];
@@ -72,6 +81,17 @@ stringstream Matrix::print_class() const {
   string result = mtr_classes(this->mtr, this->lines, this->columns);
   stringstream ss(result);
   return ss;
+}
+
+Matrix Matrix::transpose() const{
+  Matrix result = Matrix(this->lines, this->columns);
+  for(int i=0; i < this->lines; i++){
+    for(int j=0; j < this->columns; j++){
+      result.update_el(i, j, this->at(j, i));
+    }
+  }
+
+  return result;
 }
 
 void Matrix::clear_mtr() {
