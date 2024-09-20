@@ -138,5 +138,17 @@ TEST_F(MatrixLibFixture, MtrClassSquare) {
 
 
 TEST_F(MatrixLibFixture, MtrTranspose) {
-  //TODO
+  Matrix test_mtr = Matrix(4,4);
+  test_mtr.set_elements(vector<int>{
+      1,2,3,4,
+      8,7,6,5,
+      2,2,2,2,
+      4,4,4,4
+      });
+  Matrix transposed_mtr = test_mtr.transpose();
+
+  for(int i=0; i < 4; i++)
+    for(int j=0; j < 4; j++)
+      EXPECT_EQ(test_mtr.at(i, j), transposed_mtr.at(j, i));
+
 }
