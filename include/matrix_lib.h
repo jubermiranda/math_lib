@@ -29,7 +29,7 @@ public:
 
   Matrix &operator=(const Matrix &other);
   Matrix operator+(const Matrix &other) const;
-  Matrix operator-(const Matrix &other) const; // TODO
+  Matrix operator-(const Matrix &other) const;
   Matrix operator*(const Matrix &other) const; // TODO
   Matrix operator*(const int scalar) const;    // TODO
 
