@@ -150,6 +150,17 @@ Matrix Matrix::operator-(const Matrix& other) const {
 }
 
 
+Matrix Matrix::operator*(int scalar) const {
+
+  Matrix result = Matrix(this->lines, this->columns);
+  for(int i=0; i < this->lines; i++)
+    for(int j=0; j < this->columns; j++)
+      result.update_el(i, j, (this->at(i, j) * scalar));
+
+  return result;
+}
+
+
 string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
   stringstream ss("");
 
