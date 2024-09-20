@@ -9,22 +9,25 @@
 class Matrix {
 public:
   Matrix(unsigned lines,unsigned columns);
+  Matrix(const Matrix& other);
   ~Matrix();
 
   void set_elements(const int *el);//TODO
   void set_elements(const std::vector<int>);
   void set_elements_stdin();//TODO
-  void update_el(unsigned line, unsigned column, int new_el);//TODO
+  void update_el(unsigned line, unsigned column, int new_el);
+  int at(unsigned line, unsigned column) const;
 
   unsigned get_lines() const;
   unsigned get_columns() const;
   std::stringstream describe() const;//TODO
-  std::stringstream print() const;//TODO
-  std::stringstream print_class() const;//TODO
-  Matrix tr() const;//TODO
-  int stroke() const;//TODO
+  std::stringstream print() const;
+  std::stringstream print_class() const;
+  Matrix transpose() const;
+  int stroke() const;
   long det() const;//TODO
 
+  Matrix& operator=(const Matrix& other);
   Matrix operator+(const Matrix& other);//TODO
   Matrix operator-(const Matrix& other);//TODO
   Matrix operator*(const Matrix& other);//TODO
@@ -33,7 +36,6 @@ public:
 private:
   int lines;
   int columns;
-  std::string classification;
   int **mtr;
 
   void init_mtr();
