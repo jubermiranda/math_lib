@@ -152,3 +152,27 @@ TEST_F(MatrixLibFixture, MtrTranspose) {
       EXPECT_EQ(test_mtr.at(i, j), transposed_mtr.at(j, i));
 
 }
+
+
+
+TEST_F(MatrixLibFixture, MtrStroke) {
+  Matrix test_mtr = Matrix(4,4);
+  test_mtr.set_elements(vector<int>{
+      1,0,0,0,
+      0,1,0,0,
+      0,0,1,0,
+      0,0,0,1
+      });
+  EXPECT_EQ(4, test_mtr.stroke());
+
+  test_mtr = Matrix(6,6);
+  test_mtr.set_elements(vector<int> {
+      7,0,0,0,0,0,
+      0,7,0,0,0,0,
+      0,0,7,0,0,0,
+      0,0,0,7,0,0,
+      0,0,0,0,7,0,
+      0,0,0,0,0,7,
+      });
+  EXPECT_EQ(42, test_mtr.stroke());
+}
