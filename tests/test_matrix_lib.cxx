@@ -62,6 +62,7 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
 
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "identity"));
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_TRUE(test_mtr.is_square());
   EXPECT_TRUE(test_mtr.is_identity());
 
   mtr_elements.clear();
@@ -77,6 +78,7 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
 
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "identity"));
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_TRUE(test_mtr.is_square());
   EXPECT_TRUE(test_mtr.is_identity());
 }
 
@@ -92,6 +94,7 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   test_mtr.set_elements(elements);
   string result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
+  EXPECT_TRUE(test_mtr.is_null());
 
   test_mtr = Matrix(2,4);
   elements.clear();
@@ -102,6 +105,7 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   test_mtr.set_elements(elements);
   result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "null"));
+  EXPECT_TRUE(test_mtr.is_null());
 }
 
 
@@ -115,6 +119,7 @@ TEST_F(MatrixLibFixture, MtrClassSquare) {
   });
   string result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_TRUE(test_mtr.is_square());
 
 
   test_mtr = Matrix(2,2);
@@ -124,6 +129,7 @@ TEST_F(MatrixLibFixture, MtrClassSquare) {
   });
   result_class = test_mtr.print_class().str();
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_TRUE(test_mtr.is_square());
 
 
 
@@ -136,6 +142,7 @@ TEST_F(MatrixLibFixture, MtrClassSquare) {
   });
   result_class = test_mtr.print_class().str();
   EXPECT_FALSE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_FALSE(test_mtr.is_square());
 }
 
 
