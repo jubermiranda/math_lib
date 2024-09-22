@@ -109,6 +109,10 @@ bool Matrix::is_identity() const {
   return true;
 }
 
+bool Matrix::is_square() const {
+  return (this->lines == this->columns);
+}
+
 int Matrix::stroke() const {
   if (this->lines != this->columns)
     throw runtime_error("mtr not square");
