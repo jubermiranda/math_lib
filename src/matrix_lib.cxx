@@ -2,10 +2,6 @@
 
 using namespace std;
 
-string mtr_classes(int **, unsigned, unsigned);
-bool is_null(int **, unsigned, unsigned);
-bool is_identity(int **, unsigned, unsigned);
-
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
   this->init_mtr();
@@ -78,8 +74,15 @@ stringstream Matrix::print() const {
 }
 
 stringstream Matrix::print_class() const {
-  string result = mtr_classes(this->mtr, this->lines, this->columns);
-  stringstream ss(result);
+  stringstream ss("");
+
+  if(this->is_square())
+    ss << "square" << endl;
+  if(this->is_identity())
+    ss << "identity" << endl;
+  if(this->is_null())
+    ss << "null" << endl;
+
   return ss;
 }
 
@@ -111,6 +114,15 @@ bool Matrix::is_identity() const {
 
 bool Matrix::is_square() const {
   return (this->lines == this->columns);
+}
+
+bool Matrix::is_null() const {
+  for (int i = 0; i < this->lines; i++)
+    for (int j = 0; j < this->columns; j++)
+      if (this->mtr[i][j] != 0)
+        return false;
+
+  return true;
 }
 
 int Matrix::stroke() const {
@@ -186,28 +198,6 @@ bool Matrix::operator==(const Matrix& other) const {
   for(int i=0; i < this->lines; i++)
     for(int j=0; j < this->columns; j++)
       if(this->mtr[i][j] != other.mtr[i][j])
-        return false;
-
-  return true;
-}
-
-string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
-  stringstream ss("");
-
-  if (lines == columns)
-    ss << "square" << endl;
-  if (is_null(mtr_vector, lines, columns))
-    ss << "null" << endl;
-  if (is_identity(mtr_vector, lines, columns))
-    ss << "identity" << endl;
-
-  return ss.str();
-}
-
-bool is_null(int **mtr, unsigned lines, unsigned columns) {
-  for (int i = 0; i < lines; i++)
-    for (int j = 0; j < columns; j++)
-      if (mtr[i][j] != 0)
         return false;
 
   return true;
