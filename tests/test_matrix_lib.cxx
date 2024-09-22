@@ -62,6 +62,7 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
 
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "identity"));
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_TRUE(test_mtr.is_identity());
 
   mtr_elements.clear();
 
@@ -76,6 +77,7 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
 
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "identity"));
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "square"));
+  EXPECT_TRUE(test_mtr.is_identity());
 }
 
 
