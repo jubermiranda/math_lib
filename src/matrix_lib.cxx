@@ -94,6 +94,21 @@ Matrix Matrix::transpose() const {
   return result;
 }
 
+bool Matrix::is_identity() const {
+  if(!this->is_square())
+    return false;
+
+  for (int i = 0; i < lines; i++) {
+    for (int j = 0; j < columns; j++) {
+      int aux = (i == j) ? 1 : 0;
+      if (mtr[i][j] != aux)
+        return false;
+    }
+  }
+
+  return true;
+}
+
 int Matrix::stroke() const {
   if (this->lines != this->columns)
     throw runtime_error("mtr not square");
@@ -183,18 +198,6 @@ string mtr_classes(int **mtr_vector, unsigned lines, unsigned columns) {
     ss << "identity" << endl;
 
   return ss.str();
-}
-
-bool is_identity(int **mtr, unsigned lines, unsigned columns) {
-  for (int i = 0; i < lines; i++) {
-    for (int j = 0; j < columns; j++) {
-      int aux = (i == j) ? 1 : 0;
-      if (mtr[i][j] != aux)
-        return false;
-    }
-  }
-
-  return true;
 }
 
 bool is_null(int **mtr, unsigned lines, unsigned columns) {

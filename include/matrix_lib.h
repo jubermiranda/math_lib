@@ -20,6 +20,7 @@ public:
 
   unsigned get_lines() const;
   unsigned get_columns() const;
+  bool is_identity() const;
   std::stringstream describe() const; // TODO
   std::stringstream print() const;
   std::stringstream print_class() const;
