@@ -2,6 +2,8 @@
 
 using namespace std;
 
+long det_order_2(int **);
+
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
   this->init_mtr();
@@ -136,6 +138,26 @@ int Matrix::stroke() const {
   return sum;
 }
 
+long Matrix::det() const {
+  if( !this->is_square() )
+    throw runtime_error("cannot calc det. matrix not square");
+
+  switch(this->lines){
+    case 1:
+      return this->at(0,0);
+    break;
+
+    case 2:
+      return det_order_2(this->mtr);
+    break;
+
+    default:
+      throw runtime_error("not implemented yet");
+  }
+
+  return 0;
+}
+
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->lines; i++)
@@ -221,4 +243,8 @@ bool Matrix::operator==(const Matrix& other) const {
         return false;
 
   return true;
+}
+
+long det_order_2(int **mtr){
+  return ((mtr[0][0] * mtr[1][1]) - (mtr[0][1] * mtr[1][0]));
 }
