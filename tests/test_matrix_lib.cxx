@@ -359,3 +359,17 @@ TEST_F(MatrixLibFixture, MtrComparator) {
       });
   EXPECT_FALSE(test_mtr1 == test_mtr4);
 }
+
+
+TEST_F(MatrixLibFixture, MtrDetOrder1) {
+  Matrix test_mtr = Matrix(1,1);
+  long expected_det;
+
+  test_mtr.set_elements(vector<int>{
+      40
+      });
+  expected_det = 40;
+
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
+
