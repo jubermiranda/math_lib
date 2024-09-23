@@ -191,6 +191,26 @@ Matrix Matrix::operator*(int scalar) const {
   return result;
 }
 
+Matrix Matrix::operator*(const Matrix& other) const {
+  if(this->columns != other.lines)
+    throw runtime_error("to multpl two matrix, A.columns needs be == B.lines");
+
+  Matrix result = Matrix(this->lines, other.columns);
+
+  for(int i=0; i < this->lines; i++){
+    for(int j=0; j < other.columns; j++){
+
+      int sum = 0;
+      for(int k=0; k < this->columns; k++)
+        sum += this->mtr[i][k] * other.mtr[k][j];
+      result.update_el(i, j, sum);
+
+    }
+  }
+
+  return result;
+}
+
 bool Matrix::operator==(const Matrix& other) const {
   if(this->lines != other.lines || this->columns != other.columns)
     return false;

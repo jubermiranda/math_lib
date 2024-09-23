@@ -35,7 +35,7 @@ public:
   Matrix operator-(const Matrix &other) const;
   Matrix operator*(const Matrix &other) const; // TODO
   Matrix operator*(const int scalar) const;    // TODO
-  bool operator==(const Matrix& other) const;
+  bool operator==(const Matrix &other) const;
 
 private:
   int lines;
