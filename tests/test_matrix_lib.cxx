@@ -249,7 +249,7 @@ TEST_F(MatrixLibFixture, MtrDiff) {
 }
 
 
-TEST_F(MatrixLibFixture, MtrMultipl) {
+TEST_F(MatrixLibFixture, MtrMultiplScalar) {
   Matrix test_mtr = Matrix(6,6);
   test_mtr.set_elements(vector<int>{
       7,7,7,7,7,7,
@@ -276,6 +276,54 @@ TEST_F(MatrixLibFixture, MtrMultipl) {
 }
 
 
+TEST_F(MatrixLibFixture, MtrMultiplMtr) {
+  Matrix test_mtr1 = Matrix(4,4);
+  Matrix test_mtr2 = Matrix(4,4);
+  Matrix expected = Matrix(4,4);
+
+  test_mtr1.set_elements(vector<int>{
+      2,3,1,2,
+      1,1,1,1,
+      2,2,2,2,
+      2,1,3,2
+      });
+  test_mtr2.set_elements(vector<int>{
+      5,1,3,2,
+      2,1,3,9,
+      2,1,3,2,
+      2,1,3,2
+      });
+  expected.set_elements({
+      22, 8, 24, 37,
+      11, 4, 12, 15,
+      22, 8, 24, 30,
+      22, 8, 24, 23
+      });
+
+  EXPECT_EQ(expected, test_mtr1 * test_mtr2);
+
+
+  test_mtr1 = Matrix(2,4);
+  test_mtr2 = Matrix(4,2);
+  expected = Matrix(2,2);
+
+  test_mtr1.set_elements(vector<int>{
+      1,2,3,4,
+      3,3,3,3
+      });
+  test_mtr2.set_elements(vector<int>{
+      1,2,
+      3,4,
+      7,7,
+      7,7,
+      });
+  expected.set_elements(vector<int>{
+      56, 59,
+      54, 60
+      });
+
+  EXPECT_EQ(expected, test_mtr1 * test_mtr2);
+}
 
 TEST_F(MatrixLibFixture, MtrComparator) {
   Matrix test_mtr1 = Matrix(4,4);
