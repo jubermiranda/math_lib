@@ -386,3 +386,16 @@ TEST_F(MatrixLibFixture, MtrDetOrder2) {
   EXPECT_EQ(expected_det, test_mtr.det());
 }
 
+TEST_F(MatrixLibFixture, MtrDetOrder3) {
+  Matrix test_mtr(3,3);
+  long expected_det;
+
+  test_mtr.set_elements(vector<int>{
+      1,2,3,
+      4,5,6,
+      7,8,9
+      });
+  expected_det = 42;
+
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
