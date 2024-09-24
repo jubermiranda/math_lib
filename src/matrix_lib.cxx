@@ -268,4 +268,3 @@ long det_order_3(int **mtr){
   return main_diagonal - sec_diagonal;
 }
 
-

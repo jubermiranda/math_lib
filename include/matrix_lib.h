@@ -23,9 +23,11 @@ public:
   bool is_identity() const;
   bool is_square() const;
   bool is_null() const;
+
   std::stringstream describe() const; // TODO
   std::stringstream print() const;
   std::stringstream print_class() const;
+
   Matrix transpose() const;
   int stroke() const;
   long det() const; // TODO
