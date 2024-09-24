@@ -379,7 +379,7 @@ TEST_F(MatrixLibFixture, MtrDetOrder2) {
 
   test_mtr.set_elements(vector<int>{
       22, 11,
-      2, 5
+      2,  5
       });
   expected_det = 88;
 
@@ -395,7 +395,31 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
       4,5,6,
       7,8,9
       });
-  expected_det = 42;
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
 
+  test_mtr.set_elements(vector<int>{
+      6, 1,  1,
+      4, -2, 5,
+      2, 8,  7
+      });
+  expected_det = -306;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<int>{
+      10, -7, 3,
+      -3, 6, 2,
+      5, 8, 9
+      });
+  expected_det = -41;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+
+  test_mtr.set_elements(vector<int>{
+      1, 0, 0,
+      0, 1, 0,
+      0, 0, 1
+      });
+  expected_det = 1;
   EXPECT_EQ(expected_det, test_mtr.det());
 }
