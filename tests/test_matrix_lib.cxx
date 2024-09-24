@@ -359,3 +359,67 @@ TEST_F(MatrixLibFixture, MtrComparator) {
       });
   EXPECT_FALSE(test_mtr1 == test_mtr4);
 }
+
+
+TEST_F(MatrixLibFixture, MtrDetOrder1) {
+  Matrix test_mtr = Matrix(1,1);
+  long expected_det;
+
+  test_mtr.set_elements(vector<int>{
+      40
+      });
+  expected_det = 40;
+
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
+
+TEST_F(MatrixLibFixture, MtrDetOrder2) {
+  Matrix test_mtr = Matrix(2,2);
+  long expected_det;
+
+  test_mtr.set_elements(vector<int>{
+      22, 11,
+      2,  5
+      });
+  expected_det = 88;
+
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
+
+TEST_F(MatrixLibFixture, MtrDetOrder3) {
+  Matrix test_mtr(3,3);
+  long expected_det;
+
+  test_mtr.set_elements(vector<int>{
+      1,2,3,
+      4,5,6,
+      7,8,9
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<int>{
+      6, 1,  1,
+      4, -2, 5,
+      2, 8,  7
+      });
+  expected_det = -306;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<int>{
+      10, -7, 3,
+      -3, 6, 2,
+      5, 8, 9
+      });
+  expected_det = -41;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+
+  test_mtr.set_elements(vector<int>{
+      1, 0, 0,
+      0, 1, 0,
+      0, 0, 1
+      });
+  expected_det = 1;
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
