@@ -158,6 +158,57 @@ TEST_F(MatrixLibFixture, MtrClassLine) {
    EXPECT_TRUE(test_mtr.is_line());
 }
 
+TEST_F(MatrixLibFixture, MtrClassDiagonal) {
+  Matrix test_mtr = Matrix(4,2);
+  string result_class;
+
+  test_mtr.set_elements(vector<int>{
+      1,1,
+      1,1,
+      1,1,
+      1,1
+      });
+   result_class = test_mtr.print_class().str();
+   EXPECT_FALSE(t_utils::is_sub_str(result_class, "diagonal"));
+   EXPECT_FALSE(test_mtr.is_diagonal());
+
+   test_mtr = Matrix(4,4);
+   test_mtr.set_elements(vector<int>{
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1,
+      1,1,1,1
+      });
+   result_class = test_mtr.print_class().str();
+   EXPECT_FALSE(t_utils::is_sub_str(result_class, "diagonal"));
+   EXPECT_FALSE(test_mtr.is_diagonal());
+
+
+
+   test_mtr = Matrix(4,4);
+   test_mtr.set_elements(vector<int>{
+       1,0,0,0,
+       0,1,0,0,
+       0,0,1,0,
+       0,0,0,1
+       });
+   result_class = test_mtr.print_class().str();
+   EXPECT_TRUE(t_utils::is_sub_str(result_class, "diagonal"));
+   EXPECT_TRUE(test_mtr.is_diagonal());
+
+   test_mtr = Matrix(5,5);
+   test_mtr.set_elements(vector<int>{
+       1,0,0,0,0,
+       0,2,0,0,0,
+       0,0,3,0,0,
+       0,0,0,4,0,
+       0,0,0,0,5
+       });
+   result_class = test_mtr.print_class().str();
+   EXPECT_TRUE(t_utils::is_sub_str(result_class, "diagonal"));
+   EXPECT_TRUE(test_mtr.is_diagonal());
+
+}
 
 TEST_F(MatrixLibFixture, MtrClassSquare) {
   Matrix test_mtr = Matrix(4,4);

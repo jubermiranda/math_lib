@@ -25,6 +25,7 @@ public:
   bool is_null() const;
   bool is_column() const;
   bool is_line() const;
+  bool is_diagonal() const;
 
   std::stringstream describe() const; // TODO
   std::stringstream print() const;

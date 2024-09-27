@@ -89,6 +89,8 @@ stringstream Matrix::print_class() const {
     ss << "column" << endl;
   if(this->is_line())
     ss << "line" << endl;
+  if(this->is_diagonal())
+    ss << "diagonal" << endl;
 
   return ss;
 }
@@ -140,6 +142,18 @@ bool Matrix::is_column() const {
 
 bool Matrix::is_line() const {
   return (this->lines == 1);
+}
+
+bool Matrix::is_diagonal() const {
+  if(!this->is_square())
+    return false;
+
+  for (int i = 0; i < lines; i++) 
+    for (int j = 0; j < columns; j++) 
+      if (i != j && this->mtr[i][j] != 0)
+        return false;
+
+  return true;
 }
 
 
