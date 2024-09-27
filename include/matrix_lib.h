@@ -26,6 +26,8 @@ public:
   bool is_column() const;
   bool is_line() const;
   bool is_diagonal() const;
+  bool is_upper_tri() const;
+  bool is_lower_tri() const;
 
   std::stringstream describe() const; // TODO
   std::stringstream print() const;

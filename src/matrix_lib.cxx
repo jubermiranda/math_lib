@@ -91,6 +91,10 @@ stringstream Matrix::print_class() const {
     ss << "line" << endl;
   if(this->is_diagonal())
     ss << "diagonal" << endl;
+  if(this->is_upper_tri())
+    ss << "upper triangular" << endl;
+  if(this->is_lower_tri())
+    ss << "lower triangular" << endl;
 
   return ss;
 }
@@ -151,6 +155,30 @@ bool Matrix::is_diagonal() const {
   for (int i = 0; i < lines; i++) 
     for (int j = 0; j < columns; j++) 
       if (i != j && this->mtr[i][j] != 0)
+        return false;
+
+  return true;
+}
+
+bool Matrix::is_upper_tri() const {
+  if(!this->is_square())
+    return false;
+
+  for(int i=0; i < this->lines; i++)
+    for(int j=0; j < i; j++)
+      if(this->mtr[i][j] != 0)
+        return false;
+
+  return true;
+}
+
+bool Matrix::is_lower_tri() const {
+  if(!this->is_square())
+    return false;
+
+  for(int i=0; i < this->lines; i++)
+    for(int j=i+1; j < this->columns; j++)
+      if(this->mtr[i][j] != 0)
         return false;
 
   return true;

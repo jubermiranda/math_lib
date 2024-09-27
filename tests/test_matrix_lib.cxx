@@ -167,47 +167,97 @@ TEST_F(MatrixLibFixture, MtrClassDiagonal) {
       1,1,
       1,1,
       1,1
+    });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "diagonal"));
+  EXPECT_FALSE(test_mtr.is_diagonal());
+
+  test_mtr = Matrix(4,4);
+  test_mtr.set_elements(vector<int>{
+     1,1,1,1,
+     1,1,1,1,
+     1,1,1,1,
+     1,1,1,1
+     });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "diagonal"));
+  EXPECT_FALSE(test_mtr.is_diagonal());
+
+
+
+  test_mtr = Matrix(4,4);
+  test_mtr.set_elements(vector<int>{
+      1,0,0,0,
+      0,1,0,0,
+      0,0,1,0,
+      0,0,0,1
       });
-   result_class = test_mtr.print_class().str();
-   EXPECT_FALSE(t_utils::is_sub_str(result_class, "diagonal"));
-   EXPECT_FALSE(test_mtr.is_diagonal());
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "diagonal"));
+  EXPECT_TRUE(test_mtr.is_diagonal());
 
-   test_mtr = Matrix(4,4);
-   test_mtr.set_elements(vector<int>{
-      1,1,1,1,
-      1,1,1,1,
-      1,1,1,1,
-      1,1,1,1
-      });
-   result_class = test_mtr.print_class().str();
-   EXPECT_FALSE(t_utils::is_sub_str(result_class, "diagonal"));
-   EXPECT_FALSE(test_mtr.is_diagonal());
+  test_mtr = Matrix(5,5);
+  test_mtr.set_elements(vector<int>{
+      1,0,0,0,0,
+      0,2,0,0,0,
+      0,0,3,0,0,
+      0,0,0,4,0,
+      0,0,0,0,5
+    });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "diagonal"));
+  EXPECT_TRUE(test_mtr.is_diagonal());
 
+}
 
+TEST_F(MatrixLibFixture, MtrClassUpperTriangular) {
+  Matrix test_mtr(4,4);
+  string result_class;
 
-   test_mtr = Matrix(4,4);
-   test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<int>{
+       1,1,1,1,
+       0,2,2,2,
+       0,0,3,3,
+       0,0,0,4
+    });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "upper triangular"));
+  EXPECT_TRUE(test_mtr.is_upper_tri());
+
+  test_mtr.set_elements(vector<int>{
+       1,1,1,1,
+       2,2,2,2,
+       3,3,3,3,
+       4,4,0,4
+    });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "upper triangular"));
+  EXPECT_FALSE(test_mtr.is_upper_tri());
+}
+
+TEST_F(MatrixLibFixture, MtrClassLowerTriangular) {
+  Matrix test_mtr(4,4);
+  string result_class;
+
+  test_mtr.set_elements(vector<int>{
        1,0,0,0,
-       0,1,0,0,
-       0,0,1,0,
-       0,0,0,1
-       });
-   result_class = test_mtr.print_class().str();
-   EXPECT_TRUE(t_utils::is_sub_str(result_class, "diagonal"));
-   EXPECT_TRUE(test_mtr.is_diagonal());
+       2,2,0,0,
+       3,3,3,0,
+       4,4,4,4
+    });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "lower triangular"));
+  EXPECT_TRUE(test_mtr.is_lower_tri());
 
-   test_mtr = Matrix(5,5);
-   test_mtr.set_elements(vector<int>{
-       1,0,0,0,0,
-       0,2,0,0,0,
-       0,0,3,0,0,
-       0,0,0,4,0,
-       0,0,0,0,5
-       });
-   result_class = test_mtr.print_class().str();
-   EXPECT_TRUE(t_utils::is_sub_str(result_class, "diagonal"));
-   EXPECT_TRUE(test_mtr.is_diagonal());
-
+  test_mtr.set_elements(vector<int>{
+       1,1,1,1,
+       2,2,2,2,
+       3,3,3,3,
+       4,4,0,4
+    });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "lower triangular"));
+  EXPECT_FALSE(test_mtr.is_lower_tri());
 }
 
 TEST_F(MatrixLibFixture, MtrClassSquare) {
