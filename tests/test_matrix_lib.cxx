@@ -46,7 +46,7 @@ TEST_F(MatrixLibFixture, PrintMtrElements) {
 }
 
 
-TEST_F(MatrixLibFixture, MtrClassIdentity) {
+TEST_F(MatrixLibFixture, ClassIdentity) {
   string result_class;
   vector<int> mtr_elements;
 
@@ -83,7 +83,7 @@ TEST_F(MatrixLibFixture, MtrClassIdentity) {
 }
 
 
-TEST_F(MatrixLibFixture, MtrClassNull) {
+TEST_F(MatrixLibFixture, ClassNull) {
   Matrix test_mtr = Matrix(4,2);
   vector<int> elements = {
     0,0,
@@ -108,7 +108,7 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   EXPECT_TRUE(test_mtr.is_null());
 }
 
-TEST_F(MatrixLibFixture, MtrClassColumn) {
+TEST_F(MatrixLibFixture, ClassColumn) {
   Matrix test_mtr = Matrix(4,2);
   string result_class;
 
@@ -134,7 +134,7 @@ TEST_F(MatrixLibFixture, MtrClassColumn) {
    EXPECT_TRUE(test_mtr.is_column());
 }
 
-TEST_F(MatrixLibFixture, MtrClassLine) {
+TEST_F(MatrixLibFixture, ClassLine) {
   Matrix test_mtr = Matrix(4,2);
   string result_class;
 
@@ -158,7 +158,7 @@ TEST_F(MatrixLibFixture, MtrClassLine) {
    EXPECT_TRUE(test_mtr.is_line());
 }
 
-TEST_F(MatrixLibFixture, MtrClassDiagonal) {
+TEST_F(MatrixLibFixture, ClassDiagonal) {
   Matrix test_mtr = Matrix(4,2);
   string result_class;
 
@@ -210,7 +210,7 @@ TEST_F(MatrixLibFixture, MtrClassDiagonal) {
 
 }
 
-TEST_F(MatrixLibFixture, MtrClassUpperTriangular) {
+TEST_F(MatrixLibFixture, ClassUpperTriangular) {
   Matrix test_mtr(4,4);
   string result_class;
 
@@ -235,7 +235,7 @@ TEST_F(MatrixLibFixture, MtrClassUpperTriangular) {
   EXPECT_FALSE(test_mtr.is_upper_tri());
 }
 
-TEST_F(MatrixLibFixture, MtrClassLowerTriangular) {
+TEST_F(MatrixLibFixture, ClassLowerTriangular) {
   Matrix test_mtr(4,4);
   string result_class;
 
@@ -260,7 +260,7 @@ TEST_F(MatrixLibFixture, MtrClassLowerTriangular) {
   EXPECT_FALSE(test_mtr.is_lower_tri());
 }
 
-TEST_F(MatrixLibFixture, MtrIsSymmetric) {
+TEST_F(MatrixLibFixture, ClassSymmetric) {
   Matrix test_mtr(1,1);
   string result_class;
 
@@ -310,7 +310,7 @@ TEST_F(MatrixLibFixture, MtrIsSymmetric) {
 
 }
 
-TEST_F(MatrixLibFixture, MtrAntiSymmetric) {
+TEST_F(MatrixLibFixture, ClassAntiSymmetric) {
   Matrix test_mtr(4,4);
   string result_class;
 
@@ -336,7 +336,7 @@ TEST_F(MatrixLibFixture, MtrAntiSymmetric) {
 }
 
 
-TEST_F(MatrixLibFixture, MtrScalar) {
+TEST_F(MatrixLibFixture, ClassScalar) {
   Matrix test_mtr(4,4);
   string result_class;
 
@@ -371,7 +371,7 @@ TEST_F(MatrixLibFixture, MtrScalar) {
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "scalar"));
 }
 
-TEST_F(MatrixLibFixture, MtrClassSquare) {
+TEST_F(MatrixLibFixture, ClassSquare) {
   Matrix test_mtr = Matrix(4,4);
   test_mtr.set_elements(vector<int>{
       2,2,2,2,
