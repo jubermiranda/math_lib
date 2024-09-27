@@ -108,6 +108,32 @@ TEST_F(MatrixLibFixture, MtrClassNull) {
   EXPECT_TRUE(test_mtr.is_null());
 }
 
+TEST_F(MatrixLibFixture, MtrClassColumn) {
+  Matrix test_mtr = Matrix(4,2);
+  string result_class;
+
+  test_mtr.set_elements(vector<int>{
+      1,1,
+      1,1,
+      1,1,
+      1,1
+      });
+   result_class = test_mtr.print_class().str();
+   EXPECT_FALSE(t_utils::is_sub_str(result_class, "column"));
+   EXPECT_FALSE(test_mtr.is_column());
+
+
+   test_mtr = Matrix(3,1);
+   test_mtr.set_elements(vector<int>{
+       0,
+       0,
+       0
+       });
+   result_class = test_mtr.print_class().str();
+   EXPECT_TRUE(t_utils::is_sub_str(result_class, "column"));
+   EXPECT_TRUE(test_mtr.is_column());
+}
+
 
 TEST_F(MatrixLibFixture, MtrClassSquare) {
   Matrix test_mtr = Matrix(4,4);
@@ -423,3 +449,15 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
   expected_det = 1;
   EXPECT_EQ(expected_det, test_mtr.det());
 }
+
+
+// TEST_F(MatrixLibFixture, MtrDetOrderN) {
+//   Matrix test_mtr(4,4);
+//   test_mtr.set_elements(vector<int>{
+//       1,2,3,4,
+//       5,6,7,8,
+//       9,10,11,12,
+//       13,14,15,16
+//       });
+//   long expected_det;
+// }
