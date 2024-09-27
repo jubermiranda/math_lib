@@ -24,6 +24,7 @@ public:
   bool is_square() const;
   bool is_null() const;
   bool is_column() const;
+  bool is_line() const;
 
   std::stringstream describe() const; // TODO
   std::stringstream print() const;

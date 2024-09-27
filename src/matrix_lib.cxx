@@ -87,6 +87,8 @@ stringstream Matrix::print_class() const {
     ss << "null" << endl;
   if(this->is_column())
     ss << "column" << endl;
+  if(this->is_line())
+    ss << "line" << endl;
 
   return ss;
 }
@@ -134,6 +136,12 @@ bool Matrix::is_null() const {
 bool Matrix::is_column() const {
   return (this->columns == 1);
 }
+
+
+bool Matrix::is_line() const {
+  return (this->lines == 1);
+}
+
 
 int Matrix::stroke() const {
   if (this->lines != this->columns)
