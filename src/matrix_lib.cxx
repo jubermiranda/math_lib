@@ -79,22 +79,24 @@ stringstream Matrix::print() const {
 stringstream Matrix::print_class() const {
   stringstream ss("");
 
-  if(this->is_square())
+  if (this->is_square())
     ss << "square" << endl;
-  if(this->is_identity())
+  if (this->is_identity())
     ss << "identity" << endl;
-  if(this->is_null())
+  if (this->is_null())
     ss << "null" << endl;
-  if(this->is_column())
+  if (this->is_column())
     ss << "column" << endl;
-  if(this->is_line())
+  if (this->is_line())
     ss << "line" << endl;
-  if(this->is_diagonal())
+  if (this->is_diagonal())
     ss << "diagonal" << endl;
-  if(this->is_upper_tri())
+  if (this->is_upper_tri())
     ss << "upper triangular" << endl;
-  if(this->is_lower_tri())
+  if (this->is_lower_tri())
     ss << "lower triangular" << endl;
+  if (this->is_symmetric())
+    ss << "symmetric" << endl;
 
   return ss;
 }
@@ -111,7 +113,7 @@ Matrix Matrix::transpose() const {
 }
 
 bool Matrix::is_identity() const {
-  if(!this->is_square())
+  if (!this->is_square())
     return false;
 
   for (int i = 0; i < lines; i++) {
@@ -125,9 +127,7 @@ bool Matrix::is_identity() const {
   return true;
 }
 
-bool Matrix::is_square() const {
-  return (this->lines == this->columns);
-}
+bool Matrix::is_square() const { return (this->lines == this->columns); }
 
 bool Matrix::is_null() const {
   for (int i = 0; i < this->lines; i++)
@@ -138,22 +138,16 @@ bool Matrix::is_null() const {
   return true;
 }
 
+bool Matrix::is_column() const { return (this->columns == 1); }
 
-bool Matrix::is_column() const {
-  return (this->columns == 1);
-}
-
-
-bool Matrix::is_line() const {
-  return (this->lines == 1);
-}
+bool Matrix::is_line() const { return (this->lines == 1); }
 
 bool Matrix::is_diagonal() const {
-  if(!this->is_square())
+  if (!this->is_square())
     return false;
 
-  for (int i = 0; i < lines; i++) 
-    for (int j = 0; j < columns; j++) 
+  for (int i = 0; i < lines; i++)
+    for (int j = 0; j < columns; j++)
       if (i != j && this->mtr[i][j] != 0)
         return false;
 
@@ -161,29 +155,40 @@ bool Matrix::is_diagonal() const {
 }
 
 bool Matrix::is_upper_tri() const {
-  if(!this->is_square())
+  if (!this->is_square())
     return false;
 
-  for(int i=0; i < this->lines; i++)
-    for(int j=0; j < i; j++)
-      if(this->mtr[i][j] != 0)
+  for (int i = 0; i < this->lines; i++)
+    for (int j = 0; j < i; j++)
+      if (this->mtr[i][j] != 0)
         return false;
 
   return true;
 }
 
 bool Matrix::is_lower_tri() const {
-  if(!this->is_square())
+  if (!this->is_square())
     return false;
 
-  for(int i=0; i < this->lines; i++)
-    for(int j=i+1; j < this->columns; j++)
-      if(this->mtr[i][j] != 0)
+  for (int i = 0; i < this->lines; i++)
+    for (int j = i + 1; j < this->columns; j++)
+      if (this->mtr[i][j] != 0)
         return false;
 
   return true;
 }
 
+bool Matrix::is_symmetric() const {
+  if (!this->is_square())
+    return false;
+
+  for (int i = 0; i < this->lines; i++)
+    for (int j = i; j < this->columns; j++)
+      if (this->mtr[i][j] != this->mtr[j][i])
+        return false;
+
+  return true;
+}
 
 int Matrix::stroke() const {
   if (this->lines != this->columns)
@@ -197,24 +202,24 @@ int Matrix::stroke() const {
 }
 
 long Matrix::det() const {
-  if( !this->is_square() )
+  if (!this->is_square())
     throw runtime_error("cannot calc det. matrix not square");
 
-  switch(this->lines){
-    case 1:
-      return this->at(0,0);
+  switch (this->lines) {
+  case 1:
+    return this->at(0, 0);
     break;
 
-    case 2:
-      return det_order_2(this->mtr);
+  case 2:
+    return det_order_2(this->mtr);
     break;
 
-    case 3:
-      return det_order_3(this->mtr);
+  case 3:
+    return det_order_3(this->mtr);
     break;
 
-    default:
-      throw runtime_error("not implemented yet");
+  default:
+    throw runtime_error("not implemented yet");
   }
 
   return 0;
@@ -239,79 +244,76 @@ Matrix &Matrix::operator=(const Matrix &other) {
   return *this;
 }
 
-Matrix Matrix::operator+(const Matrix& other) const {
-  if(this->lines != other.lines || this->columns != other.columns)
+Matrix Matrix::operator+(const Matrix &other) const {
+  if (this->lines != other.lines || this->columns != other.columns)
     throw runtime_error("cannot sum matrix of difeerent order");
 
   Matrix result = Matrix(this->lines, this->columns);
-  for(int i=0; i < this->lines; i++)
-    for(int j=0; j < this->columns; j++)
+  for (int i = 0; i < this->lines; i++)
+    for (int j = 0; j < this->columns; j++)
       result.update_el(i, j, this->at(i, j) + other.at(i, j));
 
   return result;
 }
 
-
-Matrix Matrix::operator-(const Matrix& other) const {
-  if(this->lines != other.lines || this->columns != other.columns)
+Matrix Matrix::operator-(const Matrix &other) const {
+  if (this->lines != other.lines || this->columns != other.columns)
     throw runtime_error("cannot diff matrix of difeerent order");
 
   Matrix result = Matrix(this->lines, this->columns);
-  for(int i=0; i < this->lines; i++)
-    for(int j=0; j < this->columns; j++)
+  for (int i = 0; i < this->lines; i++)
+    for (int j = 0; j < this->columns; j++)
       result.update_el(i, j, this->at(i, j) - other.at(i, j));
 
   return result;
 }
 
-
 Matrix Matrix::operator*(int scalar) const {
 
   Matrix result = Matrix(this->lines, this->columns);
-  for(int i=0; i < this->lines; i++)
-    for(int j=0; j < this->columns; j++)
+  for (int i = 0; i < this->lines; i++)
+    for (int j = 0; j < this->columns; j++)
       result.update_el(i, j, (this->at(i, j) * scalar));
 
   return result;
 }
 
-Matrix Matrix::operator*(const Matrix& other) const {
-  if(this->columns != other.lines)
+Matrix Matrix::operator*(const Matrix &other) const {
+  if (this->columns != other.lines)
     throw runtime_error("to multpl two matrix, A.columns needs be == B.lines");
 
   Matrix result = Matrix(this->lines, other.columns);
 
-  for(int i=0; i < this->lines; i++){
-    for(int j=0; j < other.columns; j++){
+  for (int i = 0; i < this->lines; i++) {
+    for (int j = 0; j < other.columns; j++) {
 
       int sum = 0;
-      for(int k=0; k < this->columns; k++)
+      for (int k = 0; k < this->columns; k++)
         sum += this->mtr[i][k] * other.mtr[k][j];
       result.update_el(i, j, sum);
-
     }
   }
 
   return result;
 }
 
-bool Matrix::operator==(const Matrix& other) const {
-  if(this->lines != other.lines || this->columns != other.columns)
+bool Matrix::operator==(const Matrix &other) const {
+  if (this->lines != other.lines || this->columns != other.columns)
     return false;
 
-  for(int i=0; i < this->lines; i++)
-    for(int j=0; j < this->columns; j++)
-      if(this->mtr[i][j] != other.mtr[i][j])
+  for (int i = 0; i < this->lines; i++)
+    for (int j = 0; j < this->columns; j++)
+      if (this->mtr[i][j] != other.mtr[i][j])
         return false;
 
   return true;
 }
 
-long det_order_2(int **mtr){
+long det_order_2(int **mtr) {
   return ((mtr[0][0] * mtr[1][1]) - (mtr[0][1] * mtr[1][0]));
 }
 
-long det_order_3(int **mtr){
+long det_order_3(int **mtr) {
   long main_diagonal = 0;
   main_diagonal += mtr[0][0] * mtr[1][1] * mtr[2][2];
   main_diagonal += mtr[0][1] * mtr[1][2] * mtr[2][0];
@@ -324,4 +326,3 @@ long det_order_3(int **mtr){
 
   return main_diagonal - sec_diagonal;
 }
-

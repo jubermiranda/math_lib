@@ -28,6 +28,7 @@ public:
   bool is_diagonal() const;
   bool is_upper_tri() const;
   bool is_lower_tri() const;
+  bool is_symmetric() const;
 
   std::stringstream describe() const; // TODO
   std::stringstream print() const;

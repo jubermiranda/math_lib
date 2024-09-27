@@ -260,6 +260,56 @@ TEST_F(MatrixLibFixture, MtrClassLowerTriangular) {
   EXPECT_FALSE(test_mtr.is_lower_tri());
 }
 
+TEST_F(MatrixLibFixture, MtrIsSymmetric) {
+  Matrix test_mtr(1,1);
+  string result_class;
+
+  test_mtr.set_elements(vector<int>{
+      4
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "symmetric"));
+  EXPECT_TRUE(test_mtr.is_symmetric());
+
+
+  test_mtr = Matrix(2,2);
+  test_mtr.set_elements(vector<int>{
+      4,2,
+      2,4
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(test_mtr.is_symmetric());
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "symmetric"));
+
+  test_mtr.set_elements(vector<int>{
+      4,4,
+      2,2
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(test_mtr.is_symmetric());
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "symmetric"));
+
+  test_mtr = Matrix(3,3);
+  test_mtr.set_elements(vector<int>{
+      4,2,1,
+      2,3,5,
+      1,5,7
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(test_mtr.is_symmetric());
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "symmetric"));
+
+  test_mtr.set_elements(vector<int>{
+      4,1,1,
+      2,4,1,
+      2,2,4
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(test_mtr.is_symmetric());
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "symmetric"));
+
+}
+
 TEST_F(MatrixLibFixture, MtrClassSquare) {
   Matrix test_mtr = Matrix(4,4);
   test_mtr.set_elements(vector<int>{
