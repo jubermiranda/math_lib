@@ -30,6 +30,7 @@ public:
   bool is_lower_tri() const;
   bool is_symmetric() const;
   bool is_antisymmetric() const;
+  bool is_scalar() const;
 
   std::stringstream describe() const; // TODO
   std::stringstream print() const;

@@ -99,6 +99,8 @@ stringstream Matrix::print_class() const {
     ss << "symmetric" << endl;
   if (this->is_antisymmetric())
     ss << "antisymmetric" << endl;
+  if (this->is_scalar())
+    ss << "scalar" << endl;
 
   return ss;
 }
@@ -199,6 +201,18 @@ bool Matrix::is_antisymmetric() const {
   for(int i=0; i < this->lines; i++)
     if(this->mtr[i][i] != 0)
       return false;
+  return true;
+}
+
+bool Matrix::is_scalar() const {
+  if(!this->is_diagonal())
+    return false;
+
+  int diagonal_el = this->mtr[0][0];
+  for(int i=1; i < this->lines; i++)
+    if(this->mtr[i][i] != diagonal_el)
+      return false;
+
   return true;
 }
 

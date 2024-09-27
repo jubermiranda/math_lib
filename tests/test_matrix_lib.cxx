@@ -336,6 +336,41 @@ TEST_F(MatrixLibFixture, MtrAntiSymmetric) {
 }
 
 
+TEST_F(MatrixLibFixture, MtrScalar) {
+  Matrix test_mtr(4,4);
+  string result_class;
+
+  test_mtr.set_elements(vector<int>{
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(test_mtr.is_scalar());
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "scalar"));
+
+  test_mtr.set_elements(vector<int>{
+      1,0,0,0,
+      0,1,0,0,
+      0,0,1,0,
+      0,0,0,1
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(test_mtr.is_scalar());
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "scalar"));
+
+  test_mtr = Matrix(3,3);
+  test_mtr.set_elements(vector<int>{
+      3,0,0,
+      0,3,0,
+      0,0,3
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(test_mtr.is_scalar());
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "scalar"));
+}
+
 TEST_F(MatrixLibFixture, MtrClassSquare) {
   Matrix test_mtr = Matrix(4,4);
   test_mtr.set_elements(vector<int>{
