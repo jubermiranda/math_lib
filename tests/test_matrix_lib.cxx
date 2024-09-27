@@ -310,6 +310,32 @@ TEST_F(MatrixLibFixture, MtrIsSymmetric) {
 
 }
 
+TEST_F(MatrixLibFixture, MtrAntiSymmetric) {
+  Matrix test_mtr(4,4);
+  string result_class;
+
+  test_mtr.set_elements(vector<int>{
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4,
+      1,2,3,4
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_FALSE(test_mtr.is_antisymmetric());
+  EXPECT_FALSE(t_utils::is_sub_str(result_class, "antisymmetric"));
+
+  test_mtr.set_elements(vector<int>{
+      0,2,3,4,
+      1,0,3,4,
+      1,2,0,4,
+      1,2,3,0
+      });
+  result_class = test_mtr.print_class().str();
+  EXPECT_TRUE(test_mtr.is_antisymmetric());
+  EXPECT_TRUE(t_utils::is_sub_str(result_class, "antisymmetric"));
+}
+
+
 TEST_F(MatrixLibFixture, MtrClassSquare) {
   Matrix test_mtr = Matrix(4,4);
   test_mtr.set_elements(vector<int>{

@@ -29,6 +29,7 @@ public:
   bool is_upper_tri() const;
   bool is_lower_tri() const;
   bool is_symmetric() const;
+  bool is_antisymmetric() const;
 
   std::stringstream describe() const; // TODO
   std::stringstream print() const;

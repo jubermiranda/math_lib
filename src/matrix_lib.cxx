@@ -97,6 +97,8 @@ stringstream Matrix::print_class() const {
     ss << "lower triangular" << endl;
   if (this->is_symmetric())
     ss << "symmetric" << endl;
+  if (this->is_antisymmetric())
+    ss << "antisymmetric" << endl;
 
   return ss;
 }
@@ -187,6 +189,16 @@ bool Matrix::is_symmetric() const {
       if (this->mtr[i][j] != this->mtr[j][i])
         return false;
 
+  return true;
+}
+
+bool Matrix::is_antisymmetric() const {
+  if(!this->is_square())
+    return false;
+
+  for(int i=0; i < this->lines; i++)
+    if(this->mtr[i][i] != 0)
+      return false;
   return true;
 }
 
