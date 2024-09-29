@@ -69,6 +69,20 @@ TEST(MatrixDeterminant, MtrDetOrder3) {
   EXPECT_EQ(expected_det, test_mtr.det());
 }
 
+TEST(MatrixDeterminant, MtrDetOrder4){
+  Matrix test_mtr(4,4);
+  double expected;
+
+  test_mtr.set_elements(vector<float>{
+      1, 2, 3, 4,
+      1, 2, 3, 4,
+      1, 2, 3, 4,
+      1, 2, 3, 4
+  });
+
+  //TODO
+}
+
 
 TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
   Matrix test_mtr(4,4);
@@ -149,3 +163,4 @@ TEST(MatrixDeterminant, Cofactor){
 
   EXPECT_EQ(expected, test_mtr.cofactor(line, column));
 }
+
