@@ -105,9 +105,9 @@ TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
 //TODO p3, p4
 
 
-TEST(MatrixDeterminant, MinorComplementary){
+TEST(MatrixDeterminant, MinorComplementaryOrder3){
   Matrix test_mtr(3,3);
-  float expected;
+  double expected;
   unsigned line, column;
 
   test_mtr.set_elements(vector<float>{
@@ -125,4 +125,27 @@ TEST(MatrixDeterminant, MinorComplementary){
   column = 0;
   expected = 6;
   EXPECT_EQ(expected, test_mtr.minor_comp(line, column));
+}
+
+TEST(MatrixDeterminant, Cofactor){
+  Matrix test_mtr(3,3);
+  double expected;
+  unsigned line, column;
+  test_mtr.set_elements(vector<float>{
+      2, 1, 3,
+      -1, -2, 4,
+      1, 0, -3,
+  });
+
+  line = 0;
+  column = 0;
+  expected = -1;
+
+  EXPECT_EQ(expected, test_mtr.cofactor(line, column));
+
+  line = 1;
+  column = 2;
+  expected = 0;
+
+  EXPECT_EQ(expected, test_mtr.cofactor(line, column));
 }
