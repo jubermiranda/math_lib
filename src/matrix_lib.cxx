@@ -4,6 +4,7 @@ using namespace std;
 
 long det_order_2(int **);
 long det_order_3(int **);
+long det_order_n(int **, unsigned);
 
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
@@ -195,22 +196,22 @@ bool Matrix::is_symmetric() const {
 }
 
 bool Matrix::is_antisymmetric() const {
-  if(!this->is_square())
+  if (!this->is_square())
     return false;
 
-  for(int i=0; i < this->lines; i++)
-    if(this->mtr[i][i] != 0)
+  for (int i = 0; i < this->lines; i++)
+    if (this->mtr[i][i] != 0)
       return false;
   return true;
 }
 
 bool Matrix::is_scalar() const {
-  if(!this->is_diagonal())
+  if (!this->is_diagonal())
     return false;
 
   int diagonal_el = this->mtr[0][0];
-  for(int i=1; i < this->lines; i++)
-    if(this->mtr[i][i] != diagonal_el)
+  for (int i = 1; i < this->lines; i++)
+    if (this->mtr[i][i] != diagonal_el)
       return false;
 
   return true;
@@ -245,7 +246,7 @@ long Matrix::det() const {
     break;
 
   default:
-    throw runtime_error("not implemented yet");
+    return det_order_n(this->mtr, this->lines);
   }
 
   return 0;
@@ -351,4 +352,39 @@ long det_order_3(int **mtr) {
   sec_diagonal += mtr[2][2] * mtr[1][0] * mtr[0][1];
 
   return main_diagonal - sec_diagonal;
+}
+
+long det_order_n(int **mtr, unsigned n) {
+  // check pripriety: line or column is 0, then det is 0
+
+  for (int i = 0; i < n; i++) {
+    // chekc columns
+    if (mtr[0][i] == 0) {
+      bool all_zero = true;
+      for(int j=1; j < n; j++){
+        if(mtr[j][i] != 0){
+          all_zero = false;
+          break;
+        }
+      }
+      if(all_zero)
+        return 0;
+    }
+    // chekc lines
+    if(mtr[i][0] == 0){
+      bool all_zero = true;
+      for(int j=1; j < n; j++){
+        if(mtr[i][j] != 0){
+          all_zero = false;
+          break;
+        }
+      }
+      if(all_zero)
+        return 0;
+    }
+  }
+  
+
+  throw runtime_error("not implemented yet");
+  return 0;
 }
