@@ -336,6 +336,13 @@ bool Matrix::operator==(const Matrix &other) const {
   return true;
 }
 
+
+// -----------------------------------------------------
+//
+// --- AUXILIAR FUNCTIONS
+
+bool line_or_column_zero(int **mtr, int n);
+
 long det_order_2(int **mtr) {
   return ((mtr[0][0] * mtr[1][1]) - (mtr[0][1] * mtr[1][0]));
 }
@@ -355,7 +362,15 @@ long det_order_3(int **mtr) {
 }
 
 long det_order_n(int **mtr, unsigned n) {
-  // check pripriety: line or column is 0, then det is 0
+  if(line_or_column_zero(mtr, n))
+    return 0;
+  
+  throw runtime_error("not implemented yet");
+  return 0;
+}
+
+
+bool line_or_column_zero(int **mtr, int n){
 
   for (int i = 0; i < n; i++) {
     // chekc columns
@@ -368,7 +383,7 @@ long det_order_n(int **mtr, unsigned n) {
         }
       }
       if(all_zero)
-        return 0;
+        return true;
     }
     // chekc lines
     if(mtr[i][0] == 0){
@@ -380,11 +395,9 @@ long det_order_n(int **mtr, unsigned n) {
         }
       }
       if(all_zero)
-        return 0;
+        return true;
     }
   }
   
-
-  throw runtime_error("not implemented yet");
-  return 0;
+  return false;
 }
