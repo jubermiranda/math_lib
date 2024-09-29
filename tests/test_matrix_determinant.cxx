@@ -106,7 +106,7 @@ TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
 
 
 TEST(MatrixDeterminant, MinorComplementary){
-  Matrix test_mtr(4,4);
+  Matrix test_mtr(3,3);
   float expected;
   unsigned line, column;
 

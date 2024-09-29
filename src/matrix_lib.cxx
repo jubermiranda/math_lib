@@ -252,6 +252,25 @@ double Matrix::det() const {
   return 0;
 }
 
+double Matrix::minor_comp(unsigned line, unsigned column) const {
+  if (this->lines <= 1 || this->columns <= 1)
+    throw runtime_error("TODO: null matrix handling");
+  if (line >= this->lines || column >= this->columns)
+    throw runtime_error("cannot calc minor_comp! index out of range");
+
+  Matrix aux(this->lines - 1, this->columns - 1);
+  for (int i = 0; i < this->lines; i++) {
+    for (int j = 0; j < this->columns; j++) {
+      if (i != line && j != column) {
+        aux.update_el(((i < line) ? i : i - 1), ((j < column) ? j : j - 1),
+                      this->mtr[i][j]);
+      }
+    }
+  }
+
+  return aux.det();
+}
+
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->lines; i++)
@@ -336,7 +355,6 @@ bool Matrix::operator==(const Matrix &other) const {
   return true;
 }
 
-
 // -----------------------------------------------------
 //
 // --- AUXILIAR FUNCTIONS
@@ -362,42 +380,41 @@ double det_order_3(float **mtr) {
 }
 
 double det_order_n(float **mtr, unsigned n) {
-  if(line_or_column_zero(mtr, n))
+  if (line_or_column_zero(mtr, n))
     return 0;
-  
+
   throw runtime_error("not implemented yet");
   return 0;
 }
 
-
-bool line_or_column_zero(float **mtr, int n){
+bool line_or_column_zero(float **mtr, int n) {
 
   for (int i = 0; i < n; i++) {
     // chekc columns
     if (mtr[0][i] == 0) {
       bool all_zero = true;
-      for(int j=1; j < n; j++){
-        if(mtr[j][i] != 0){
+      for (int j = 1; j < n; j++) {
+        if (mtr[j][i] != 0) {
           all_zero = false;
           break;
         }
       }
-      if(all_zero)
+      if (all_zero)
         return true;
     }
     // chekc lines
-    if(mtr[i][0] == 0){
+    if (mtr[i][0] == 0) {
       bool all_zero = true;
-      for(int j=1; j < n; j++){
-        if(mtr[i][j] != 0){
+      for (int j = 1; j < n; j++) {
+        if (mtr[i][j] != 0) {
           all_zero = false;
           break;
         }
       }
-      if(all_zero)
+      if (all_zero)
         return true;
     }
   }
-  
+
   return false;
 }

@@ -39,6 +39,7 @@ public:
   Matrix transpose() const;
   float stroke() const;
   double det() const; // TODO
+  double minor_comp(unsigned, unsigned) const;
 
   Matrix &operator=(const Matrix &other);
   Matrix operator+(const Matrix &other) const;
