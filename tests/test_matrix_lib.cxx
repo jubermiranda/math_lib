@@ -687,13 +687,34 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
 }
 
 
-// TEST_F(MatrixLibFixture, MtrDetOrderN) {
-//   Matrix test_mtr(4,4);
-//   test_mtr.set_elements(vector<int>{
-//       1,2,3,4,
-//       5,6,7,8,
-//       9,10,11,12,
-//       13,14,15,16
-//       });
-//   long expected_det;
-// }
+TEST_F(MatrixLibFixture, LineOrColumnZeroDetIsZero) {
+  Matrix test_mtr(4,4);
+  long expected_det;
+
+  test_mtr.set_elements(vector<int>{
+      0, 0, 0, 0,
+      5, 6, 7, 8,
+      9, 10, 11, 12,
+      13, 14, 15, 16
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<int>{
+      0, 2, 3, 4,
+      0, 6, 7, 8,
+      0, 10, 11, 12,
+      0, 14, 15, 16
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<int>{
+      1, 1, 0, 1,
+      1, 1, 0, 1,
+      1, 1, 0, 1,
+      1, 1, 0, 1,
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
