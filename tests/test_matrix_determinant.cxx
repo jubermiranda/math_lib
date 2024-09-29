@@ -101,3 +101,28 @@ TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 }
+
+//TODO p3, p4
+
+
+TEST(MatrixDeterminant, MinorComplementary){
+  Matrix test_mtr(4,4);
+  float expected;
+  unsigned line, column;
+
+  test_mtr.set_elements(vector<float>{
+      2, 1, 3,
+      -1, -2, 4,
+      1, 0, -3,
+  });
+
+  line = 1;
+  column = 2;
+  expected = -1;
+  EXPECT_EQ(expected, test_mtr.minor_comp(line, column));
+
+  line = 0;
+  column = 0;
+  expected = 6;
+  EXPECT_EQ(expected, test_mtr.minor_comp(line, column));
+}
