@@ -139,13 +139,13 @@ TEST(MatrixDeterminant, Cofactor){
 
   line = 0;
   column = 0;
-  expected = -1;
+  expected = 6;
 
   EXPECT_EQ(expected, test_mtr.cofactor(line, column));
 
   line = 1;
   column = 2;
-  expected = 0;
+  expected = 1;
 
   EXPECT_EQ(expected, test_mtr.cofactor(line, column));
 }

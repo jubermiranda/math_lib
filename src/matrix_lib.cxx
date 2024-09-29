@@ -271,6 +271,10 @@ double Matrix::minor_comp(unsigned line, unsigned column) const {
   return aux.det();
 }
 
+double Matrix::cofactor(unsigned line, unsigned column) const {
+  return (this->minor_comp(line, column) * (((line + column) % 2 == 0) ? 1 : -1));
+}
+
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->lines; i++)
