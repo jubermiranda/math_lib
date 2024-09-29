@@ -1,0 +1,103 @@
+#include <gtest/gtest.h>
+#include <vector>
+
+#include "matrix_lib.h"
+#include "utils.h"
+
+using std::vector;
+
+TEST(MatrixDeterminant, MtrDetOrder1) {
+  Matrix test_mtr = Matrix(1,1);
+  double expected_det;
+
+  test_mtr.set_elements(vector<float>{
+      40
+      });
+  expected_det = 40;
+
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
+
+TEST(MatrixDeterminant, MtrDetOrder2) {
+  Matrix test_mtr = Matrix(2,2);
+  double expected_det;
+
+  test_mtr.set_elements(vector<float>{
+      22, 11,
+      2,  5
+      });
+  expected_det = 88;
+
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
+
+TEST(MatrixDeterminant, MtrDetOrder3) {
+  Matrix test_mtr(3,3);
+  double expected_det;
+
+  test_mtr.set_elements(vector<float>{
+      1,2,3,
+      4,5,6,
+      7,8,9
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<float>{
+      6, 1,  1,
+      4, -2, 5,
+      2, 8,  7
+      });
+  expected_det = -306;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<float>{
+      10, -7, 3,
+      -3, 6, 2,
+      5, 8, 9
+      });
+  expected_det = -41;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+
+  test_mtr.set_elements(vector<float>{
+      1, 0, 0,
+      0, 1, 0,
+      0, 0, 1
+      });
+  expected_det = 1;
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
+
+
+TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
+  Matrix test_mtr(4,4);
+  double expected_det;
+
+  test_mtr.set_elements(vector<float>{
+      0, 0, 0, 0,
+      5, 6, 7, 8,
+      9, 10, 11, 12,
+      13, 14, 15, 16
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<float>{
+      0, 2, 3, 4,
+      0, 6, 7, 8,
+      0, 10, 11, 12,
+      0, 14, 15, 16
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+
+  test_mtr.set_elements(vector<float>{
+      1, 1, 0, 1,
+      1, 1, 0, 1,
+      1, 1, 0, 1,
+      1, 1, 0, 1,
+      });
+  expected_det = 0;
+  EXPECT_EQ(expected_det, test_mtr.det());
+}
