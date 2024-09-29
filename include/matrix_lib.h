@@ -12,11 +12,11 @@ public:
   Matrix(const Matrix &other);
   ~Matrix();
 
-  void set_elements(const int *el); // TODO
-  void set_elements(const std::vector<int>);
+  void set_elements(const float *el); // TODO
+  void set_elements(const std::vector<float>);
   void set_elements_stdin(); // TODO
-  void update_el(unsigned line, unsigned column, int new_el);
-  int at(unsigned line, unsigned column) const;
+  void update_el(unsigned line, unsigned column, float new_el);
+  float at(unsigned line, unsigned column) const;
 
   unsigned get_lines() const;
   unsigned get_columns() const;
@@ -37,20 +37,20 @@ public:
   std::stringstream print_class() const;
 
   Matrix transpose() const;
-  int stroke() const;
-  long det() const; // TODO
+  float stroke() const;
+  double det() const; // TODO
 
   Matrix &operator=(const Matrix &other);
   Matrix operator+(const Matrix &other) const;
   Matrix operator-(const Matrix &other) const;
   Matrix operator*(const Matrix &other) const;
-  Matrix operator*(const int scalar) const;
+  Matrix operator*(const float scalar) const;
   bool operator==(const Matrix &other) const;
 
 private:
-  int lines;
-  int columns;
-  int **mtr;
+  unsigned lines;
+  unsigned columns;
+  float **mtr;
 
   void init_mtr();
   void clear_mtr();

@@ -25,7 +25,7 @@ TEST_F(MatrixLibFixture, CreateGetLineColumns) {
 
 TEST_F(MatrixLibFixture, PrintMtrElements) {
   Matrix test_mtr = Matrix(4,4);
-  vector<int> elements = {
+  vector<float> elements = {
       1,0,0,0,
       0,1,0,0,
       0,0,1,0,
@@ -48,7 +48,7 @@ TEST_F(MatrixLibFixture, PrintMtrElements) {
 
 TEST_F(MatrixLibFixture, ClassIdentity) {
   string result_class;
-  vector<int> mtr_elements;
+  vector<float> mtr_elements;
 
   Matrix test_mtr = Matrix(4,4);
   mtr_elements = {
@@ -85,7 +85,7 @@ TEST_F(MatrixLibFixture, ClassIdentity) {
 
 TEST_F(MatrixLibFixture, ClassNull) {
   Matrix test_mtr = Matrix(4,2);
-  vector<int> elements = {
+  vector<float> elements = {
     0,0,
     0,0,
     0,0,
@@ -112,7 +112,7 @@ TEST_F(MatrixLibFixture, ClassColumn) {
   Matrix test_mtr = Matrix(4,2);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,1,
       1,1,
       1,1,
@@ -124,7 +124,7 @@ TEST_F(MatrixLibFixture, ClassColumn) {
 
 
    test_mtr = Matrix(3,1);
-   test_mtr.set_elements(vector<int>{
+   test_mtr.set_elements(vector<float>{
        0,
        0,
        0
@@ -138,7 +138,7 @@ TEST_F(MatrixLibFixture, ClassLine) {
   Matrix test_mtr = Matrix(4,2);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,1,
       1,1,
       1,1,
@@ -150,7 +150,7 @@ TEST_F(MatrixLibFixture, ClassLine) {
 
 
    test_mtr = Matrix(1,3);
-   test_mtr.set_elements(vector<int>{
+   test_mtr.set_elements(vector<float>{
        0,0,0
        });
    result_class = test_mtr.print_class().str();
@@ -162,7 +162,7 @@ TEST_F(MatrixLibFixture, ClassDiagonal) {
   Matrix test_mtr = Matrix(4,2);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,1,
       1,1,
       1,1,
@@ -173,7 +173,7 @@ TEST_F(MatrixLibFixture, ClassDiagonal) {
   EXPECT_FALSE(test_mtr.is_diagonal());
 
   test_mtr = Matrix(4,4);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
      1,1,1,1,
      1,1,1,1,
      1,1,1,1,
@@ -186,7 +186,7 @@ TEST_F(MatrixLibFixture, ClassDiagonal) {
 
 
   test_mtr = Matrix(4,4);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,0,0,0,
       0,1,0,0,
       0,0,1,0,
@@ -197,7 +197,7 @@ TEST_F(MatrixLibFixture, ClassDiagonal) {
   EXPECT_TRUE(test_mtr.is_diagonal());
 
   test_mtr = Matrix(5,5);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,0,0,0,0,
       0,2,0,0,0,
       0,0,3,0,0,
@@ -214,7 +214,7 @@ TEST_F(MatrixLibFixture, ClassUpperTriangular) {
   Matrix test_mtr(4,4);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
        1,1,1,1,
        0,2,2,2,
        0,0,3,3,
@@ -224,7 +224,7 @@ TEST_F(MatrixLibFixture, ClassUpperTriangular) {
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "upper triangular"));
   EXPECT_TRUE(test_mtr.is_upper_tri());
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
        1,1,1,1,
        2,2,2,2,
        3,3,3,3,
@@ -239,7 +239,7 @@ TEST_F(MatrixLibFixture, ClassLowerTriangular) {
   Matrix test_mtr(4,4);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
        1,0,0,0,
        2,2,0,0,
        3,3,3,0,
@@ -249,7 +249,7 @@ TEST_F(MatrixLibFixture, ClassLowerTriangular) {
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "lower triangular"));
   EXPECT_TRUE(test_mtr.is_lower_tri());
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
        1,1,1,1,
        2,2,2,2,
        3,3,3,3,
@@ -264,7 +264,7 @@ TEST_F(MatrixLibFixture, ClassSymmetric) {
   Matrix test_mtr(1,1);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4
       });
   result_class = test_mtr.print_class().str();
@@ -273,7 +273,7 @@ TEST_F(MatrixLibFixture, ClassSymmetric) {
 
 
   test_mtr = Matrix(2,2);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4,2,
       2,4
       });
@@ -281,7 +281,7 @@ TEST_F(MatrixLibFixture, ClassSymmetric) {
   EXPECT_TRUE(test_mtr.is_symmetric());
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "symmetric"));
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4,4,
       2,2
       });
@@ -290,7 +290,7 @@ TEST_F(MatrixLibFixture, ClassSymmetric) {
   EXPECT_FALSE(t_utils::is_sub_str(result_class, "symmetric"));
 
   test_mtr = Matrix(3,3);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4,2,1,
       2,3,5,
       1,5,7
@@ -299,7 +299,7 @@ TEST_F(MatrixLibFixture, ClassSymmetric) {
   EXPECT_TRUE(test_mtr.is_symmetric());
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "symmetric"));
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4,1,1,
       2,4,1,
       2,2,4
@@ -314,7 +314,7 @@ TEST_F(MatrixLibFixture, ClassAntiSymmetric) {
   Matrix test_mtr(4,4);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,2,3,4,
       1,2,3,4,
       1,2,3,4,
@@ -324,7 +324,7 @@ TEST_F(MatrixLibFixture, ClassAntiSymmetric) {
   EXPECT_FALSE(test_mtr.is_antisymmetric());
   EXPECT_FALSE(t_utils::is_sub_str(result_class, "antisymmetric"));
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       0,2,3,4,
       1,0,3,4,
       1,2,0,4,
@@ -340,7 +340,7 @@ TEST_F(MatrixLibFixture, ClassScalar) {
   Matrix test_mtr(4,4);
   string result_class;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,2,3,4,
       1,2,3,4,
       1,2,3,4,
@@ -350,7 +350,7 @@ TEST_F(MatrixLibFixture, ClassScalar) {
   EXPECT_FALSE(test_mtr.is_scalar());
   EXPECT_FALSE(t_utils::is_sub_str(result_class, "scalar"));
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,0,0,0,
       0,1,0,0,
       0,0,1,0,
@@ -361,7 +361,7 @@ TEST_F(MatrixLibFixture, ClassScalar) {
   EXPECT_TRUE(t_utils::is_sub_str(result_class, "scalar"));
 
   test_mtr = Matrix(3,3);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       3,0,0,
       0,3,0,
       0,0,3
@@ -373,7 +373,7 @@ TEST_F(MatrixLibFixture, ClassScalar) {
 
 TEST_F(MatrixLibFixture, ClassSquare) {
   Matrix test_mtr = Matrix(4,4);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       2,2,2,2,
       2,2,2,2,
       2,2,2,2,
@@ -385,7 +385,7 @@ TEST_F(MatrixLibFixture, ClassSquare) {
 
 
   test_mtr = Matrix(2,2);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4,4,
       4,4
   });
@@ -396,7 +396,7 @@ TEST_F(MatrixLibFixture, ClassSquare) {
 
 
   test_mtr = Matrix(4,2);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       4,2,
       4,2,
       4,2,
@@ -410,7 +410,7 @@ TEST_F(MatrixLibFixture, ClassSquare) {
 
 TEST_F(MatrixLibFixture, MtrTranspose) {
   Matrix test_mtr = Matrix(4,4);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,2,3,4,
       8,7,6,5,
       2,2,2,2,
@@ -428,7 +428,7 @@ TEST_F(MatrixLibFixture, MtrTranspose) {
 
 TEST_F(MatrixLibFixture, MtrStroke) {
   Matrix test_mtr = Matrix(4,4);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,1,1,1,
       1,1,1,1,
       1,1,1,1,
@@ -437,7 +437,7 @@ TEST_F(MatrixLibFixture, MtrStroke) {
   EXPECT_EQ(4, test_mtr.stroke());
 
   test_mtr = Matrix(6,6);
-  test_mtr.set_elements(vector<int> {
+  test_mtr.set_elements(vector<float> {
       7,0,0,0,0,0,
       0,7,0,0,0,0,
       0,0,7,0,0,0,
@@ -451,14 +451,14 @@ TEST_F(MatrixLibFixture, MtrStroke) {
 
 TEST_F(MatrixLibFixture, MtrSum) {
   Matrix test_mtr1 = Matrix(4,4);
-  test_mtr1.set_elements(vector<int>{
+  test_mtr1.set_elements(vector<float>{
       2,2,2,2,
       2,2,2,2,
       2,2,2,2,
       2,2,2,2
       });
   Matrix test_mtr2 = Matrix(4,4);
-  test_mtr2.set_elements(vector<int>{
+  test_mtr2.set_elements(vector<float>{
       1,1,1,1,
       1,1,1,1,
       1,1,1,1,
@@ -468,7 +468,7 @@ TEST_F(MatrixLibFixture, MtrSum) {
   Matrix sum_result = test_mtr1 + test_mtr2;
 
   Matrix expected = Matrix(4,4);
-  expected.set_elements(vector<int>{
+  expected.set_elements(vector<float>{
       3,3,3,3,
       3,3,3,3,
       3,3,3,3,
@@ -482,14 +482,14 @@ TEST_F(MatrixLibFixture, MtrSum) {
 
 TEST_F(MatrixLibFixture, MtrDiff) {
   Matrix test_mtr1 = Matrix(4,4);
-  test_mtr1.set_elements(vector<int>{
+  test_mtr1.set_elements(vector<float>{
       3,3,3,3,
       3,3,3,3,
       3,3,3,3,
       3,3,3,3
       });
   Matrix test_mtr2 = Matrix(4,4);
-  test_mtr2.set_elements(vector<int>{
+  test_mtr2.set_elements(vector<float>{
       1,1,1,1,
       1,1,1,1,
       1,1,1,1,
@@ -499,7 +499,7 @@ TEST_F(MatrixLibFixture, MtrDiff) {
   Matrix diff_result = test_mtr1 - test_mtr2;
 
   Matrix expected = Matrix(4,4);
-  expected.set_elements(vector<int>{
+  expected.set_elements(vector<float>{
       2,2,2,2,
       2,2,2,2,
       2,2,2,2,
@@ -513,7 +513,7 @@ TEST_F(MatrixLibFixture, MtrDiff) {
 
 TEST_F(MatrixLibFixture, MtrMultiplScalar) {
   Matrix test_mtr = Matrix(6,6);
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       7,7,7,7,7,7,
       7,7,7,7,7,7,
       7,7,7,7,7,7,
@@ -525,7 +525,7 @@ TEST_F(MatrixLibFixture, MtrMultiplScalar) {
   Matrix multpl_result = test_mtr * 6;
 
   Matrix expected = Matrix(6,6);
-  expected.set_elements(vector<int>{
+  expected.set_elements(vector<float>{
       42,42,42,42,42,42,
       42,42,42,42,42,42,
       42,42,42,42,42,42,
@@ -543,13 +543,13 @@ TEST_F(MatrixLibFixture, MtrMultiplMtr) {
   Matrix test_mtr2 = Matrix(4,4);
   Matrix expected = Matrix(4,4);
 
-  test_mtr1.set_elements(vector<int>{
+  test_mtr1.set_elements(vector<float>{
       2,3,1,2,
       1,1,1,1,
       2,2,2,2,
       2,1,3,2
       });
-  test_mtr2.set_elements(vector<int>{
+  test_mtr2.set_elements(vector<float>{
       5,1,3,2,
       2,1,3,9,
       2,1,3,2,
@@ -569,17 +569,17 @@ TEST_F(MatrixLibFixture, MtrMultiplMtr) {
   test_mtr2 = Matrix(4,2);
   expected = Matrix(2,2);
 
-  test_mtr1.set_elements(vector<int>{
+  test_mtr1.set_elements(vector<float>{
       1,2,3,4,
       3,3,3,3
       });
-  test_mtr2.set_elements(vector<int>{
+  test_mtr2.set_elements(vector<float>{
       1,2,
       3,4,
       7,7,
       7,7,
       });
-  expected.set_elements(vector<int>{
+  expected.set_elements(vector<float>{
       56, 59,
       54, 60
       });
@@ -593,13 +593,13 @@ TEST_F(MatrixLibFixture, MtrComparator) {
   Matrix test_mtr3 = Matrix(4,4);
   Matrix test_mtr4 = Matrix(2,2);
 
-  test_mtr1.set_elements(vector<int>{
+  test_mtr1.set_elements(vector<float>{
       1,2,3,4,
       4,3,2,1,
       1,2,3,4,
       4,3,2,1,
       });
-  test_mtr2.set_elements(vector<int>{
+  test_mtr2.set_elements(vector<float>{
       1,2,3,4,
       4,3,2,1,
       1,2,3,4,
@@ -607,7 +607,7 @@ TEST_F(MatrixLibFixture, MtrComparator) {
       });
   EXPECT_TRUE(test_mtr1 == test_mtr2);
 
-  test_mtr3.set_elements(vector<int>{
+  test_mtr3.set_elements(vector<float>{
       1,2,3,4,
       1,2,3,4,
       1,2,3,4,
@@ -615,7 +615,7 @@ TEST_F(MatrixLibFixture, MtrComparator) {
       });
   EXPECT_FALSE(test_mtr1 == test_mtr3);
 
-  test_mtr4.set_elements(vector<int>{
+  test_mtr4.set_elements(vector<float>{
       1,1,
       1,1
       });
@@ -625,9 +625,9 @@ TEST_F(MatrixLibFixture, MtrComparator) {
 
 TEST_F(MatrixLibFixture, MtrDetOrder1) {
   Matrix test_mtr = Matrix(1,1);
-  long expected_det;
+  double expected_det;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       40
       });
   expected_det = 40;
@@ -637,9 +637,9 @@ TEST_F(MatrixLibFixture, MtrDetOrder1) {
 
 TEST_F(MatrixLibFixture, MtrDetOrder2) {
   Matrix test_mtr = Matrix(2,2);
-  long expected_det;
+  double expected_det;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       22, 11,
       2,  5
       });
@@ -650,9 +650,9 @@ TEST_F(MatrixLibFixture, MtrDetOrder2) {
 
 TEST_F(MatrixLibFixture, MtrDetOrder3) {
   Matrix test_mtr(3,3);
-  long expected_det;
+  double expected_det;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1,2,3,
       4,5,6,
       7,8,9
@@ -660,7 +660,7 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       6, 1,  1,
       4, -2, 5,
       2, 8,  7
@@ -668,7 +668,7 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
   expected_det = -306;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       10, -7, 3,
       -3, 6, 2,
       5, 8, 9
@@ -677,7 +677,7 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
   EXPECT_EQ(expected_det, test_mtr.det());
 
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1, 0, 0,
       0, 1, 0,
       0, 0, 1
@@ -689,9 +689,9 @@ TEST_F(MatrixLibFixture, MtrDetOrder3) {
 
 TEST_F(MatrixLibFixture, LineOrColumnZeroDetIsZero) {
   Matrix test_mtr(4,4);
-  long expected_det;
+  double expected_det;
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       0, 0, 0, 0,
       5, 6, 7, 8,
       9, 10, 11, 12,
@@ -700,7 +700,7 @@ TEST_F(MatrixLibFixture, LineOrColumnZeroDetIsZero) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       0, 2, 3, 4,
       0, 6, 7, 8,
       0, 10, 11, 12,
@@ -709,7 +709,7 @@ TEST_F(MatrixLibFixture, LineOrColumnZeroDetIsZero) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<int>{
+  test_mtr.set_elements(vector<float>{
       1, 1, 0, 1,
       1, 1, 0, 1,
       1, 1, 0, 1,

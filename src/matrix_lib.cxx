@@ -2,9 +2,9 @@
 
 using namespace std;
 
-long det_order_2(int **);
-long det_order_3(int **);
-long det_order_n(int **, unsigned);
+double det_order_2(float **);
+double det_order_3(float **);
+double det_order_n(float **, unsigned);
 
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
@@ -20,20 +20,20 @@ Matrix::~Matrix() { this->clear_mtr(); }
 
 void Matrix::init_mtr() {
   if (this->lines > 0 && this->columns > 0) {
-    this->mtr = new int *[lines];
+    this->mtr = new float *[lines];
     for (int i = 0; i < this->lines; i++) {
-      this->mtr[i] = new int[columns];
+      this->mtr[i] = new float[columns];
     }
   } else {
     throw runtime_error("null matrix dimentions");
   }
 }
 
-void Matrix::set_elements(const int *el) {
+void Matrix::set_elements(const float *el) {
   throw runtime_error("not implemented yet");
 }
 
-void Matrix::set_elements(const vector<int> el) {
+void Matrix::set_elements(const vector<float> el) {
   if (el.size() != (this->lines * this->columns))
     throw runtime_error("invalid vector");
   if (this->mtr == nullptr)
@@ -44,7 +44,7 @@ void Matrix::set_elements(const vector<int> el) {
       this->mtr[i][j] = el.at((i * columns + j));
 }
 
-void Matrix::update_el(unsigned line, unsigned column, int new_el) {
+void Matrix::update_el(unsigned line, unsigned column, float new_el) {
   if (this->mtr == nullptr)
     throw runtime_error("null pointer exception");
   if (line >= this->lines || column >= this->columns)
@@ -53,7 +53,7 @@ void Matrix::update_el(unsigned line, unsigned column, int new_el) {
   this->mtr[line][column] = new_el;
 }
 
-int Matrix::at(unsigned line, unsigned column) const {
+float Matrix::at(unsigned line, unsigned column) const {
   if (line >= this->lines || column >= this->columns)
     throw runtime_error("index out of range");
 
@@ -123,7 +123,7 @@ bool Matrix::is_identity() const {
 
   for (int i = 0; i < lines; i++) {
     for (int j = 0; j < columns; j++) {
-      int aux = (i == j) ? 1 : 0;
+      float aux = (i == j) ? 1 : 0;
       if (mtr[i][j] != aux)
         return false;
     }
@@ -209,7 +209,7 @@ bool Matrix::is_scalar() const {
   if (!this->is_diagonal())
     return false;
 
-  int diagonal_el = this->mtr[0][0];
+  float diagonal_el = this->mtr[0][0];
   for (int i = 1; i < this->lines; i++)
     if (this->mtr[i][i] != diagonal_el)
       return false;
@@ -217,18 +217,18 @@ bool Matrix::is_scalar() const {
   return true;
 }
 
-int Matrix::stroke() const {
+float Matrix::stroke() const {
   if (this->lines != this->columns)
     throw runtime_error("mtr not square");
 
-  int sum = 0;
+  float sum = 0;
   for (int i = 0; i < this->lines; i++)
     sum += this->mtr[i][i];
 
   return sum;
 }
 
-long Matrix::det() const {
+double Matrix::det() const {
   if (!this->is_square())
     throw runtime_error("cannot calc det. matrix not square");
 
@@ -255,8 +255,8 @@ long Matrix::det() const {
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->lines; i++)
-      free(this->mtr[i]);
-    free(this->mtr);
+      delete[](this->mtr[i]);
+    delete[](this->mtr);
   }
 }
 
@@ -295,7 +295,7 @@ Matrix Matrix::operator-(const Matrix &other) const {
   return result;
 }
 
-Matrix Matrix::operator*(int scalar) const {
+Matrix Matrix::operator*(float scalar) const {
 
   Matrix result = Matrix(this->lines, this->columns);
   for (int i = 0; i < this->lines; i++)
@@ -314,7 +314,7 @@ Matrix Matrix::operator*(const Matrix &other) const {
   for (int i = 0; i < this->lines; i++) {
     for (int j = 0; j < other.columns; j++) {
 
-      int sum = 0;
+      float sum = 0;
       for (int k = 0; k < this->columns; k++)
         sum += this->mtr[i][k] * other.mtr[k][j];
       result.update_el(i, j, sum);
@@ -341,13 +341,13 @@ bool Matrix::operator==(const Matrix &other) const {
 //
 // --- AUXILIAR FUNCTIONS
 
-bool line_or_column_zero(int **mtr, int n);
+bool line_or_column_zero(float **mtr, int n);
 
-long det_order_2(int **mtr) {
+double det_order_2(float **mtr) {
   return ((mtr[0][0] * mtr[1][1]) - (mtr[0][1] * mtr[1][0]));
 }
 
-long det_order_3(int **mtr) {
+double det_order_3(float **mtr) {
   long main_diagonal = 0;
   main_diagonal += mtr[0][0] * mtr[1][1] * mtr[2][2];
   main_diagonal += mtr[0][1] * mtr[1][2] * mtr[2][0];
@@ -361,7 +361,7 @@ long det_order_3(int **mtr) {
   return main_diagonal - sec_diagonal;
 }
 
-long det_order_n(int **mtr, unsigned n) {
+double det_order_n(float **mtr, unsigned n) {
   if(line_or_column_zero(mtr, n))
     return 0;
   
@@ -370,7 +370,7 @@ long det_order_n(int **mtr, unsigned n) {
 }
 
 
-bool line_or_column_zero(int **mtr, int n){
+bool line_or_column_zero(float **mtr, int n){
 
   for (int i = 0; i < n; i++) {
     // chekc columns
