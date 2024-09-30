@@ -131,6 +131,27 @@ TEST(MatrixDeterminant, MtrDetOrder5){
   
 }
 
+TEST(MatrixDeterminant, MtrDetOrder10){
+  Matrix test_mtr(10, 10);
+  double expected;
+
+  test_mtr.set_elements(vector<float>{
+      1,  3,  4,  2,  5,  7,  11, -9, 7,  1,
+      0,  -5, 1,  1,  9, -4,  1,  3,  1,  1,
+      -2, 3,  4,  2,  5,  7,  -4, 4,  7,  -1,
+      4,  3,  1,  2,  5,  7,  1,  9,  7,  -1,
+      1,  5,  4,  1,  5,  1,  9,  0,  7,  -1,
+      2,  3,  0,  2,  5,  7,  1,  9,  7,  -1,
+      -8, 3,  4,  2,  1,  7,  1,  -1, 7,  -1,
+      6,  4,  -8, 2,  5,  2,  1,  7,  7,  -1,
+      4,  4,  4,  2,  5,  7,  1,  1,  7,  -1,
+      1, -6,  4,  2,  5,  7,  1,  2,  7,  -1,
+  });
+  //Need calc expected correct value
+  expected = 7524720;
+  EXPECT_EQ(expected, test_mtr.det());
+}
+
 
 TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
   Matrix test_mtr(4,4);
