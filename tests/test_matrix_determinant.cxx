@@ -105,6 +105,22 @@ TEST(MatrixDeterminant, MtrDetOrder4){
   EXPECT_EQ(expected, test_mtr.det());
 }
 
+TEST(MatrixDeterminant, MtrDetOrder5){
+  Matrix test_mtr(5,5);
+  double expected;
+
+  test_mtr.set_elements(vector<float>{
+      1, 2, 3, -3, 1,
+      0, 4, 0, 0, 0,
+      0, 1, 0, 1, 1,
+      0, -6, 6, 1, 3,
+      0, 2, 0, -1, 1
+  });
+  expected = -48;
+  EXPECT_EQ(expected, test_mtr.det());
+  
+}
+
 
 TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
   Matrix test_mtr(4,4);
