@@ -2,10 +2,6 @@
 
 using namespace std;
 
-double det_order_2(float **);
-double det_order_3(float **);
-double det_order_n(float **, unsigned);
-
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
   this->init_mtr();
@@ -238,15 +234,15 @@ double Matrix::det() const {
     break;
 
   case 2:
-    return det_order_2(this->mtr);
+    return this->det_order_2();
     break;
 
   case 3:
-    return det_order_3(this->mtr);
+    return this->det_order_3();
     break;
 
   default:
-    return det_order_n(this->mtr, this->lines);
+    return this->det_order_n();
   }
 
   return 0;
@@ -272,7 +268,8 @@ double Matrix::minor_comp(unsigned line, unsigned column) const {
 }
 
 double Matrix::cofactor(unsigned line, unsigned column) const {
-  return (this->minor_comp(line, column) * (((line + column) % 2 == 0) ? 1 : -1));
+  return (this->minor_comp(line, column) *
+          (((line + column) % 2 == 0) ? 1 : -1));
 }
 
 void Matrix::clear_mtr() {
@@ -365,15 +362,19 @@ bool Matrix::operator==(const Matrix &other) const {
 
 bool line_or_column_zero(float **mtr, int n);
 
-double det_order_2(float **mtr) {
-  return ((mtr[0][0] * mtr[1][1]) - (mtr[0][1] * mtr[1][0]));
+double Matrix::det_order_2() const {
+  if (this->lines != 2 || this->columns != 2)
+    throw runtime_error("invalid matrix dimentions");
+
+  return ((this->mtr[0][0] * this->mtr[1][1]) -
+          (this->mtr[0][1] * this->mtr[1][0]));
 }
 
-double det_order_3(float **mtr) {
+double Matrix::det_order_3() const{
   long main_diagonal = 0;
-  main_diagonal += mtr[0][0] * mtr[1][1] * mtr[2][2];
-  main_diagonal += mtr[0][1] * mtr[1][2] * mtr[2][0];
-  main_diagonal += mtr[0][2] * mtr[1][0] * mtr[2][1];
+  main_diagonal += this->mtr[0][0] * this->mtr[1][1] * this->mtr[2][2];
+  main_diagonal += this->mtr[0][1] * this->mtr[1][2] * this->mtr[2][0];
+  main_diagonal += this->mtr[0][2] * this->mtr[1][0] * this->mtr[2][1];
 
   long sec_diagonal = 0;
   sec_diagonal += mtr[2][0] * mtr[1][1] * mtr[0][2];
@@ -383,12 +384,24 @@ double det_order_3(float **mtr) {
   return main_diagonal - sec_diagonal;
 }
 
-double det_order_n(float **mtr, unsigned n) {
-  if (line_or_column_zero(mtr, n))
+double Matrix::det_order_n() const {
+  if (this->lines <= 3 || this->columns <= 3)
+    throw runtime_error("expected dimentions > 3");
+  if (this->lines != this->columns)
+    throw runtime_error("matrix not square. cannot calc det");
+
+  unsigned n = this->lines;
+
+  if (line_or_column_zero(this->mtr, n))
     return 0;
 
-  throw runtime_error("not implemented yet");
-  return 0;
+  // chose first line. apply laplace
+  double result = 0;
+  for (int i = 0; i < n; i++) {
+    result += (this->mtr[0][i] * this->cofactor(0, i));
+  }
+
+  return result;
 }
 
 bool line_or_column_zero(float **mtr, int n) {

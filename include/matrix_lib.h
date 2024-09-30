@@ -56,6 +56,10 @@ private:
 
   void init_mtr();
   void clear_mtr();
+
+  double det_order_2() const;
+  double det_order_3() const;
+  double det_order_n() const;
 };
 
 #endif
