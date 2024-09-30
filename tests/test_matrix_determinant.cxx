@@ -118,6 +118,16 @@ TEST(MatrixDeterminant, MtrDetOrder5){
   });
   expected = -48;
   EXPECT_EQ(expected, test_mtr.det());
+
+  test_mtr.set_elements(vector<float>{
+      1, 3, 1, 3, 5,
+      4, 1, -1, 0, 2,
+      0, 2, 2, 1, 0,
+      2, 1, -5, 1, 4,
+      1, -2, 3, 1, 1
+  });
+  expected = -212;
+  EXPECT_EQ(expected, test_mtr.det());
   
 }
 
