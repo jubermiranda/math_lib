@@ -1,1 +1,70 @@
-math lib to learn c++ and math.
+# **MathLib: C++ Math Library**
+
+## **Overview**
+
+**MathLib** is a C++ math library that implements fundamental concepts from linear algebra, analytic geometry, and other related topics. Its purpose is to provide a set of tools for learning and practical application of these concepts, while also serving as a solid base for experimenting with new mathematical techniques and C++ development.
+
+This library was initially conceived as part of my studies at university, covering subjects such as:
+
+- **Linear Algebra**
+- **Analytic Geometry**
+- *(Other subjects may be added in the future)*
+
+The library also serves as a resource to develop my skills in **C++** and **object-oriented programming**.
+
+## **Features**
+
+- Matrix operations (addition, multiplication, transposition)
+- Matrix classification
+- Determinant calculation
+
+> More features will be added as new concepts are studied and applied.
+
+---
+
+## **Building and Running Tests (Linux)**
+
+### **Prerequisites**
+
+- **C++11** or later
+- **CMake** (optional, but recommended)
+- **Google Test** (for unit tests)
+
+### **Cloning the Repository**
+
+First, clone the repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/jubermiranda/math_lib
+cd math_lib
+```
+
+### **Compiling the Tests**
+
+1. **Create a build directory**:
+
+```bash
+mkdir .build
+```
+
+2. **Generate the build files** using CMake:
+
+```bash
+cmake -S . -B .build/
+```
+
+3. **Build the test executable**:
+
+```bash
+cmake --build .build/
+```
+
+### **Running the Tests**
+
+To run the tests, execute the following command:
+
+```bash
+.build/tests/./test_matrix_lib
+```
+
+If all tests pass successfully, you'll see a summary of the results in your terminal.
