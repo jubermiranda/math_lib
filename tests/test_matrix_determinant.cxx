@@ -75,12 +75,24 @@ TEST(MatrixDeterminant, MtrDetOrder4){
 
   test_mtr.set_elements(vector<float>{
       1, 2, 3, 4,
-      1, 2, 3, 4,
-      1, 2, 3, 4,
-      1, 2, 3, 4
+      5, 6, 7, 8,
+      9, 10, 11, 12,
+      13, 14, 15, 16
   });
+  expected = 0;
 
-  //TODO
+  EXPECT_EQ(expected, test_mtr.det());
+
+  test_mtr.set_elements(vector<float>{
+      1, 3, 1, 3,
+      4, 1, -1, 0,
+      0, 2, 2, 1,
+      2, 1, -5, 1
+  });
+  expected = 56;
+
+  EXPECT_EQ(expected, test_mtr.det());
+
 }
 
 
