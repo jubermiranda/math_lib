@@ -51,11 +51,9 @@ bool Matrix::is_identity() const {
     return false;
 
   for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < columns; j++) {
-      float aux = (i == j) ? 1 : 0;
-      if (mtr[i][j] != aux)
+    for (int j = 0; j < columns; j++)
+      if (mtr[i][j] != ((i == j) ? 1 : 0))
         return false;
-    }
   }
 
   return true;
@@ -157,11 +155,11 @@ Matrix Matrix::transpose() const {
   return result;
 }
 
-float Matrix::stroke() const {
+double Matrix::stroke() const {
   if (!this->is_square())
     throw runtime_error("mtr not square");
 
-  float sum = 0;
+  double sum = 0;
   for (int i = 0; i < this->rows; i++)
     sum += this->mtr[i][i];
 

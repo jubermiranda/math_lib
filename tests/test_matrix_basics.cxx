@@ -57,7 +57,7 @@ TEST(MatrixBasics, Transpose) {
 
 TEST(MatrixBasics, Stroke) {
   Matrix test_mtr = Matrix(4,4);
-  float stroke;
+  double stroke;
 
   test_mtr.set_elements(vector<float>{
       1,1,1,1,

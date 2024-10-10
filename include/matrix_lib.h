@@ -34,7 +34,7 @@ public:
   bool is_scalar() const;
 
   Matrix transpose() const;
-  float stroke() const;
+  double stroke() const;
   double det() const; // TODO
   double minor_comp(unsigned, unsigned) const;
   double cofactor(unsigned, unsigned) const;
