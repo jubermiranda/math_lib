@@ -5,6 +5,7 @@ using namespace std;
 bool _vector_can_fill_mtr(const vector<float> vec, unsigned, unsigned);
 void _copy_mtr(float **src, float **dest, unsigned lines, unsigned columns);
 bool _line_or_column_zero(float **mtr, int n);
+void _check_mtr(float **mtr);
 
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
@@ -21,8 +22,7 @@ Matrix::Matrix(const Matrix &other)
 Matrix::~Matrix() { this->clear_mtr(); }
 
 void Matrix::set_elements(const vector<float> el) {
-  if (this->mtr == nullptr)
-    throw runtime_error("null pointer exception");
+  _check_mtr(this->mtr);
 
   if (_vector_can_fill_mtr(el, this->lines, this->columns)) {
 
@@ -35,8 +35,8 @@ void Matrix::set_elements(const vector<float> el) {
 }
 
 void Matrix::update_el(unsigned line, unsigned column, float new_el) {
-  if (this->mtr == nullptr)
-    throw runtime_error("null pointer exception");
+  _check_mtr(this->mtr);
+
   if (line >= this->lines || column >= this->columns)
     throw runtime_error("index out of range");
 
@@ -445,4 +445,9 @@ void _copy_mtr(float **src, float **dest, unsigned lines, unsigned columns) {
 bool _vector_can_fill_mtr(const vector<float> vec, unsigned mtr_lines,
                           unsigned mtr_columns) {
   return (vec.size() == mtr_lines * mtr_columns);
+}
+
+void _check_mtr(float **mtr){
+  if (mtr == nullptr)
+    throw runtime_error("null pointer exception");
 }
