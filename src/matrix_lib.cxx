@@ -30,21 +30,20 @@ void Matrix::set_elements(const vector<float> vec) {
 void Matrix::update_el(unsigned row, unsigned column, float new_el) {
   this->check_mtr();
 
-  if (row >= this->rows || column >= this->columns)
+  if (!is_valid_position(row, column))
     throw runtime_error("index out of range");
 
   this->mtr[row][column] = new_el;
 }
 
 float Matrix::at(unsigned row, unsigned column) const {
-  if (row >= this->rows || column >= this->columns)
+  if (!is_valid_position(row, column))
     throw runtime_error("index out of range");
 
   return this->mtr[row][column];
 }
 
 unsigned Matrix::row_size() const { return this->rows; }
-
 unsigned Matrix::column_size() const { return this->columns; }
 
 bool Matrix::is_identity() const {
