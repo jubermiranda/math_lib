@@ -46,9 +46,9 @@ public:
   Matrix operator*(const Matrix &other) const;
   bool operator==(const Matrix &other) const;
 
-  std::stringstream describe() const; // TODO
   std::stringstream print() const;
   std::stringstream print_class() const;
+  std::stringstream describe() const; // TODO
 
 private:
   unsigned rows;
@@ -64,8 +64,11 @@ private:
   double det_order_n() const;
 
   bool vector_can_fill_mtr(const std::vector<float>) const;
-  bool check_mtr() const;
+  void check_mtr() const;
   bool is_valid_position(unsigned row, unsigned column) const;
+  bool same_size_as(const Matrix&) const;
+  bool has_zero_line() const;
+  Matrix gen_compl_mtr(unsigned suppr_r, unsigned suppr_c) const;
 };
 
 #endif

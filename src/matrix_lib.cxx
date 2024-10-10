@@ -171,6 +171,7 @@ double Matrix::det() const {
     throw runtime_error("cannot calc det. matrix not square");
 
   switch (this->rows) {
+
   case 1:
     return this->at(0, 0);
     break;
@@ -197,16 +198,7 @@ double Matrix::minor_comp(unsigned row, unsigned column) const {
   if (!is_valid_position(row, column))
     throw runtime_error("index out of range");
 
-  Matrix aux(this->rows - 1, this->columns - 1);
-  for (int i = 0; i < this->rows; i++) {
-    for (int j = 0; j < this->columns; j++) {
-      if (i != row && j != column) {
-        aux.update_el(((i < row) ? i : i - 1), ((j < column) ? j : j - 1),
-                      this->mtr[i][j]);
-      }
-    }
-  }
-
+  Matrix aux = this->gen_compl_mtr(row, column);
   return aux.det();
 }
 
@@ -222,6 +214,7 @@ Matrix &Matrix::operator=(const Matrix &other) {
     this->rows = other.rows;
     this->columns = other.columns;
     this->init_mtr();
+    other.copy_elements_to(*this);
   }
   return *this;
 }
@@ -239,7 +232,7 @@ Matrix Matrix::operator+(const Matrix &other) const {
 }
 
 Matrix Matrix::operator-(const Matrix &other) const {
-  if (this->rows != other.rows || this->columns != other.columns)
+  if (!this->same_size_as(other))
     throw runtime_error("cannot diff matrix of difeerent order");
 
   Matrix result = Matrix(this->rows, this->columns);
@@ -280,7 +273,7 @@ Matrix Matrix::operator*(const Matrix &other) const {
 }
 
 bool Matrix::operator==(const Matrix &other) const {
-  if (this->rows != other.rows || this->columns != other.columns)
+  if (!this->same_size_as(other))
     return false;
 
   for (int i = 0; i < this->rows; i++)
@@ -291,8 +284,24 @@ bool Matrix::operator==(const Matrix &other) const {
   return true;
 }
 
+stringstream Matrix::print() const {
+  stringstream ss("");
+  ss << "Matrix " << this->rows << "X" << this->columns << endl;
+
+  for (int i = 0; i < this->rows; i++) {
+    for (int j = 0; j < this->columns; j++)
+      ss << "[" << this->mtr[i][j] << "]";
+    ss << endl;
+  }
+
+  ss << "----" << endl;
+
+  return ss;
+}
+
 stringstream Matrix::print_class() const {
   stringstream ss("");
+  ss << "Classifications:" << endl;
 
   if (this->is_square())
     ss << "square" << endl;
@@ -317,19 +326,7 @@ stringstream Matrix::print_class() const {
   if (this->is_scalar())
     ss << "scalar" << endl;
 
-  return ss;
-}
-
-stringstream Matrix::print() const {
-  stringstream ss("");
-  ss << "Matrix " << this->rows << "X" << this->columns << endl;
-  for (int i = 0; i < this->rows; i++) {
-    for (int j = 0; j < this->columns; j++)
-      ss << "[" << this->mtr[i][j] << "]";
-    ss << endl;
-  }
   ss << "----" << endl;
-
   return ss;
 }
 
@@ -352,6 +349,18 @@ void Matrix::clear_mtr() {
       delete[](this->mtr[i]);
     delete[](this->mtr);
   }
+}
+
+void Matrix::copy_elements_to(Matrix &other) const {
+  if (!this->same_size_as(other))
+    throw runtime_error("cannot copy. diferent sizes");
+
+  this->check_mtr();
+  other.check_mtr();
+
+  for (int i = 0; i < this->rows; i++)
+    for (int j = 0; j < this->columns; j++)
+      other.mtr[i][j] = this->mtr[i][j];
 }
 
 double Matrix::det_order_2() const {
@@ -379,12 +388,12 @@ double Matrix::det_order_3() const {
 double Matrix::det_order_n() const {
   if (this->rows <= 3 || this->columns <= 3)
     throw runtime_error("expected dimentions > 3");
-  if (this->rows != this->columns)
+  if (!this->is_square())
     throw runtime_error("matrix not square. cannot calc det");
 
   unsigned n = this->rows;
 
-  if (_line_or_column_zero(this->mtr, n))
+  if (has_zero_line())
     return 0;
 
   double result = 0;
@@ -395,7 +404,28 @@ double Matrix::det_order_n() const {
   return result;
 }
 
-bool _line_or_column_zero(float **mtr, int n) {
+bool Matrix::vector_can_fill_mtr(const vector<float> vec) const {
+  return (vec.size() == this->rows * this->columns);
+}
+
+void Matrix::check_mtr() const {
+  if (this->mtr == nullptr)
+    throw runtime_error("null pointer exception");
+}
+
+bool Matrix::is_valid_position(unsigned row, unsigned column) const {
+  return ((row < this->rows) && (column < this->columns));
+}
+
+bool Matrix::same_size_as(const Matrix &other) const {
+  return (this->rows == other.rows && this->columns == other.columns);
+}
+
+bool Matrix::has_zero_line() const {
+  if(!is_square())
+    throw runtime_error("mtr not square");
+
+  unsigned n = this->rows;
 
   for (int i = 0; i < n; i++) {
     // chekc columns
@@ -410,7 +440,7 @@ bool _line_or_column_zero(float **mtr, int n) {
       if (all_zero)
         return true;
     }
-    // chekc lines
+    // chekc rows
     if (mtr[i][0] == 0) {
       bool all_zero = true;
       for (int j = 1; j < n; j++) {
@@ -427,18 +457,14 @@ bool _line_or_column_zero(float **mtr, int n) {
   return false;
 }
 
-void _copy_mtr(float **src, float **dest, unsigned lines, unsigned columns) {
-  for (int i = 0; i < lines; i++)
-    for (int j = 0; j < columns; j++)
-      dest[i][j] = src[i][j];
-}
+Matrix Matrix::gen_compl_mtr(unsigned suppr_r, unsigned suppr_c) const {
 
-bool _vector_can_fill_mtr(const vector<float> vec, unsigned mtr_lines,
-                          unsigned mtr_columns) {
-  return (vec.size() == mtr_lines * mtr_columns);
-}
+  Matrix aux(this->rows - 1, this->columns - 1);
+  for (int i = 0; i < this->rows; i++)
+    for (int j = 0; j < this->columns; j++)
+      if (i != suppr_r && j != suppr_c)
+        aux.update_el(((i < suppr_r) ? i : i - 1), ((j < suppr_c) ? j : j - 1),
+                      this->mtr[i][j]);
 
-void _check_mtr(float **mtr) {
-  if (mtr == nullptr)
-    throw runtime_error("null pointer exception");
+  return aux;
 }

@@ -11,8 +11,8 @@ using std::string;
 TEST(MatrixBasics, GetLineColumn) {
   Matrix test_mtr = Matrix(4,2);
 
-  EXPECT_EQ(test_mtr.get_lines(), 4);
-  EXPECT_EQ(test_mtr.get_columns(), 2);
+  EXPECT_EQ(test_mtr.row_size(), 4);
+  EXPECT_EQ(test_mtr.column_size(), 2);
 }
 
 TEST(MatrixBasics, PrintElements) {

@@ -103,7 +103,7 @@ TEST(MatrixClassification, Line) {
       });
    result_class = test_mtr.print_class().str();
    EXPECT_FALSE(t_utils::is_sub_str(result_class, "line"));
-   EXPECT_FALSE(test_mtr.is_line());
+   EXPECT_FALSE(test_mtr.is_row());
 
 
    test_mtr = Matrix(1,3);
@@ -112,7 +112,7 @@ TEST(MatrixClassification, Line) {
        });
    result_class = test_mtr.print_class().str();
    EXPECT_TRUE(t_utils::is_sub_str(result_class, "line"));
-   EXPECT_TRUE(test_mtr.is_line());
+   EXPECT_TRUE(test_mtr.is_row());
 }
 
 TEST(MatrixClassification, Diagonal) {
