@@ -2,6 +2,8 @@
 
 using namespace std;
 
+bool _line_or_column_zero(float **mtr, int n);
+
 Matrix::Matrix(unsigned lines, unsigned columns)
     : lines(lines), columns(columns) {
   this->init_mtr();
@@ -13,21 +15,6 @@ Matrix::Matrix(const Matrix &other)
 }
 
 Matrix::~Matrix() { this->clear_mtr(); }
-
-void Matrix::init_mtr() {
-  if (this->lines > 0 && this->columns > 0) {
-    this->mtr = new float *[lines];
-    for (int i = 0; i < this->lines; i++) {
-      this->mtr[i] = new float[columns];
-    }
-  } else {
-    throw runtime_error("null matrix dimentions");
-  }
-}
-
-void Matrix::set_elements(const float *el) {
-  throw runtime_error("not implemented yet");
-}
 
 void Matrix::set_elements(const vector<float> el) {
   if (el.size() != (this->lines * this->columns))
@@ -56,62 +43,9 @@ float Matrix::at(unsigned line, unsigned column) const {
   return this->mtr[line][column];
 }
 
-unsigned Matrix::get_lines() const { return this->lines; }
+unsigned Matrix::line_size() const { return this->lines; }
 
-unsigned Matrix::get_columns() const { return this->columns; }
-
-stringstream Matrix::print() const {
-  stringstream ss("");
-  ss << "Matrix " << this->lines << "X" << this->columns << endl;
-  for (int i = 0; i < this->lines; i++) {
-    for (int j = 0; j < this->columns; j++)
-      ss << "[" << this->mtr[i][j] << "]";
-    ss << endl;
-  }
-  ss << "----" << endl;
-
-  return ss;
-}
-
-stringstream Matrix::print_class() const {
-  stringstream ss("");
-
-  if (this->is_square())
-    ss << "square" << endl;
-  if (this->is_identity())
-    ss << "identity" << endl;
-  if (this->is_null())
-    ss << "null" << endl;
-  if (this->is_column())
-    ss << "column" << endl;
-  if (this->is_line())
-    ss << "line" << endl;
-  if (this->is_diagonal())
-    ss << "diagonal" << endl;
-  if (this->is_upper_tri())
-    ss << "upper triangular" << endl;
-  if (this->is_lower_tri())
-    ss << "lower triangular" << endl;
-  if (this->is_symmetric())
-    ss << "symmetric" << endl;
-  if (this->is_antisymmetric())
-    ss << "antisymmetric" << endl;
-  if (this->is_scalar())
-    ss << "scalar" << endl;
-
-  return ss;
-}
-
-Matrix Matrix::transpose() const {
-  Matrix result = Matrix(this->lines, this->columns);
-  for (int i = 0; i < this->lines; i++) {
-    for (int j = 0; j < this->columns; j++) {
-      result.update_el(i, j, this->at(j, i));
-    }
-  }
-
-  return result;
-}
+unsigned Matrix::column_size() const { return this->columns; }
 
 bool Matrix::is_identity() const {
   if (!this->is_square())
@@ -213,6 +147,17 @@ bool Matrix::is_scalar() const {
   return true;
 }
 
+Matrix Matrix::transpose() const {
+  Matrix result = Matrix(this->lines, this->columns);
+  for (int i = 0; i < this->lines; i++) {
+    for (int j = 0; j < this->columns; j++) {
+      result.update_el(i, j, this->at(j, i));
+    }
+  }
+
+  return result;
+}
+
 float Matrix::stroke() const {
   if (this->lines != this->columns)
     throw runtime_error("mtr not square");
@@ -270,14 +215,6 @@ double Matrix::minor_comp(unsigned line, unsigned column) const {
 double Matrix::cofactor(unsigned line, unsigned column) const {
   return (this->minor_comp(line, column) *
           (((line + column) % 2 == 0) ? 1 : -1));
-}
-
-void Matrix::clear_mtr() {
-  if (this->mtr != nullptr) {
-    for (int i = 0; i < this->lines; i++)
-      delete[](this->mtr[i]);
-    delete[](this->mtr);
-  }
 }
 
 Matrix &Matrix::operator=(const Matrix &other) {
@@ -356,11 +293,68 @@ bool Matrix::operator==(const Matrix &other) const {
   return true;
 }
 
-// -----------------------------------------------------
-//
-// --- AUXILIAR FUNCTIONS
+stringstream Matrix::print_class() const {
+  stringstream ss("");
 
-bool line_or_column_zero(float **mtr, int n);
+  if (this->is_square())
+    ss << "square" << endl;
+  if (this->is_identity())
+    ss << "identity" << endl;
+  if (this->is_null())
+    ss << "null" << endl;
+  if (this->is_column())
+    ss << "column" << endl;
+  if (this->is_line())
+    ss << "line" << endl;
+  if (this->is_diagonal())
+    ss << "diagonal" << endl;
+  if (this->is_upper_tri())
+    ss << "upper triangular" << endl;
+  if (this->is_lower_tri())
+    ss << "lower triangular" << endl;
+  if (this->is_symmetric())
+    ss << "symmetric" << endl;
+  if (this->is_antisymmetric())
+    ss << "antisymmetric" << endl;
+  if (this->is_scalar())
+    ss << "scalar" << endl;
+
+  return ss;
+}
+
+stringstream Matrix::print() const {
+  stringstream ss("");
+  ss << "Matrix " << this->lines << "X" << this->columns << endl;
+  for (int i = 0; i < this->lines; i++) {
+    for (int j = 0; j < this->columns; j++)
+      ss << "[" << this->mtr[i][j] << "]";
+    ss << endl;
+  }
+  ss << "----" << endl;
+
+  return ss;
+}
+
+// ---
+
+void Matrix::init_mtr() {
+  if (this->lines > 0 && this->columns > 0) {
+    this->mtr = new float *[lines];
+    for (int i = 0; i < this->lines; i++) {
+      this->mtr[i] = new float[columns];
+    }
+  } else {
+    throw runtime_error("null matrix dimentions");
+  }
+}
+
+void Matrix::clear_mtr() {
+  if (this->mtr != nullptr) {
+    for (int i = 0; i < this->lines; i++)
+      delete[](this->mtr[i]);
+    delete[](this->mtr);
+  }
+}
 
 double Matrix::det_order_2() const {
   if (this->lines != 2 || this->columns != 2)
@@ -370,7 +364,7 @@ double Matrix::det_order_2() const {
           (this->mtr[0][1] * this->mtr[1][0]));
 }
 
-double Matrix::det_order_3() const{
+double Matrix::det_order_3() const {
   long main_diagonal = 0;
   main_diagonal += this->mtr[0][0] * this->mtr[1][1] * this->mtr[2][2];
   main_diagonal += this->mtr[0][1] * this->mtr[1][2] * this->mtr[2][0];
@@ -392,10 +386,9 @@ double Matrix::det_order_n() const {
 
   unsigned n = this->lines;
 
-  if (line_or_column_zero(this->mtr, n))
+  if (_line_or_column_zero(this->mtr, n))
     return 0;
 
-  // chose first line. apply laplace
   double result = 0;
   for (int i = 0; i < n; i++) {
     result += (this->mtr[0][i] * this->cofactor(0, i));
@@ -404,7 +397,7 @@ double Matrix::det_order_n() const {
   return result;
 }
 
-bool line_or_column_zero(float **mtr, int n) {
+bool _line_or_column_zero(float **mtr, int n) {
 
   for (int i = 0; i < n; i++) {
     // chekc columns

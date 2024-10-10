@@ -18,8 +18,9 @@ public:
   void update_el(unsigned line, unsigned column, float new_el);
   float at(unsigned line, unsigned column) const;
 
-  unsigned get_lines() const;
-  unsigned get_columns() const;
+  unsigned line_size() const;
+  unsigned column_size() const;
+
   bool is_identity() const;
   bool is_square() const;
   bool is_null() const;
@@ -31,10 +32,6 @@ public:
   bool is_symmetric() const;
   bool is_antisymmetric() const;
   bool is_scalar() const;
-
-  std::stringstream describe() const; // TODO
-  std::stringstream print() const;
-  std::stringstream print_class() const;
 
   Matrix transpose() const;
   float stroke() const;
@@ -48,6 +45,10 @@ public:
   Matrix operator*(const Matrix &other) const;
   Matrix operator*(const float scalar) const;
   bool operator==(const Matrix &other) const;
+
+  std::stringstream describe() const; // TODO
+  std::stringstream print() const;
+  std::stringstream print_class() const;
 
 private:
   unsigned lines;
