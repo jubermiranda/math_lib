@@ -2,6 +2,8 @@
 
 using namespace std;
 
+bool _vector_can_fill_mtr(const vector<float> vec, unsigned, unsigned);
+void _copy_mtr(float **src, float **dest, unsigned lines, unsigned columns);
 bool _line_or_column_zero(float **mtr, int n);
 
 Matrix::Matrix(unsigned lines, unsigned columns)
@@ -11,20 +13,25 @@ Matrix::Matrix(unsigned lines, unsigned columns)
 
 Matrix::Matrix(const Matrix &other)
     : lines(other.lines), columns(other.columns) {
+
   this->init_mtr();
+  _copy_mtr(other.mtr, this->mtr, this->lines, this->columns);
 }
 
 Matrix::~Matrix() { this->clear_mtr(); }
 
 void Matrix::set_elements(const vector<float> el) {
-  if (el.size() != (this->lines * this->columns))
-    throw runtime_error("invalid vector");
   if (this->mtr == nullptr)
     throw runtime_error("null pointer exception");
 
-  for (int i = 0; i < this->lines; i++)
-    for (int j = 0; j < this->columns; j++)
-      this->mtr[i][j] = el.at((i * columns + j));
+  if (_vector_can_fill_mtr(el, this->lines, this->columns)) {
+
+    for (int i = 0; i < this->lines; i++)
+      for (int j = 0; j < this->columns; j++)
+        this->mtr[i][j] = el.at((i * columns + j));
+
+  } else
+    throw runtime_error("bad vector size. cannot fill mtr");
 }
 
 void Matrix::update_el(unsigned line, unsigned column, float new_el) {
@@ -427,4 +434,15 @@ bool _line_or_column_zero(float **mtr, int n) {
   }
 
   return false;
+}
+
+void _copy_mtr(float **src, float **dest, unsigned lines, unsigned columns) {
+  for (int i = 0; i < lines; i++)
+    for (int j = 0; j < columns; j++)
+      dest[i][j] = src[i][j];
+}
+
+bool _vector_can_fill_mtr(const vector<float> vec, unsigned mtr_lines,
+                          unsigned mtr_columns) {
+  return (vec.size() == mtr_lines * mtr_columns);
 }
