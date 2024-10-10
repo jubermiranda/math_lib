@@ -2,55 +2,48 @@
 
 using namespace std;
 
-bool _vector_can_fill_mtr(const vector<float> vec, unsigned, unsigned);
-void _copy_mtr(float **src, float **dest, unsigned lines, unsigned columns);
-bool _line_or_column_zero(float **mtr, int n);
-void _check_mtr(float **mtr);
-
-Matrix::Matrix(unsigned lines, unsigned columns)
-    : lines(lines), columns(columns) {
+Matrix::Matrix(unsigned rows, unsigned columns) : rows(rows), columns(columns) {
   this->init_mtr();
 }
 
-Matrix::Matrix(const Matrix &other)
-    : lines(other.lines), columns(other.columns) {
+Matrix::Matrix(const Matrix &other) : rows(other.rows), columns(other.columns) {
 
   this->init_mtr();
-  _copy_mtr(other.mtr, this->mtr, this->lines, this->columns);
+  other.copy_elements_to(*this);
 }
 
 Matrix::~Matrix() { this->clear_mtr(); }
 
-void Matrix::set_elements(const vector<float> el) {
-  _check_mtr(this->mtr);
+void Matrix::set_elements(const vector<float> vec) {
+  this->check_mtr();
 
-  if (_vector_can_fill_mtr(el, this->lines, this->columns)) {
+  if (vector_can_fill_mtr(vec)) {
 
-    for (int i = 0; i < this->lines; i++)
+    for (int i = 0; i < this->rows; i++)
       for (int j = 0; j < this->columns; j++)
-        this->mtr[i][j] = el.at((i * columns + j));
+        this->mtr[i][j] = vec.at((i * columns + j));
 
   } else
     throw runtime_error("bad vector size. cannot fill mtr");
 }
 
-void Matrix::update_el(unsigned line, unsigned column, float new_el) {
-  _check_mtr(this->mtr);
+void Matrix::update_el(unsigned row, unsigned column, float new_el) {
+  this->check_mtr();
 
-  if (line >= this->lines || column >= this->columns)
+  if (row >= this->rows || column >= this->columns)
     throw runtime_error("index out of range");
 
-  this->mtr[line][column] = new_el;
+  this->mtr[row][column] = new_el;
 }
 
-float Matrix::at(unsigned line, unsigned column) const {
-  if (line >= this->lines || column >= this->columns)
+float Matrix::at(unsigned row, unsigned column) const {
+  if (row >= this->rows || column >= this->columns)
     throw runtime_error("index out of range");
 
-  return this->mtr[line][column];
+  return this->mtr[row][column];
 }
 
-unsigned Matrix::line_size() const { return this->lines; }
+unsigned Matrix::row_size() const { return this->rows; }
 
 unsigned Matrix::column_size() const { return this->columns; }
 
@@ -58,7 +51,7 @@ bool Matrix::is_identity() const {
   if (!this->is_square())
     return false;
 
-  for (int i = 0; i < lines; i++) {
+  for (int i = 0; i < rows; i++) {
     for (int j = 0; j < columns; j++) {
       float aux = (i == j) ? 1 : 0;
       if (mtr[i][j] != aux)
@@ -69,10 +62,10 @@ bool Matrix::is_identity() const {
   return true;
 }
 
-bool Matrix::is_square() const { return (this->lines == this->columns); }
+bool Matrix::is_square() const { return (this->rows == this->columns); }
 
 bool Matrix::is_null() const {
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
       if (this->mtr[i][j] != 0)
         return false;
@@ -82,13 +75,13 @@ bool Matrix::is_null() const {
 
 bool Matrix::is_column() const { return (this->columns == 1); }
 
-bool Matrix::is_line() const { return (this->lines == 1); }
+bool Matrix::is_row() const { return (this->rows == 1); }
 
 bool Matrix::is_diagonal() const {
   if (!this->is_square())
     return false;
 
-  for (int i = 0; i < lines; i++)
+  for (int i = 0; i < rows; i++)
     for (int j = 0; j < columns; j++)
       if (i != j && this->mtr[i][j] != 0)
         return false;
@@ -100,7 +93,7 @@ bool Matrix::is_upper_tri() const {
   if (!this->is_square())
     return false;
 
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < i; j++)
       if (this->mtr[i][j] != 0)
         return false;
@@ -112,7 +105,7 @@ bool Matrix::is_lower_tri() const {
   if (!this->is_square())
     return false;
 
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     for (int j = i + 1; j < this->columns; j++)
       if (this->mtr[i][j] != 0)
         return false;
@@ -124,7 +117,7 @@ bool Matrix::is_symmetric() const {
   if (!this->is_square())
     return false;
 
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     for (int j = i; j < this->columns; j++)
       if (this->mtr[i][j] != this->mtr[j][i])
         return false;
@@ -136,7 +129,7 @@ bool Matrix::is_antisymmetric() const {
   if (!this->is_square())
     return false;
 
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     if (this->mtr[i][i] != 0)
       return false;
   return true;
@@ -147,7 +140,7 @@ bool Matrix::is_scalar() const {
     return false;
 
   float diagonal_el = this->mtr[0][0];
-  for (int i = 1; i < this->lines; i++)
+  for (int i = 1; i < this->rows; i++)
     if (this->mtr[i][i] != diagonal_el)
       return false;
 
@@ -155,8 +148,8 @@ bool Matrix::is_scalar() const {
 }
 
 Matrix Matrix::transpose() const {
-  Matrix result = Matrix(this->lines, this->columns);
-  for (int i = 0; i < this->lines; i++) {
+  Matrix result = Matrix(this->rows, this->columns);
+  for (int i = 0; i < this->rows; i++) {
     for (int j = 0; j < this->columns; j++) {
       result.update_el(i, j, this->at(j, i));
     }
@@ -166,11 +159,11 @@ Matrix Matrix::transpose() const {
 }
 
 float Matrix::stroke() const {
-  if (this->lines != this->columns)
+  if (!this->is_square())
     throw runtime_error("mtr not square");
 
   float sum = 0;
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     sum += this->mtr[i][i];
 
   return sum;
@@ -180,7 +173,7 @@ double Matrix::det() const {
   if (!this->is_square())
     throw runtime_error("cannot calc det. matrix not square");
 
-  switch (this->lines) {
+  switch (this->rows) {
   case 1:
     return this->at(0, 0);
     break;
@@ -200,17 +193,18 @@ double Matrix::det() const {
   return 0;
 }
 
-double Matrix::minor_comp(unsigned line, unsigned column) const {
-  if (this->lines <= 1 || this->columns <= 1)
-    throw runtime_error("TODO: null matrix handling");
-  if (line >= this->lines || column >= this->columns)
-    throw runtime_error("cannot calc minor_comp! index out of range");
+double Matrix::minor_comp(unsigned row, unsigned column) const {
+  if (this->rows <= 1 || this->columns <= 1)
+    throw runtime_error("to calc minor_comp, mtr order should be > 1");
 
-  Matrix aux(this->lines - 1, this->columns - 1);
-  for (int i = 0; i < this->lines; i++) {
+  if (!is_valid_position(row, column))
+    throw runtime_error("index out of range");
+
+  Matrix aux(this->rows - 1, this->columns - 1);
+  for (int i = 0; i < this->rows; i++) {
     for (int j = 0; j < this->columns; j++) {
-      if (i != line && j != column) {
-        aux.update_el(((i < line) ? i : i - 1), ((j < column) ? j : j - 1),
+      if (i != row && j != column) {
+        aux.update_el(((i < row) ? i : i - 1), ((j < column) ? j : j - 1),
                       this->mtr[i][j]);
       }
     }
@@ -228,7 +222,7 @@ Matrix &Matrix::operator=(const Matrix &other) {
   if (this != &other) {
     this->clear_mtr();
 
-    this->lines = other.lines;
+    this->rows = other.rows;
     this->columns = other.columns;
     this->init_mtr();
   }
@@ -236,11 +230,11 @@ Matrix &Matrix::operator=(const Matrix &other) {
 }
 
 Matrix Matrix::operator+(const Matrix &other) const {
-  if (this->lines != other.lines || this->columns != other.columns)
+  if (this->rows != other.rows || this->columns != other.columns)
     throw runtime_error("cannot sum matrix of difeerent order");
 
-  Matrix result = Matrix(this->lines, this->columns);
-  for (int i = 0; i < this->lines; i++)
+  Matrix result = Matrix(this->rows, this->columns);
+  for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
       result.update_el(i, j, this->at(i, j) + other.at(i, j));
 
@@ -248,11 +242,11 @@ Matrix Matrix::operator+(const Matrix &other) const {
 }
 
 Matrix Matrix::operator-(const Matrix &other) const {
-  if (this->lines != other.lines || this->columns != other.columns)
+  if (this->rows != other.rows || this->columns != other.columns)
     throw runtime_error("cannot diff matrix of difeerent order");
 
-  Matrix result = Matrix(this->lines, this->columns);
-  for (int i = 0; i < this->lines; i++)
+  Matrix result = Matrix(this->rows, this->columns);
+  for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
       result.update_el(i, j, this->at(i, j) - other.at(i, j));
 
@@ -261,8 +255,8 @@ Matrix Matrix::operator-(const Matrix &other) const {
 
 Matrix Matrix::operator*(float scalar) const {
 
-  Matrix result = Matrix(this->lines, this->columns);
-  for (int i = 0; i < this->lines; i++)
+  Matrix result = Matrix(this->rows, this->columns);
+  for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
       result.update_el(i, j, (this->at(i, j) * scalar));
 
@@ -270,12 +264,12 @@ Matrix Matrix::operator*(float scalar) const {
 }
 
 Matrix Matrix::operator*(const Matrix &other) const {
-  if (this->columns != other.lines)
+  if (this->columns != other.rows)
     throw runtime_error("to multpl two matrix, A.columns needs be == B.lines");
 
-  Matrix result = Matrix(this->lines, other.columns);
+  Matrix result = Matrix(this->rows, other.columns);
 
-  for (int i = 0; i < this->lines; i++) {
+  for (int i = 0; i < this->rows; i++) {
     for (int j = 0; j < other.columns; j++) {
 
       float sum = 0;
@@ -289,10 +283,10 @@ Matrix Matrix::operator*(const Matrix &other) const {
 }
 
 bool Matrix::operator==(const Matrix &other) const {
-  if (this->lines != other.lines || this->columns != other.columns)
+  if (this->rows != other.rows || this->columns != other.columns)
     return false;
 
-  for (int i = 0; i < this->lines; i++)
+  for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
       if (this->mtr[i][j] != other.mtr[i][j])
         return false;
@@ -311,7 +305,7 @@ stringstream Matrix::print_class() const {
     ss << "null" << endl;
   if (this->is_column())
     ss << "column" << endl;
-  if (this->is_line())
+  if (this->is_row())
     ss << "line" << endl;
   if (this->is_diagonal())
     ss << "diagonal" << endl;
@@ -331,8 +325,8 @@ stringstream Matrix::print_class() const {
 
 stringstream Matrix::print() const {
   stringstream ss("");
-  ss << "Matrix " << this->lines << "X" << this->columns << endl;
-  for (int i = 0; i < this->lines; i++) {
+  ss << "Matrix " << this->rows << "X" << this->columns << endl;
+  for (int i = 0; i < this->rows; i++) {
     for (int j = 0; j < this->columns; j++)
       ss << "[" << this->mtr[i][j] << "]";
     ss << endl;
@@ -345,9 +339,9 @@ stringstream Matrix::print() const {
 // ---
 
 void Matrix::init_mtr() {
-  if (this->lines > 0 && this->columns > 0) {
-    this->mtr = new float *[lines];
-    for (int i = 0; i < this->lines; i++) {
+  if (this->rows > 0 && this->columns > 0) {
+    this->mtr = new float *[rows];
+    for (int i = 0; i < this->rows; i++) {
       this->mtr[i] = new float[columns];
     }
   } else {
@@ -357,14 +351,14 @@ void Matrix::init_mtr() {
 
 void Matrix::clear_mtr() {
   if (this->mtr != nullptr) {
-    for (int i = 0; i < this->lines; i++)
+    for (int i = 0; i < this->rows; i++)
       delete[](this->mtr[i]);
     delete[](this->mtr);
   }
 }
 
 double Matrix::det_order_2() const {
-  if (this->lines != 2 || this->columns != 2)
+  if (this->rows != 2 || this->columns != 2)
     throw runtime_error("invalid matrix dimentions");
 
   return ((this->mtr[0][0] * this->mtr[1][1]) -
@@ -386,12 +380,12 @@ double Matrix::det_order_3() const {
 }
 
 double Matrix::det_order_n() const {
-  if (this->lines <= 3 || this->columns <= 3)
+  if (this->rows <= 3 || this->columns <= 3)
     throw runtime_error("expected dimentions > 3");
-  if (this->lines != this->columns)
+  if (this->rows != this->columns)
     throw runtime_error("matrix not square. cannot calc det");
 
-  unsigned n = this->lines;
+  unsigned n = this->rows;
 
   if (_line_or_column_zero(this->mtr, n))
     return 0;
@@ -447,7 +441,7 @@ bool _vector_can_fill_mtr(const vector<float> vec, unsigned mtr_lines,
   return (vec.size() == mtr_lines * mtr_columns);
 }
 
-void _check_mtr(float **mtr){
+void _check_mtr(float **mtr) {
   if (mtr == nullptr)
     throw runtime_error("null pointer exception");
 }
