@@ -18,6 +18,17 @@ float Vector::mod_square() const{
   return (p.x * p.x + p.y * p.y + p.z * p.z);
 }
 
+bool Vector::is_null() const {
+  bool result = p.x == 0 && p.y == 0 && p.z == 0;
+  return result;
+}
+
+bool Vector::operator==(const Vector& other) const{
+  return (this->p == other.p);
+}
+
+
+
 /* VectorRelation: TODO
 static bool is_parallel(const Vector &, const Vector &);
 static bool is_ortogonal(const Vector &, const Vector &);
