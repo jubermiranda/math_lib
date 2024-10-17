@@ -12,16 +12,15 @@ public:
   Vector(Point a, Point b);
   Vector(float x, float y, float z);
 
-  float x() { return this->p.x; };
-  float y() { return this->p.y; };
-  float z() { return this->p.z; };
-
+  float x() const { return p.x; };
+  float y() const { return p.y; };
+  float z() const { return p.z; };
   float mod() const;
   float mod_square() const;
 
   Vector unit() const;
   Vector scale(float factor) const;
-  Vector direction_cos() const;
+  Vector direction_cossines() const;
   Vector opposite() const;
   Vector rotate_around_x(float angle) const;
   Vector rotate_around_y(float angle) const;
@@ -29,6 +28,7 @@ public:
   Vector reflect_across_plane(const Vector &normal) const;
 
   bool is_unit() const;
+  bool is_null() const;
 
   Vector operator+(const Vector &) const;
   Vector operator-(const Vector &) const;
