@@ -34,7 +34,6 @@ TEST(VectorBasics, Module) {
   EXPECT_EQ(vec.mod(), 5.0f);
 }
 
-
 TEST(VectorBasics, ModuleSquare) {
   Vector vec;
 
@@ -43,4 +42,26 @@ TEST(VectorBasics, ModuleSquare) {
 
   vec = Vector(-3, -4, 0);
   EXPECT_EQ(vec.mod_square(), 25.0f);
+}
+
+TEST(VectorBasics, Constructors) {
+  Vector vec;
+  Point p, q;
+
+  vec = Vector();
+  EXPECT_EQ(vec.x(), 0.0f);
+  EXPECT_EQ(vec.y(), 0.0f);
+  EXPECT_EQ(vec.z(), 0.0f);
+  EXPECT_TRUE(vec.is_null());
+
+  p = Point(1, 2, 3);
+  q = Point(5, 5, 5);
+  vec = Vector(p, q);
+  EXPECT_EQ(vec.x(), q.x - p.x);
+  EXPECT_EQ(vec.y(), q.y - p.y);
+  EXPECT_EQ(vec.z(), q.z - p.z);
+
+  EXPECT_EQ(Vector(p, q), Vector(q - p));
+
+  EXPECT_EQ(Vector(Point(7, 7, 7)), Vector(7, 7, 7));
 }
