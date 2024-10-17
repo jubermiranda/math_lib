@@ -3,36 +3,43 @@
 
 #include "point.h"
 
+enum class VectorRelation { PARALLEL, ORTHOGONAL, COLLINEAR, NONE };
+
 class Vector {
 public:
+  Vector();
   Vector(Point p);
   Vector(Point a, Point b);
+  Vector(float x, float y, float z);
+
+  float x() { return this->p.x; };
+  float y() { return this->p.y; };
+  float z() { return this->p.z; };
 
   float mod() const;
-  float cos_x() const;
-  float cos_y() const;
-  float cos_z() const;
+  float mod_square() const;
 
-  Point middle_point() const;
-  Vector product(const Vector &) const;
-  Vector opposite() const;
   Vector unit() const;
-  Vector projection(const Vector &) const;
+  Vector scale(float factor) const;
+  Vector direction_cos() const;
+  Vector opposite() const;
+  Vector rotate_around_x(float angle) const;
+  Vector rotate_around_y(float angle) const;
+  Vector rotate_around_z(float angle) const;
+  Vector reflect_across_plane(const Vector &normal) const;
 
-  bool operator==(const Vector &) const;
+  bool is_unit() const;
+
   Vector operator+(const Vector &) const;
   Vector operator-(const Vector &) const;
   Vector operator*(float) const;
   float operator*(const Vector &) const;
+  bool operator==(const Vector &) const;
 
-  static bool is_parallel(const Vector &, const Vector &);
-  static bool is_ortogonal(const Vector &, const Vector &);
-  static bool is_opposite(const Vector &, const Vector &);
-  static bool is_collinear(const Vector &, const Vector &);
-  static bool is_coplanar(const Vector &, const Vector &);
   static float angle(const Vector &, const Vector &);
-
-  static float distance(const Point& a, const Point& b);
+  static float mix_product(const Vector &, const Vector &, const Vector &);
+  static Vector cross_product(const Vector &, const Vector &);
+  static Vector projection(const Vector &, const Vector &);
 
 private:
   Point p;
