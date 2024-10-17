@@ -6,7 +6,7 @@
 
 using std::string;
 
-TEST(VectorBasics, DistanceMod) {
+TEST(VectorBasics, Module) {
   Vector vec;
 
   vec = Vector(0, 0, 0);
@@ -32,4 +32,15 @@ TEST(VectorBasics, DistanceMod) {
 
   vec = Vector(-3, -4, 0);
   EXPECT_EQ(vec.mod(), 5.0f);
+}
+
+
+TEST(VectorBasics, ModuleSquare) {
+  Vector vec;
+
+  vec = Vector(1, 2, 2);
+  EXPECT_EQ(vec.mod_square(), 9.0f);
+
+  vec = Vector(-3, -4, 0);
+  EXPECT_EQ(vec.mod_square(), 25.0f);
 }
