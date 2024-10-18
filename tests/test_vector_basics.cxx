@@ -65,3 +65,14 @@ TEST(VectorBasics, Constructors) {
 
   EXPECT_EQ(Vector(Point(7, 7, 7)), Vector(7, 7, 7));
 }
+
+TEST(VectorBasics, UnitVector) {
+  Vector vec, expect_unit;
+  float vec_mod;
+
+  vec = Vector(2.0, 4.0, 6.0);
+  vec_mod = vec.mod();
+  expect_unit = Vector(vec.x() / vec_mod, vec.y() / vec_mod, vec.z() / vec_mod);
+
+  EXPECT_EQ(expect_unit, vec.unit());
+}

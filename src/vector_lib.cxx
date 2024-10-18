@@ -28,7 +28,6 @@ bool Vector::operator==(const Vector& other) const{
 }
 
 
-
 /* VectorRelation: TODO
 static bool is_parallel(const Vector &, const Vector &);
 static bool is_ortogonal(const Vector &, const Vector &);
