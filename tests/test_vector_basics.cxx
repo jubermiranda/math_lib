@@ -68,11 +68,9 @@ TEST(VectorBasics, Constructors) {
 
 TEST(VectorBasics, UnitVector) {
   Vector vec, expect_unit;
-  float vec_mod;
 
-  vec = Vector(2.0, 4.0, 6.0);
-  vec_mod = vec.mod();
-  expect_unit = Vector(vec.x() / vec_mod, vec.y() / vec_mod, vec.z() / vec_mod);
+  vec = Vector(3.0, 4.0, 0.0);
+  expect_unit = Vector(0.6, 0.8, 0);
 
   EXPECT_EQ(expect_unit, vec.unit());
 }

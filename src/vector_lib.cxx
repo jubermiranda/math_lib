@@ -27,6 +27,12 @@ bool Vector::operator==(const Vector& other) const{
   return (this->p == other.p);
 }
 
+Vector Vector::unit() const {
+  Point p_result(p.x / mod(), p.y / mod(), p.z / mod());
+  Vector unit_vec(p_result);
+
+  return unit_vec;
+}
 
 /* VectorRelation: TODO
 static bool is_parallel(const Vector &, const Vector &);
