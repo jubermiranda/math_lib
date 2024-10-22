@@ -13,3 +13,6 @@ Point Point::operator-(const Point &other) const {
 bool Point::operator==(const Point& other) const{
   return (x == other.x && y == other.y && z == other.z);
 }
+bool Point::operator==(const Point&& other) const{
+  return (x == other.x && y == other.y && z == other.z);
+}

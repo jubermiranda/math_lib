@@ -13,6 +13,7 @@ public:
   Point operator-(const Point&)const;
   Point operator+(const Point&)const;
   bool operator==(const Point&)const;
+  bool operator==(const Point&&)const;
 };
 
 #endif /* ifndef POINT_H_ */

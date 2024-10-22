@@ -1,5 +1,6 @@
 #include "vector_lib.h"
 #include <cmath>
+#include <stdexcept>
 
 Vector::Vector() : p(Point(0, 0, 0)) {}
 
@@ -14,16 +15,17 @@ float Vector::mod() const {
   return result;
 }
 
-float Vector::mod_square() const{
-  return (p.x * p.x + p.y * p.y + p.z * p.z);
-}
+float Vector::mod_square() const { return (p.x * p.x + p.y * p.y + p.z * p.z); }
 
 bool Vector::is_null() const {
   bool result = p.x == 0 && p.y == 0 && p.z == 0;
   return result;
 }
 
-bool Vector::operator==(const Vector& other) const{
+bool Vector::operator==(const Vector &other) const {
+  return (this->p == other.p);
+}
+bool Vector::operator==(const Vector &&other) const {
   return (this->p == other.p);
 }
 
@@ -32,6 +34,10 @@ Vector Vector::unit() const {
   Vector unit_vec(p_result);
 
   return unit_vec;
+}
+
+Vector Vector::scale(float factor) const {
+  return Vector(p.x * factor, p.y * factor, p.z * factor);
 }
 
 /* VectorRelation: TODO
