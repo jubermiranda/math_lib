@@ -74,3 +74,30 @@ TEST(VectorBasics, UnitVector) {
 
   EXPECT_EQ(expect_unit, vec.unit());
 }
+
+TEST(VectorBasics, ScaleVector) {
+  Vector vec(4, 3, 2);
+  Vector vec_scaled;
+  float scale_factor;
+
+  scale_factor = 3.5;
+  EXPECT_EQ(vec.scale(scale_factor), Vector(14, 10.5, 7));
+
+  scale_factor = -1;
+  EXPECT_EQ(vec.scale(scale_factor), Vector(-4, -3, -2));
+
+  scale_factor = 0;
+  EXPECT_EQ(vec.scale(scale_factor), Vector(0,0,0));
+  EXPECT_TRUE(vec.scale(scale_factor).is_null());
+
+  // 0 < factor < 1 should makes the vector shorter 
+  scale_factor = 0.5;
+  vec_scaled = vec.scale(scale_factor);
+  EXPECT_TRUE(vec.mod() > vec_scaled.mod());
+
+  // factor > 1 should makes the vector longer 
+  scale_factor = 42;
+  vec_scaled = vec.scale(scale_factor);
+  EXPECT_TRUE(vec.mod() < vec_scaled.mod());
+
+}
