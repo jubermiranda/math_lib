@@ -45,6 +45,16 @@ TEST(VectorBasics, ModuleSquare) {
   EXPECT_EQ(vec.mod_square(), 25.0f);
 }
 
+TEST(VectorBasics, IsNull) {
+  Vector vec;
+
+  vec = Vector(0,0,0);
+  EXPECT_TRUE(vec.is_null());
+
+  vec = Vector(1, 2, 3);
+  EXPECT_FALSE(vec.is_null());
+}
+
 TEST(VectorBasics, Constructors) {
   Vector vec;
   Point p, q;
