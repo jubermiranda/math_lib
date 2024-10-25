@@ -22,17 +22,7 @@ bool Vector::is_null() const {
   return result;
 }
 
-bool Vector::is_unit() const {
-  return (mod() == 1);
-}
-
-bool Vector::operator==(const Vector &other) const {
-  return (this->p == other.p);
-}
-
-bool Vector::operator!=(const Vector &other) const {
-  return !(this->p == other.p);
-}
+bool Vector::is_unit() const { return (mod() == 1); }
 
 Vector Vector::unit() const {
   Point p_result(p.x / mod(), p.y / mod(), p.z / mod());
@@ -58,6 +48,18 @@ Vector Vector::opposite() const { return Vector(p.x * -1, p.y * -1, p.z * -1); }
 
 Vector Vector::operator+(const Vector &other) const {
   return Vector(p.x + other.x(), p.y + other.y(), p.z + other.z());
+}
+
+Vector Vector::operator/(float n) const {
+  return Vector(p.x / n, p.y / n, p.z / n);
+}
+
+bool Vector::operator==(const Vector &other) const {
+  return (this->p == other.p);
+}
+
+bool Vector::operator!=(const Vector &other) const {
+  return !(this->p == other.p);
 }
 
 /* VectorRelation: TODO
