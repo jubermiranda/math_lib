@@ -35,7 +35,7 @@ public:
   Vector operator*(float) const;
   float operator*(const Vector &) const;
   bool operator==(const Vector &) const;
-  bool operator==(const Vector &&) const;
+  bool operator!=(const Vector &) const;
 
   static float angle(const Vector &, const Vector &);
   static float mix_product(const Vector &, const Vector &, const Vector &);

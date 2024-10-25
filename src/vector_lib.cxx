@@ -25,8 +25,9 @@ bool Vector::is_null() const {
 bool Vector::operator==(const Vector &other) const {
   return (this->p == other.p);
 }
-bool Vector::operator==(const Vector &&other) const {
-  return (this->p == other.p);
+
+bool Vector::operator!=(const Vector &other) const {
+  return !(this->p == other.p);
 }
 
 Vector Vector::unit() const {
