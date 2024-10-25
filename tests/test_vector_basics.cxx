@@ -1,5 +1,7 @@
+#include <cmath>
 #include <gtest/gtest.h>
 #include <math.h>
+#include <stdexcept>
 #include <vector>
 
 #include "utils.h"
@@ -53,6 +55,26 @@ TEST(VectorBasics, IsNull) {
 
   vec = Vector(1, 2, 3);
   EXPECT_FALSE(vec.is_null());
+}
+
+TEST(VectorBasics, IsUnit) {
+  Vector vec;
+
+  vec = Vector(1, 0, 0);
+  EXPECT_TRUE(vec.is_unit());
+
+  vec = Vector(0, 1, 0);
+  EXPECT_TRUE(vec.is_unit());
+
+  vec = Vector(0, 0, 1);
+  EXPECT_TRUE(vec.is_unit());
+
+  vec = Vector(-1, 0, 0);
+  EXPECT_TRUE(vec.is_unit());
+
+  vec = Vector(1, 2, 2);
+  Vector result = vec / vec.mod();
+  EXPECT_TRUE(result.is_unit());
 }
 
 TEST(VectorBasics, Constructors) {

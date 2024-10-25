@@ -34,6 +34,7 @@ public:
   Vector operator-(const Vector &) const;
   Vector operator*(float) const;
   float operator*(const Vector &) const;
+  Vector operator/(float) const;
   bool operator==(const Vector &) const;
   bool operator!=(const Vector &) const;
 

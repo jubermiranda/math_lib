@@ -22,6 +22,10 @@ bool Vector::is_null() const {
   return result;
 }
 
+bool Vector::is_unit() const {
+  return (mod() == 1);
+}
+
 bool Vector::operator==(const Vector &other) const {
   return (this->p == other.p);
 }
