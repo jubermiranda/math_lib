@@ -50,6 +50,12 @@ Vector Vector::direction_cossines() const {
   return Vector(coss_x, coss_y, coss_z);
 }
 
+Vector Vector::opposite() const { return Vector(p.x * -1, p.y * -1, p.z * -1); }
+
+Vector Vector::operator+(const Vector &other) const {
+  return Vector(p.x + other.x(), p.y + other.y(), p.z + other.z());
+}
+
 /* VectorRelation: TODO
 static bool is_parallel(const Vector &, const Vector &);
 static bool is_ortogonal(const Vector &, const Vector &);
