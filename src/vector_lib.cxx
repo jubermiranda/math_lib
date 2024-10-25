@@ -41,6 +41,15 @@ Vector Vector::scale(float factor) const {
   return Vector(p.x * factor, p.y * factor, p.z * factor);
 }
 
+Vector Vector::direction_cossines() const {
+  float mod = this->mod();
+  float coss_x = p.x / mod;
+  float coss_y = p.y / mod;
+  float coss_z = p.z / mod;
+
+  return Vector(coss_x, coss_y, coss_z);
+}
+
 /* VectorRelation: TODO
 static bool is_parallel(const Vector &, const Vector &);
 static bool is_ortogonal(const Vector &, const Vector &);
