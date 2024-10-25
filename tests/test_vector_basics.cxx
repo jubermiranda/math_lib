@@ -132,3 +132,28 @@ TEST(VectorBasics, DirectionCossines) {
   EXPECT_EQ(cossines.x(), cossines.y());
   EXPECT_EQ(cossines.x(), cossines.z());
 }
+
+TEST(VectorBasics, OppositeVector) {
+  Vector vec;
+  Vector expected;
+
+  vec = Vector(4, 2, 0);
+  expected = Vector(-4, -2, 0);
+  EXPECT_EQ(expected, vec.opposite());
+
+  vec = Vector(0, 0, 0);
+  expected = Vector(0,0,0);
+  EXPECT_EQ(expected, vec.opposite());
+
+  vec = Vector(-4, -3, -2);
+  expected = Vector(4, 3, 2);
+  EXPECT_EQ(expected, vec.opposite());
+
+  vec = Vector(-1, 2, -3);
+  expected = Vector(1, -2,3);
+  EXPECT_EQ(expected, vec.opposite());
+
+  //sum of opposite vectors result in a null vector
+  EXPECT_EQ((vec + vec.opposite()), Vector(0,0,0));
+  EXPECT_TRUE((vec + vec.opposite()).is_null());
+}
