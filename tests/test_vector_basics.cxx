@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <math.h>
 #include <vector>
 
 #include "utils.h"
@@ -87,17 +88,47 @@ TEST(VectorBasics, ScaleVector) {
   EXPECT_EQ(vec.scale(scale_factor), Vector(-4, -3, -2));
 
   scale_factor = 0;
-  EXPECT_EQ(vec.scale(scale_factor), Vector(0,0,0));
+  EXPECT_EQ(vec.scale(scale_factor), Vector(0, 0, 0));
   EXPECT_TRUE(vec.scale(scale_factor).is_null());
 
-  // 0 < factor < 1 should makes the vector shorter 
+  // 0 < factor < 1 should makes the vector shorter
   scale_factor = 0.5;
   vec_scaled = vec.scale(scale_factor);
   EXPECT_TRUE(vec.mod() > vec_scaled.mod());
 
-  // factor > 1 should makes the vector longer 
+  // factor > 1 should makes the vector longer
   scale_factor = 42;
   vec_scaled = vec.scale(scale_factor);
   EXPECT_TRUE(vec.mod() < vec_scaled.mod());
+}
 
+TEST(VectorBasics, DirectionCossines) {
+  Vector vec;
+  Vector expected;
+
+  vec = Vector(3, 4, 0);
+  expected = Vector(0.6, 0.8, 0.0);
+  EXPECT_EQ(expected, vec.direction_cossines());
+
+  vec = Vector(1, 0, 0);
+  expected = Vector(1, 0, 0);
+  EXPECT_EQ(expected, vec.direction_cossines());
+
+  vec = Vector(0, 1, 0);
+  expected = Vector(0, 1, 0);
+  EXPECT_EQ(expected, vec.direction_cossines());
+
+  vec = Vector(0, 0, 1);
+  expected = Vector(0, 0, 1);
+  EXPECT_EQ(expected, vec.direction_cossines());
+
+  vec = Vector(1, 1, 1);
+  expected = Vector(1 / std::sqrt(3), 1 / std::sqrt(3), 1 / std::sqrt(3));
+  EXPECT_EQ(expected, vec.direction_cossines());
+
+  // vector with same values (x,y,z) result equals cossines
+  vec = Vector(42, 42, 42);
+  Vector cossines = vec.direction_cossines();
+  EXPECT_EQ(cossines.x(), cossines.y());
+  EXPECT_EQ(cossines.x(), cossines.z());
 }
