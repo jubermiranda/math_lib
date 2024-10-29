@@ -189,3 +189,19 @@ TEST(VectorBasics, OppositeVector) {
   EXPECT_EQ((vec + vec.opposite()), Vector(0,0,0));
   EXPECT_TRUE((vec + vec.opposite()).is_null());
 }
+
+TEST(VectorBasics, RotateAroundX) {
+  Vector vec;
+
+  vec = Vector(0,1,0);
+  EXPECT_EQ(vec.rotate_around_x(90), Vector(0,0,1));
+
+  vec = Vector(0,0,1);
+  EXPECT_EQ(vec.rotate_around_x(90), Vector(0,-1,0));
+
+  vec = Vector(0,1,0);
+  EXPECT_EQ(vec.rotate_around_x(180), Vector(0,-1,0));
+
+  vec = Vector(1,1,1);
+  EXPECT_EQ(vec.rotate_around_x(180), Vector(1,-1,-1));
+}
