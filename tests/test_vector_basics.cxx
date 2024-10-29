@@ -8,6 +8,7 @@
 #include "vector_lib.h"
 
 using std::string;
+const double kTolerance = 1e-10;
 
 TEST(VectorBasics, Module) {
   Vector vec;
@@ -16,35 +17,35 @@ TEST(VectorBasics, Module) {
   EXPECT_EQ(vec.mod(), 0);
 
   vec = Vector(2.4, 0, 0);
-  EXPECT_EQ(vec.mod(), 2.4f);
+  EXPECT_EQ(vec.mod(), 2.4);
   vec = Vector(4.2, 0, 0);
-  EXPECT_EQ(vec.mod(), 4.2f);
+  EXPECT_EQ(vec.mod(), 4.2);
 
   vec = Vector(0, 2, 0);
-  EXPECT_EQ(vec.mod(), 2.0f);
+  EXPECT_EQ(vec.mod(), 2.0);
   vec = Vector(0, 4, 0);
-  EXPECT_EQ(vec.mod(), 4.0f);
+  EXPECT_EQ(vec.mod(), 4.0);
 
   vec = Vector(0, 0, 2.2);
-  EXPECT_EQ(vec.mod(), 2.2f);
+  EXPECT_EQ(vec.mod(), 2.2);
   vec = Vector(0, 0, 4.4);
-  EXPECT_EQ(vec.mod(), 4.4f);
+  EXPECT_EQ(vec.mod(), 4.4);
 
   vec = Vector(1, 2, 2);
-  EXPECT_EQ(vec.mod(), 3.0f);
+  EXPECT_EQ(vec.mod(), 3.0);
 
   vec = Vector(-3, -4, 0);
-  EXPECT_EQ(vec.mod(), 5.0f);
+  EXPECT_EQ(vec.mod(), 5.0);
 }
 
 TEST(VectorBasics, ModuleSquare) {
   Vector vec;
 
   vec = Vector(1, 2, 2);
-  EXPECT_EQ(vec.mod_square(), 9.0f);
+  EXPECT_EQ(vec.mod_square(), 9.0);
 
   vec = Vector(-3, -4, 0);
-  EXPECT_EQ(vec.mod_square(), 25.0f);
+  EXPECT_EQ(vec.mod_square(), 25.0);
 }
 
 TEST(VectorBasics, IsNull) {
@@ -82,9 +83,9 @@ TEST(VectorBasics, Constructors) {
   Point p, q;
 
   vec = Vector();
-  EXPECT_EQ(vec.x(), 0.0f);
-  EXPECT_EQ(vec.y(), 0.0f);
-  EXPECT_EQ(vec.z(), 0.0f);
+  EXPECT_EQ(vec.x(), 0.0);
+  EXPECT_EQ(vec.y(), 0.0);
+  EXPECT_EQ(vec.z(), 0.0);
   EXPECT_TRUE(vec.is_null());
 
   p = Point(1, 2, 3);
@@ -192,16 +193,40 @@ TEST(VectorBasics, OppositeVector) {
 
 TEST(VectorBasics, RotateAroundX) {
   Vector vec;
+  Vector expected;
+  Vector result;
+  double angle;
 
+  angle = 90;
   vec = Vector(0,1,0);
-  EXPECT_EQ(vec.rotate_around_x(90), Vector(0,0,1));
+  result = vec.rotate_around_x(angle);
+  expected = Vector(0, 0, 1);
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
+
+  angle = 90;
   vec = Vector(0,0,1);
-  EXPECT_EQ(vec.rotate_around_x(90), Vector(0,-1,0));
+  result = vec.rotate_around_x(angle);
+  expected = Vector(0, -1, 0);
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
+  angle = 180;
   vec = Vector(0,1,0);
-  EXPECT_EQ(vec.rotate_around_x(180), Vector(0,-1,0));
+  result = vec.rotate_around_x(angle);
+  expected = Vector(0, -1, 0);
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
+  angle = 180;
   vec = Vector(1,1,1);
-  EXPECT_EQ(vec.rotate_around_x(180), Vector(1,-1,-1));
+  result = vec.rotate_around_x(angle);
+  expected = Vector(1, -1, -1);
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 }

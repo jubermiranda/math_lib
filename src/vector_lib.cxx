@@ -1,6 +1,10 @@
 #include "vector_lib.h"
 #include <cmath>
 #include <stdexcept>
+#include <numbers>
+
+using std::cos;
+using std::sin;
 
 Vector::Vector() : p(Point(0, 0, 0)) {}
 
@@ -8,14 +12,16 @@ Vector::Vector(Point p) : p(p) {}
 
 Vector::Vector(Point a, Point b) : p(b - a) {}
 
-Vector::Vector(float x, float y, float z) : p(Point(x, y, z)) {}
+Vector::Vector(double x, double y, double z) : p(Point(x, y, z)) {}
 
-float Vector::mod() const {
-  float result = std::sqrt(mod_square());
+double Vector::mod() const {
+  double result = std::sqrt(mod_square());
   return result;
 }
 
-float Vector::mod_square() const { return (p.x * p.x + p.y * p.y + p.z * p.z); }
+double Vector::mod_square() const {
+  return (p.x * p.x + p.y * p.y + p.z * p.z);
+}
 
 bool Vector::is_null() const {
   bool result = p.x == 0 && p.y == 0 && p.z == 0;
@@ -31,26 +37,36 @@ Vector Vector::unit() const {
   return unit_vec;
 }
 
-Vector Vector::scale(float factor) const {
+Vector Vector::scale(double factor) const {
   return Vector(p.x * factor, p.y * factor, p.z * factor);
 }
 
 Vector Vector::direction_cossines() const {
-  float mod = this->mod();
-  float coss_x = p.x / mod;
-  float coss_y = p.y / mod;
-  float coss_z = p.z / mod;
+  double mod = this->mod();
+  double coss_x = p.x / mod;
+  double coss_y = p.y / mod;
+  double coss_z = p.z / mod;
 
   return Vector(coss_x, coss_y, coss_z);
 }
 
 Vector Vector::opposite() const { return Vector(p.x * -1, p.y * -1, p.z * -1); }
 
+Vector Vector::rotate_around_x(double angle) const {
+  long double pi = std::numbers::pi_v<long double>;
+  long double radians = angle * pi / 180.0;
+
+  long double new_y = (p.y * cos(radians)) - (p.z * sin(radians));
+  long double new_z = (p.y * sin(radians)) + (p.z * cos(radians));
+
+  return Vector(p.x, new_y, new_z);
+}
+
 Vector Vector::operator+(const Vector &other) const {
   return Vector(p.x + other.x(), p.y + other.y(), p.z + other.z());
 }
 
-Vector Vector::operator/(float n) const {
+Vector Vector::operator/(double n) const {
   return Vector(p.x / n, p.y / n, p.z / n);
 }
 
