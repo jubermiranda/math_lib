@@ -26,7 +26,7 @@ The library also serves as a resource to develop my skills in **C++** and **obje
 
 ### **Prerequisites**
 
-- **C++11** or later
+- **C++20** or later
 - **CMake** (optional, but recommended)
 - **Google Test** (for unit tests)
 
