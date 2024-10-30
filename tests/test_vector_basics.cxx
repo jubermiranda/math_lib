@@ -51,7 +51,7 @@ TEST(VectorBasics, ModuleSquare) {
 TEST(VectorBasics, IsNull) {
   Vector vec;
 
-  vec = Vector(0,0,0);
+  vec = Vector(0, 0, 0);
   EXPECT_TRUE(vec.is_null());
 
   vec = Vector(1, 2, 3);
@@ -74,6 +74,8 @@ TEST(VectorBasics, IsUnit) {
   EXPECT_TRUE(vec.is_unit());
 
   vec = Vector(1, 2, 2);
+  EXPECT_FALSE(vec.is_unit());
+  // vec divided by its mod() results in unit vector
   Vector result = vec / vec.mod();
   EXPECT_TRUE(result.is_unit());
 }
@@ -90,12 +92,12 @@ TEST(VectorBasics, Constructors) {
 
   p = Point(1, 2, 3);
   q = Point(5, 5, 5);
+  EXPECT_EQ(Vector(p, q), Vector(q - p));
+
   vec = Vector(p, q);
   EXPECT_EQ(vec.x(), q.x - p.x);
   EXPECT_EQ(vec.y(), q.y - p.y);
   EXPECT_EQ(vec.z(), q.z - p.z);
-
-  EXPECT_EQ(Vector(p, q), Vector(q - p));
 
   EXPECT_EQ(Vector(Point(7, 7, 7)), Vector(7, 7, 7));
 }
@@ -133,6 +135,12 @@ TEST(VectorBasics, ScaleVector) {
   scale_factor = 42;
   vec_scaled = vec.scale(scale_factor);
   EXPECT_TRUE(vec.mod() < vec_scaled.mod());
+
+  // factor = -1 keeps the same size. (change the direction)
+  scale_factor = -1;
+  vec_scaled = vec.scale(scale_factor);
+  EXPECT_EQ(vec.opposite(), vec_scaled);
+  EXPECT_TRUE(vec.mod() == vec_scaled.mod());
 }
 
 TEST(VectorBasics, DirectionCossines) {
@@ -162,8 +170,7 @@ TEST(VectorBasics, DirectionCossines) {
   // vector with same values (x,y,z) result equals cossines
   vec = Vector(42, 42, 42);
   Vector cossines = vec.direction_cossines();
-  EXPECT_EQ(cossines.x(), cossines.y());
-  EXPECT_EQ(cossines.x(), cossines.z());
+  EXPECT_TRUE(cossines.x() == cossines.y() == cossines.z());
 }
 
 TEST(VectorBasics, OppositeVector) {
@@ -175,7 +182,7 @@ TEST(VectorBasics, OppositeVector) {
   EXPECT_EQ(expected, vec.opposite());
 
   vec = Vector(0, 0, 0);
-  expected = Vector(0,0,0);
+  expected = Vector(0, 0, 0);
   EXPECT_EQ(expected, vec.opposite());
 
   vec = Vector(-4, -3, -2);
@@ -183,11 +190,11 @@ TEST(VectorBasics, OppositeVector) {
   EXPECT_EQ(expected, vec.opposite());
 
   vec = Vector(-1, 2, -3);
-  expected = Vector(1, -2,3);
+  expected = Vector(1, -2, 3);
   EXPECT_EQ(expected, vec.opposite());
 
-  //sum of opposite vectors result in a null vector
-  EXPECT_EQ((vec + vec.opposite()), Vector(0,0,0));
+  // sum of opposite vectors result in a null vector
+  EXPECT_EQ((vec + vec.opposite()), Vector(0, 0, 0));
   EXPECT_TRUE((vec + vec.opposite()).is_null());
 }
 
@@ -198,16 +205,15 @@ TEST(VectorBasics, RotateAroundX) {
   double angle;
 
   angle = 90;
-  vec = Vector(0,1,0);
+  vec = Vector(0, 1, 0);
   result = vec.rotate_around_x(angle);
   expected = Vector(0, 0, 1);
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
-
   angle = 90;
-  vec = Vector(0,0,1);
+  vec = Vector(0, 0, 1);
   result = vec.rotate_around_x(angle);
   expected = Vector(0, -1, 0);
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
@@ -215,7 +221,7 @@ TEST(VectorBasics, RotateAroundX) {
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
   angle = 180;
-  vec = Vector(0,1,0);
+  vec = Vector(0, 1, 0);
   result = vec.rotate_around_x(angle);
   expected = Vector(0, -1, 0);
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
@@ -223,10 +229,11 @@ TEST(VectorBasics, RotateAroundX) {
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
   angle = 180;
-  vec = Vector(1,1,1);
+  vec = Vector(1, 1, 1);
   result = vec.rotate_around_x(angle);
   expected = Vector(1, -1, -1);
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 }
+
