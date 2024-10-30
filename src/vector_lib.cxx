@@ -1,7 +1,7 @@
 #include "vector_lib.h"
 #include <cmath>
-#include <stdexcept>
 #include <numbers>
+#include <stdexcept>
 
 using std::cos;
 using std::sin;
@@ -56,10 +56,30 @@ Vector Vector::rotate_around_x(double angle) const {
   long double pi = std::numbers::pi_v<long double>;
   long double radians = angle * pi / 180.0;
 
-  long double new_y = (p.y * cos(radians)) - (p.z * sin(radians));
+  long double new_y = (p.y * cos(radians)) + (p.z * -sin(radians));
   long double new_z = (p.y * sin(radians)) + (p.z * cos(radians));
 
   return Vector(p.x, new_y, new_z);
+}
+
+Vector Vector::rotate_around_y(double angle) const {
+  long double pi = std::numbers::pi_v<long double>;
+  long double radians = angle * pi / 180.0;
+
+  long double new_x = (p.x * cos(radians)) + (p.z * sin(radians));
+  long double new_z = (p.x * -sin(radians)) + (p.z * cos(radians));
+
+  return Vector(new_x, p.y, new_z);
+}
+
+Vector Vector::rotate_around_z(double angle) const {
+  long double pi = std::numbers::pi_v<long double>;
+  long double radians = angle * pi / 180.0;
+
+  long double new_x = (p.x * cos(radians)) + (p.y * -sin(radians));
+  long double new_y = (p.x * sin(radians)) + (p.y * cos(radians));
+
+  return Vector(new_x, new_y, p.z);
 }
 
 Vector Vector::operator+(const Vector &other) const {

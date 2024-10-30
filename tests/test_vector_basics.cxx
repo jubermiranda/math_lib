@@ -170,7 +170,8 @@ TEST(VectorBasics, DirectionCossines) {
   // vector with same values (x,y,z) result equals cossines
   vec = Vector(42, 42, 42);
   Vector cossines = vec.direction_cossines();
-  EXPECT_TRUE(cossines.x() == cossines.y() == cossines.z());
+  EXPECT_EQ(cossines.x(), cossines.y());
+  EXPECT_EQ(cossines.x(), cossines.z());
 }
 
 TEST(VectorBasics, OppositeVector) {
@@ -254,7 +255,7 @@ TEST(VectorBasics, RotateAroundY) {
 
   vec = Vector(1, 0, 0);
   result = vec.rotate_around_y(angle);
-  expected = Vector(0, 0, 1);
+  expected = Vector(0, 0, -1);
 
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
