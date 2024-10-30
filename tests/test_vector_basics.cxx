@@ -204,7 +204,9 @@ TEST(VectorBasics, RotateAroundX) {
   Vector result;
   double angle;
 
+ // Rotate around X by 90 degrees
   angle = 90;
+
   vec = Vector(0, 1, 0);
   result = vec.rotate_around_x(angle);
   expected = Vector(0, 0, 1);
@@ -212,28 +214,109 @@ TEST(VectorBasics, RotateAroundX) {
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
-  angle = 90;
   vec = Vector(0, 0, 1);
   result = vec.rotate_around_x(angle);
   expected = Vector(0, -1, 0);
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+ //
 
+ // Rotate around X by 180 degrees
   angle = 180;
+
   vec = Vector(0, 1, 0);
   result = vec.rotate_around_x(angle);
   expected = Vector(0, -1, 0);
+
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
 
-  angle = 180;
   vec = Vector(1, 1, 1);
   result = vec.rotate_around_x(angle);
   expected = Vector(1, -1, -1);
+
   EXPECT_NEAR(result.x(), expected.x(), kTolerance);
   EXPECT_NEAR(result.y(), expected.y(), kTolerance);
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+ //
 }
 
+TEST(VectorBasics, RotateAroundY) {
+  Vector vec;
+  Vector expected;
+  Vector result;
+  double angle;
+
+ // Rotate around Y by 90 degrees
+  angle = 90;
+
+  vec = Vector(1, 0, 0);
+  result = vec.rotate_around_y(angle);
+  expected = Vector(0, 0, 1);
+
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+
+  vec = Vector(0, 0, 1);
+  result = vec.rotate_around_y(angle);
+  expected = Vector(1, 0, 0);
+
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+ //
+
+ // Rotate around Y by 180 degrees
+  angle = 180;
+
+  vec = Vector(1, 1, 1);
+  result = vec.rotate_around_y(angle);
+  expected = Vector(-1, 1, -1);
+
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+ //
+}
+
+TEST(VectorBasics, RotateAroundZ) {
+  Vector vec;
+  Vector expected;
+  Vector result;
+  double angle;
+
+ // Rotate around Z by 90 degrees
+  angle = 90;
+
+  vec = Vector(1, 0, 0);
+  result = vec.rotate_around_z(angle);
+  expected = Vector(0, 1, 0);
+
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+
+  vec = Vector(0, 1, 0);
+  result = vec.rotate_around_z(angle);
+  expected = Vector(-1, 0, 0);
+
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+ //
+
+ // Rotate around Z by 180 degrees
+  angle = 180;
+
+  vec = Vector(1, 1, 1);
+  result = vec.rotate_around_z(angle);
+  expected = Vector(-1, -1, 1);
+
+  EXPECT_NEAR(result.x(), expected.x(), kTolerance);
+  EXPECT_NEAR(result.y(), expected.y(), kTolerance);
+  EXPECT_NEAR(result.z(), expected.z(), kTolerance);
+ //
+}
