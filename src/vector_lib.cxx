@@ -86,6 +86,10 @@ Vector Vector::operator+(const Vector &other) const {
   return Vector(p.x + other.x(), p.y + other.y(), p.z + other.z());
 }
 
+Vector Vector::operator-(const Vector &other) const {
+  return Vector(p.x - other.x(), p.y - other.y(), p.z - other.z());
+}
+
 Vector Vector::operator/(double n) const {
   return Vector(p.x / n, p.y / n, p.z / n);
 }
