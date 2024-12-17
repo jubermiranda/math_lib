@@ -10,6 +10,31 @@
 using std::string;
 const double kTolerance = 1e-10;
 
+TEST(VectorBasics, Constructors) {
+  Vector vec;
+  Point p, q;
+
+  // empty constructor
+  vec = Vector();
+  EXPECT_EQ(vec.x(), 0.0);
+  EXPECT_EQ(vec.y(), 0.0);
+  EXPECT_EQ(vec.z(), 0.0);
+  EXPECT_TRUE(vec.is_null());
+
+  // point constructor 
+  p = Point(1, 2, 3);
+  q = Point(5, 5, 5);
+  EXPECT_EQ(Vector(p, q), Vector(q - p));
+
+  vec = Vector(p, q);
+  EXPECT_EQ(vec.x(), q.x - p.x);
+  EXPECT_EQ(vec.y(), q.y - p.y);
+  EXPECT_EQ(vec.z(), q.z - p.z);
+
+  // using a point to create a vector is the same that use x,y,z as param
+  EXPECT_EQ( Vector(Point(7, 7, 7)), Vector(7, 7, 7) );
+}
+
 TEST(VectorBasics, Module) {
   Vector vec;
 
@@ -58,8 +83,8 @@ TEST(VectorBasics, IsNull) {
   EXPECT_FALSE(vec.is_null());
 }
 
-TEST(VectorBasics, IsUnit) {
-  Vector vec;
+TEST(VectorBasics, UnitVector) {
+  Vector vec, expect_unit;
 
   vec = Vector(1, 0, 0);
   EXPECT_TRUE(vec.is_unit());
@@ -75,40 +100,30 @@ TEST(VectorBasics, IsUnit) {
 
   vec = Vector(1, 2, 2);
   EXPECT_FALSE(vec.is_unit());
-  // vec divided by its mod() results in unit vector
-  Vector result = vec / vec.mod();
-  EXPECT_TRUE(result.is_unit());
-}
-
-TEST(VectorBasics, Constructors) {
-  Vector vec;
-  Point p, q;
-
-  vec = Vector();
-  EXPECT_EQ(vec.x(), 0.0);
-  EXPECT_EQ(vec.y(), 0.0);
-  EXPECT_EQ(vec.z(), 0.0);
-  EXPECT_TRUE(vec.is_null());
-
-  p = Point(1, 2, 3);
-  q = Point(5, 5, 5);
-  EXPECT_EQ(Vector(p, q), Vector(q - p));
-
-  vec = Vector(p, q);
-  EXPECT_EQ(vec.x(), q.x - p.x);
-  EXPECT_EQ(vec.y(), q.y - p.y);
-  EXPECT_EQ(vec.z(), q.z - p.z);
-
-  EXPECT_EQ(Vector(Point(7, 7, 7)), Vector(7, 7, 7));
-}
-
-TEST(VectorBasics, UnitVector) {
-  Vector vec, expect_unit;
 
   vec = Vector(3.0, 4.0, 0.0);
   expect_unit = Vector(0.6, 0.8, 0);
-
   EXPECT_EQ(expect_unit, vec.unit());
+
+  EXPECT_TRUE( vec.unit().is_unit() );
+  EXPECT_TRUE( vec.unit().mod() == 1 );
+
+  // divide a vector by its mod result in a unit vector
+  vec = Vector(4,3,2);
+  expect_unit = vec / vec.mod();
+  EXPECT_EQ( expect_unit, vec.unit());
+  EXPECT_TRUE( expect_unit.mod() == 1 );
+
+  vec = Vector(-5,3,-1);
+  expect_unit = vec / vec.mod();
+  EXPECT_EQ( expect_unit, vec.unit());
+  EXPECT_TRUE( expect_unit.mod() == 1 );
+
+  vec = Vector(0.41, 2.99, 3.1);
+  expect_unit = vec / vec.mod();
+  EXPECT_EQ( expect_unit, vec.unit());
+  // round error here, so use a tolerance
+  EXPECT_NEAR( expect_unit.mod(), 1, kTolerance );
 }
 
 TEST(VectorBasics, ScaleVector) {
