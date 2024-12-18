@@ -383,11 +383,37 @@ TEST(VectorBasics, RotateAroundZ) {
 }
 
 TEST(VectorBasics, Angle){
-  Vector v(1, 0, 0);
-  Vector w(0, 1, 0);
-  double lhs = 90;
-  double rhs = v.angle(w);
+  double lhs, rhs;
+  Vector v, w;
 
+  v = Vector(1, 0, 0);
+  w = Vector(0, 1, 0);
+  lhs = 90;
+  rhs = v.angle(w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector(1, 0, 0);
+  w = Vector(1, 0, 0);
+  lhs = 0;
+  rhs = v.angle(w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector(sqrt(3), 1, 0);
+  w = Vector(2, 0, 0);
+  lhs = 30;
+  rhs = v.angle(w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector(1, 1, 0);
+  w = Vector(1, 0, 0);
+  lhs = 45;
+  rhs = v.angle(w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector(1, sqrt(3), 0);
+  w = Vector(2, 0, 0);
+  lhs = 60;
+  rhs = v.angle(w);
   EXPECT_NEAR(lhs, rhs, kTolerance);
 }
 
