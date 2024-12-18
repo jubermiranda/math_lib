@@ -198,6 +198,9 @@ TEST(VectorBasics, Operators){
   lhs = k * ( u * v );
   rhs = (k * u) * v;
   EXPECT_EQ(lhs, rhs);
+
+  // u * u === |u|^2
+  EXPECT_EQ( u * u, u.mod() * u.mod() );
 }
 
 TEST(VectorBasics, DirectionCossines) {
@@ -378,3 +381,13 @@ TEST(VectorBasics, RotateAroundZ) {
   EXPECT_NEAR(result.z(), expected.z(), kTolerance);
  //
 }
+
+TEST(VectorBasics, Angle){
+  Vector v(1, 0, 0);
+  Vector w(0, 1, 0);
+  double lhs = 90;
+  double rhs = v.angle(w);
+
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+}
+

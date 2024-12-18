@@ -38,10 +38,9 @@ public:
   bool operator==(const Vector &) const;
   bool operator!=(const Vector &) const;
 
-  static double angle(const Vector &, const Vector &);
-  static double mix_product(const Vector &, const Vector &, const Vector &);
-  static Vector cross_product(const Vector &, const Vector &);
-  static Vector projection(const Vector &, const Vector &);
+  double angle(const Vector &) const;
+  Vector cross_product(const Vector &, const Vector &);
+  Vector projection(const Vector &, const Vector &);
 
 private:
   Point p;
