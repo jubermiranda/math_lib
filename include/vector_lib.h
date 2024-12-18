@@ -47,4 +47,6 @@ private:
   Point p;
 };
 
+Vector operator*(double, const Vector&);
+
 #endif

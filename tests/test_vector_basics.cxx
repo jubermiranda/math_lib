@@ -159,7 +159,7 @@ TEST(VectorBasics, ScaleVector) {
 }
 
 TEST(VectorBasics, Operators){
-  Vector v, w, expected;
+  Vector u, v, w, expected;
 
   // sum - diff
   v = Vector(1, 3, 5);
@@ -172,6 +172,32 @@ TEST(VectorBasics, Operators){
   EXPECT_EQ( v - w, expected );
   expected = Vector(0, -2, -4);
   EXPECT_EQ( w - v, expected );
+
+  // * /
+  v = Vector(3, 4, 0);
+  EXPECT_EQ( v.mod(), 5 );
+  EXPECT_EQ( (v * 0.5), (v / 2) );
+  v = v * 2;
+  EXPECT_EQ( v.mod(), 10);
+  v = v / 2;
+  EXPECT_EQ( v.mod(), 5);
+
+  EXPECT_EQ( v * -1, v.opposite() );
+
+  // u( v + w ) === u.v + u.w
+  double lhs, rhs;
+  lhs = u * (v + w);
+  rhs = u * v + u * w;
+  EXPECT_EQ( lhs, rhs );
+
+  // u * v === v * u
+  EXPECT_EQ( v*u, u*v );
+
+  // k(u * v) === (ku) * v
+  double k = 42;
+  lhs = k * ( u * v );
+  rhs = (k * u) * v;
+  EXPECT_EQ(lhs, rhs);
 }
 
 TEST(VectorBasics, DirectionCossines) {

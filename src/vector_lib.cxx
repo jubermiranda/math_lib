@@ -86,6 +86,10 @@ Vector Vector::operator+(const Vector &other) const {
   return Vector(p.x + other.x(), p.y + other.y(), p.z + other.z());
 }
 
+Vector Vector::operator-(const Vector &other) const {
+  return Vector(p.x - other.x(), p.y - other.y(), p.z - other.z());
+}
+
 Vector Vector::operator/(double n) const {
   return Vector(p.x / n, p.y / n, p.z / n);
 }
@@ -96,6 +100,29 @@ bool Vector::operator==(const Vector &other) const {
 
 bool Vector::operator!=(const Vector &other) const {
   return !(this->p == other.p);
+}
+
+double Vector::operator*(const Vector& other) const{
+  double result = 
+    x() * other.x()
+    + y() * other.y()
+    + z() * other.z();
+  return result;
+}
+
+Vector Vector::operator*(double k) const {
+  return (Vector(this->p * k));
+}
+
+
+Vector operator*(double k, const Vector& v){
+  return v * k;
+}
+
+// static
+
+double Vector::angle(const Vector& v1, const Vector& v2){
+  return 0;
 }
 
 /* VectorRelation: TODO
