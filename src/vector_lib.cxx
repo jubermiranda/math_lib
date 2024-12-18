@@ -122,7 +122,8 @@ Vector operator*(double k, const Vector& v){
 
 double Vector::angle(const Vector& other) const {
   long double r = (Vector(this->p) * other) / (this->mod() * other.mod());
-  return (std::acos(r));
+  long double rad = std::acos(r);
+  return (rad * (180.0 / M_PIl));
 }
 
 /* VectorRelation: TODO
