@@ -2,9 +2,11 @@
 #include <cmath>
 #include <numbers>
 #include <stdexcept>
+#include <type_traits>
 
 using std::cos;
 using std::sin;
+
 
 Vector::Vector() : p(Point(0, 0, 0)) {}
 
@@ -38,7 +40,7 @@ Vector Vector::unit() const {
 }
 
 Vector Vector::scale(double factor) const {
-  return Vector(p.x * factor, p.y * factor, p.z * factor);
+  return (Vector(*this * factor));
 }
 
 Vector Vector::direction_cossines() const {
@@ -53,8 +55,7 @@ Vector Vector::direction_cossines() const {
 Vector Vector::opposite() const { return Vector(p.x * -1, p.y * -1, p.z * -1); }
 
 Vector Vector::rotate_around_x(double angle) const {
-  long double pi = std::numbers::pi_v<long double>;
-  long double radians = angle * pi / 180.0;
+  long double radians = angle * M_PIl / 180.0;
 
   long double new_y = (p.y * cos(radians)) + (p.z * -sin(radians));
   long double new_z = (p.y * sin(radians)) + (p.z * cos(radians));
@@ -100,6 +101,28 @@ bool Vector::operator==(const Vector &other) const {
 
 bool Vector::operator!=(const Vector &other) const {
   return !(this->p == other.p);
+}
+
+double Vector::operator*(const Vector& other) const{
+  double result = 
+    x() * other.x()
+    + y() * other.y()
+    + z() * other.z();
+  return result;
+}
+
+Vector Vector::operator*(double k) const {
+  return (Vector(this->p * k));
+}
+
+
+Vector operator*(double k, const Vector& v){
+  return v * k;
+}
+
+double Vector::angle(const Vector& other) const {
+  long double r = (Vector(this->p) * other) / (this->mod() * other.mod());
+  return (std::acos(r));
 }
 
 /* VectorRelation: TODO
