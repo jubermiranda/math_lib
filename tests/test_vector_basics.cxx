@@ -158,6 +158,22 @@ TEST(VectorBasics, ScaleVector) {
   EXPECT_TRUE(vec.mod() == vec_scaled.mod());
 }
 
+TEST(VectorBasics, Operators){
+  Vector v, w, expected;
+
+  // sum - diff
+  v = Vector(1, 3, 5);
+  w = Vector(1, 1, 1);
+  expected = Vector(2, 4, 6);
+  EXPECT_EQ( expected, v + w );
+  EXPECT_EQ( v + w, w + v );
+
+  expected = Vector(0, 2, 4);
+  EXPECT_EQ( v - w, expected );
+  expected = Vector(0, -2, -4);
+  EXPECT_EQ( w - v, expected );
+}
+
 TEST(VectorBasics, DirectionCossines) {
   Vector vec;
   Vector expected;
