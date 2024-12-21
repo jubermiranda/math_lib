@@ -10,7 +10,6 @@ public:
   Rational(int p, int q);
   Rational(unsigned p, unsigned q);
 
-  Rational(long double);
   Rational(double);
   Rational(float);
 
@@ -20,8 +19,9 @@ public:
   long denominator() const { return q; }
 
   long to_l() const;
-  double to_d() const;
   float to_f() const;
+  double to_d() const;
+  long double to_ld() const;
   std::string to_s() const;
 
 private:
@@ -32,7 +32,7 @@ private:
   void check_is_valid() const;
 
   void simplify() ;
-  void decimal_to_pq(long double);
+  void decimal_to_pq(double);
 };
 
 #endif

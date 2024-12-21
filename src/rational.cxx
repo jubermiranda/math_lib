@@ -5,7 +5,7 @@
 #include <string>
 
 long mdc_euc(long a, long b);
-Rational cont_fraction(long double n);
+Rational cont_fraction(double n);
 
 Rational::Rational() : p(0), q(1), sign(true){};
 
@@ -24,14 +24,12 @@ Rational::Rational(unsigned p, unsigned q) : p(p), q(q), sign(true) {
   simplify();
 }
 
-Rational::Rational(long double n) { decimal_to_pq(n); }
-
 Rational::Rational(double n) { decimal_to_pq(n); }
 
 Rational::Rational(float n) { decimal_to_pq(n); }
 
-Rational& Rational::operator=(const Rational& other){
-  if(this != &other){
+Rational &Rational::operator=(const Rational &other) {
+  if (this != &other) {
     this->sign = other.sign;
     this->p = other.p;
     this->q = other.q;
@@ -43,6 +41,10 @@ long Rational::to_l() const { return (long)(this->p / this->q); }
 
 double Rational::to_d() const { return ((double)this->p / (double)this->q); }
 
+long double Rational::to_ld() const { 
+  return ( (long double)this->p / (long double)this->q ); 
+}
+
 float Rational::to_f() const {
   return (float)((float)this->p / (float)this->q);
 }
@@ -51,7 +53,7 @@ std::string Rational::to_s() const {
   return (std::to_string(p) + "/" + std::to_string(q));
 }
 
-void Rational::decimal_to_pq(long double n) {
+void Rational::decimal_to_pq(double n) {
   Rational result = cont_fraction(n);
   (*this) = result;
 }
@@ -84,6 +86,4 @@ long mdc_euc(long a, long b) {
   return a;
 }
 
-Rational cont_fraction(long double n){
-  throw std::runtime_error("cont_fraction not implemented");
-}
+Rational cont_fraction(double n) { if (n - ()) }
