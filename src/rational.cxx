@@ -7,19 +7,19 @@
 void decimal_to_pq(const double& n, long&, long&);
 long mdc_euc(long a, long b);
 
-Rational::Rational() : p(0), q(1), sign(false){};
+Rational::Rational() : p(0), q(1), sign(true){};
 
-Rational::Rational(long p, long q) : p(p), q(q), sign((p*q > 0)){
+Rational::Rational(long p, long q) : p(p), q(q), sign((p*q >= 0)){
   check_is_valid();
   simplify();
 }
 
-Rational::Rational(int p, int q) : p(p), q(q), sign((p*q > 0)){
+Rational::Rational(int p, int q) : p(p), q(q), sign((p*q >= 0)){
   check_is_valid();
   simplify();
 }
 
-Rational::Rational(unsigned p, unsigned q) : p(p), q(q), sign(false){
+Rational::Rational(unsigned p, unsigned q) : p(p), q(q), sign(true){
   check_is_valid();
   simplify();
 }

@@ -22,8 +22,8 @@ public:
   std::string to_s() const;
 
 private:
-  long p;
-  long q;
+  unsigned long p;
+  unsigned long q;
   bool sign;
 
   void check_is_valid() const;
