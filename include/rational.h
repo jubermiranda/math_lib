@@ -10,8 +10,11 @@ public:
   Rational(int p, int q);
   Rational(unsigned p, unsigned q);
 
+  Rational(long double);
   Rational(double);
   Rational(float);
+
+  Rational& operator=(const Rational& other);
 
   long numerator() const { return p; }
   long denominator() const { return q; }
@@ -27,7 +30,9 @@ private:
   bool sign;
 
   void check_is_valid() const;
+
   void simplify() ;
+  void decimal_to_pq(long double);
 };
 
 #endif
