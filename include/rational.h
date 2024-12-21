@@ -16,15 +16,18 @@ public:
   long numerator() const { return p; }
   long denominator() const { return q; }
 
-  long to_l();
-  double to_d();
-  float to_f();
-  std::string to_s();
+  long to_l() const;
+  double to_d() const;
+  float to_f() const;
+  std::string to_s() const;
 
 private:
   long p;
   long q;
   bool sign;
+
+  void check_is_valid() const;
+  void simplify() ;
 };
 
 #endif

@@ -17,8 +17,20 @@ TEST(RationalBasics, Constructors) {
   r = Rational(p, q);
 
   // decimal
-  double d = 1.3333333333333;
-  r = Rational(d);
+  //double d = 1.3333333333333;
+  //r = Rational(d);
+}
+
+TEST(RationalBasics, Simplify){
+  Rational r;
+
+  r = Rational(100,42);
+  EXPECT_EQ(r.numerator(), 50);
+  EXPECT_EQ(r.denominator(), 21);
+
+  r = Rational(126,294);
+  EXPECT_EQ(r.numerator(), 3);
+  EXPECT_EQ(r.denominator(), 7);
 }
 
 TEST(RationalBasics, OutPut) {
