@@ -86,4 +86,13 @@ long mdc_euc(long a, long b) {
   return a;
 }
 
-Rational cont_fraction(double n) { if (n - ()) }
+Rational cont_fraction(double n) {
+  double int_part;
+  double decimal_part = std::modf(n, &int_part);
+
+  if(decimal_part == 0)
+    return Rational((long)int_part, (long)1);
+
+  Rational result = ((long) int_part + (1/decimal_part));
+  return result;
+}
