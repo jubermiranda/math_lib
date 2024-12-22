@@ -16,9 +16,39 @@ TEST(RationalBasics, Constructors) {
   long q = 4;
   r = Rational(p, q);
 
+  //int
+  r = Rational(4);
+
   // decimal
-  //double d = 1.3333333333333;
-  //r = Rational(d);
+  r = Rational(3.14159265359);
+}
+
+TEST(RationalBasics, UpdateDenominator){
+  Rational r(1, 7);
+  r.update_denominator(r.denominator() + Rational(1, 3));
+
+  EXPECT_EQ(r, Rational(3, 22));
+}
+
+TEST(RationalBasics, numerator){
+  Rational r;
+
+  r = Rational();
+  EXPECT_EQ(r.numerator(), 0);
+
+  r = Rational(4);
+  EXPECT_EQ(r.numerator(), 4);
+
+  r = Rational(16, 8);
+  EXPECT_EQ(r.numerator(), 2);
+
+  r = Rational(-16, 8);
+  EXPECT_EQ(r.numerator(), 2);
+
+  r = Rational(0.25);
+  EXPECT_EQ(r.numerator(), 1);
+  r = Rational(1.25);
+  EXPECT_EQ(r.numerator(), 5);
 }
 
 TEST(RationalBasics, Simplify){

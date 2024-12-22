@@ -3,9 +3,13 @@
 #include <numbers>
 #include <stdexcept>
 #include <string>
+#include <vector>
+
+using std::vector;
+
+const unsigned STD_CONT_FRA_MAX = 27;
 
 long mdc_euc(long a, long b);
-Rational cont_fraction(double n);
 
 Rational::Rational() : p(0), q(1), sign(true){};
 
@@ -14,13 +18,57 @@ Rational::Rational(long p, long q) : p(p), q(q), sign((p * q >= 0)) {
   simplify();
 }
 
-Rational::Rational(int p, int q) : p(p), q(q), sign((p * q >= 0)) {
+Rational::Rational(int p, long q) : p(p), q(q), sign((p * q >= 0)) {
   check_is_valid();
+  simplify();
+}
+
+Rational::Rational(long p, int q) : p(p), q(q), sign((p * q >= 0)) {
+  check_is_valid();
+  simplify();
+}
+
+Rational::Rational(int p, int q){
+  if(q == 0)
+    throw std::runtime_error("division by 0 not allowed");
+
+  this->sign = (p*q >= 0);
+  if(p < 0)
+    p = p*-1;
+  if(q < 0)
+    q = q*-1;
+  this->p = p;
+  this->q = q;
   simplify();
 }
 
 Rational::Rational(unsigned p, unsigned q) : p(p), q(q), sign(true) {
   check_is_valid();
+  simplify();
+}
+
+Rational::Rational(int p, const Rational &q) { *this = Rational((long)p, q); }
+
+Rational::Rational(long p, const Rational &q) {
+  if (p == 0 || q == 0) {
+    *this = Rational(0);
+    return;
+  }
+
+  this->sign = ((p >= 0) == q.sign);
+  this->q = q.p;
+  this->p = p * q.q;
+  simplify();
+}
+
+Rational::Rational(double p, const Rational &q) {
+  *this = Rational(Rational(p), q);
+}
+
+Rational::Rational(const Rational &p, const Rational &q) {
+  this->sign = (p.sign == q.sign);
+  this->p = p.p * q.q;
+  this->q = p.q * q.p;
   simplify();
 }
 
@@ -42,11 +90,17 @@ Rational::Rational(int n) {
   q = 1;
 }
 
-Rational::Rational(double n) { decimal_to_pq(n); }
+Rational::Rational(double n) {
+  Rational result = double_to_rational(n);
+  (*this) = result;
+}
 
-Rational::Rational(float n) { decimal_to_pq(n); }
+Rational::Rational(float n) {
+  Rational result = double_to_rational(n);
+  (*this) = result;
+}
 
-long Rational::numerator() const { return (sign) ? p : -p; }
+long Rational::numerator() const { return p; }
 
 long Rational::denominator() const { return q; }
 
@@ -87,13 +141,29 @@ std::string Rational::to_s() const {
 }
 
 Rational Rational::inverse() const {
+  if(numerator() == 0)
+    return (Rational(0));
+
   Rational result;
 
   result.p = this->q;
   result.q = this->p;
   result.sign = this->sign;
+  result.simplify();
 
   return result;
+}
+
+void Rational::update_denominator(const Rational& r){
+  if(r == 0)
+    throw std::runtime_error("division by 0 not allowed");
+  if(p == 0)
+    return;
+
+  sign = (sign == r.sign);
+  q = r.p;
+  p = p * r.q;
+  this->simplify();
 }
 
 Rational &Rational::operator=(const Rational &other) {
@@ -192,17 +262,21 @@ void Rational::check_is_valid() const {
     throw std::runtime_error("division by zero error");
 }
 
-bool Rational::same_sign(const Rational&other) const {
+bool Rational::same_sign(const Rational &other) const {
   return (sign == other.sign);
 }
 
 void Rational::simplify() {
+  if(p == 0)
+    return;
+
   long mdc = mdc_euc(p, q);
   if (mdc == q) {
     p = p / q;
     q = 1;
     return;
   }
+
   if (mdc == 1)
     return;
 
@@ -210,9 +284,35 @@ void Rational::simplify() {
   q /= mdc;
 }
 
-void Rational::decimal_to_pq(double n) {
-  Rational result = cont_fraction(n);
-  (*this) = result;
+Rational Rational::double_to_rational(double n) const {
+  double a0;
+  double decimal_part;
+  decimal_part = std::modf(n, &a0);
+  Rational result((long)a0);
+  if(decimal_part == 0)
+    return result;
+
+  double an;
+  decimal_part = 1 / decimal_part;
+  decimal_part = std::modf(decimal_part, &an);
+  if(decimal_part == 0)
+    return (result + Rational(1, (long)an));
+
+  vector<double> parts = vector<double>();
+  parts.push_back(an);
+
+  while (decimal_part > 0 && parts.size() < STD_CONT_FRA_MAX-1) {
+    decimal_part = 1.0 / decimal_part;
+    decimal_part = std::modf(decimal_part, &an);
+    parts.push_back(an);
+  }
+
+  Rational aux(1, (long)parts.size()-1);
+  for (int i = parts.size() - 2; i >= 0; i--) {
+    aux = parts.at(i) + Rational(1, aux);
+  }
+  result = result + Rational(1, aux);
+  return result;
 }
 
 // aux
@@ -310,15 +410,4 @@ long mdc_euc(long a, long b) {
     b = rest;
   }
   return a;
-}
-
-Rational cont_fraction(double n) {
-  double int_part;
-  double decimal_part = std::modf(n, &int_part);
-
-  if (decimal_part == 0)
-    return Rational((long)int_part, (long)1);
-
-  Rational result = ((long)int_part + (1 / decimal_part));
-  return result;
 }
