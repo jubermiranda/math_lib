@@ -80,6 +80,15 @@ TEST(RationalBasics, Decimal){
   EXPECT_EQ(r.decimal(), expected_decimal_part);
 }
 
+TEST(RationalBasics, Convertions){
+  Rational r;
+
+  r = Rational(5, 4);
+  EXPECT_EQ(r.to_i(), 1);
+  EXPECT_EQ(r.to_d(), 1.25);
+  EXPECT_EQ(r.to_s(), "5/4");
+}
+
 TEST(RationalBasics, UpdateDenominator){
   Rational r(1, 7);
   r.update_denominator(r.denominator() + Rational(1, 3));
