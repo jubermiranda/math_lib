@@ -5,6 +5,8 @@
 
 using std::string;
 
+const double kTolerance = 1e-10;
+
 TEST(RationalBasics, Constructors) {
   Rational r;
 
@@ -53,7 +55,29 @@ TEST(RationalBasics, NumeratorDenominator){
   r = Rational(Rational(1, 2), Rational(3, 4));
   EXPECT_EQ(r.numerator(), 2);
   EXPECT_EQ(r.denominator(), 3);
+}
 
+TEST(RationalBasics, Decimal){
+  // Rational.decimal should return the decimal part of the represented number p/q (converted to double)
+  // sometimes, to_d() couldn't return the exact representation. so maybe its a approximation
+  Rational r;
+
+  double n = 3.14159265359;
+  double expected_decimal_part = 0.14159265359;
+  r = Rational(n);
+  EXPECT_NEAR(r.decimal(), expected_decimal_part, kTolerance );
+
+  r = Rational(1, 4);
+  expected_decimal_part = 0.25;
+  EXPECT_EQ(r.decimal(), expected_decimal_part);
+
+  r = Rational(-1, 4);
+  expected_decimal_part = -0.25;
+  EXPECT_EQ(r.decimal(), expected_decimal_part);
+
+  r = Rational(1);
+  expected_decimal_part = 0;
+  EXPECT_EQ(r.decimal(), expected_decimal_part);
 }
 
 TEST(RationalBasics, UpdateDenominator){
