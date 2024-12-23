@@ -25,14 +25,7 @@ TEST(RationalBasics, Constructors) {
   //TODO:("others constructors")
 }
 
-TEST(RationalBasics, UpdateDenominator){
-  Rational r(1, 7);
-  r.update_denominator(r.denominator() + Rational(1, 3));
-
-  EXPECT_EQ(r, Rational(3, 22));
-}
-
-TEST(RationalBasics, numerator){
+TEST(RationalBasics, NumeratorDenominator){
   Rational r;
 
   r = Rational();
@@ -40,17 +33,34 @@ TEST(RationalBasics, numerator){
 
   r = Rational(4);
   EXPECT_EQ(r.numerator(), 4);
+  EXPECT_EQ(r.denominator(), 1);
 
   r = Rational(16, 8);
   EXPECT_EQ(r.numerator(), 2);
+  EXPECT_EQ(r.denominator(), 1);
 
   r = Rational(-16, 8);
   EXPECT_EQ(r.numerator(), 2);
+  EXPECT_EQ(r.denominator(), 1);
 
   r = Rational(0.25);
   EXPECT_EQ(r.numerator(), 1);
+  EXPECT_EQ(r.denominator(), 4);
   r = Rational(1.25);
   EXPECT_EQ(r.numerator(), 5);
+  EXPECT_EQ(r.denominator(), 4);
+
+  r = Rational(Rational(1, 2), Rational(3, 4));
+  EXPECT_EQ(r.numerator(), 2);
+  EXPECT_EQ(r.denominator(), 3);
+
+}
+
+TEST(RationalBasics, UpdateDenominator){
+  Rational r(1, 7);
+  r.update_denominator(r.denominator() + Rational(1, 3));
+
+  EXPECT_EQ(r, Rational(3, 22));
 }
 
 TEST(RationalBasics, Simplify){
