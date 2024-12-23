@@ -21,6 +21,8 @@ TEST(RationalBasics, Constructors) {
 
   // decimal
   r = Rational(3.14159265359);
+
+  //TODO:("others constructors")
 }
 
 TEST(RationalBasics, UpdateDenominator){
