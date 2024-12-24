@@ -89,6 +89,21 @@ TEST(RationalBasics, Convertions){
   EXPECT_EQ(r.to_s(), "5/4");
 }
 
+TEST(RationalBasics, IsPositive){
+  Rational r;
+
+  r = Rational(4, 2);
+  EXPECT_TRUE(r.is_positive());
+  // in this impl, 0 return true to is_positive
+  r = Rational(0);
+  EXPECT_TRUE(r.is_positive());
+
+  r = Rational(-2, 4);
+  EXPECT_FALSE(r.is_positive());
+  r = Rational(2, -4);
+  EXPECT_FALSE(r.is_positive());
+}
+
 TEST(RationalBasics, UpdateDenominator){
   Rational r(1, 7);
   r.update_denominator(r.denominator() + Rational(1, 3));
