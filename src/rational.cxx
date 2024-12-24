@@ -7,9 +7,11 @@
 
 using std::vector;
 
-const unsigned STD_CONT_FRA_MAX = 27;
+const unsigned STD_CONT_FRA_MAX = 19;
+const double kTolerance = 1e-13;
 
 long mdc_euc(long a, long b);
+bool near_zero(double n);
 
 Rational::Rational() : p(0), q(1), sign(true){};
 
@@ -80,13 +82,13 @@ Rational::Rational(unsigned n) {
 
 Rational::Rational(long n) {
   this->sign = (n >= 0);
-  p = n;
+  p = (n >=0)?n:-n;
   q = 1;
 }
 
 Rational::Rational(int n) {
   this->sign = (n >= 0);
-  p = n;
+  p = (n >=0)?n:-n;
   q = 1;
 }
 
@@ -289,19 +291,19 @@ Rational Rational::double_to_rational(double n) const {
   double decimal_part;
   decimal_part = std::modf(n, &a0);
   Rational result((long)a0);
-  if(decimal_part == 0)
+  if(near_zero(decimal_part))
     return result;
 
   double an;
   decimal_part = 1 / decimal_part;
   decimal_part = std::modf(decimal_part, &an);
-  if(decimal_part == 0)
+  if(near_zero(decimal_part))
     return (result + Rational(1, (long)an));
 
   vector<double> parts = vector<double>();
   parts.push_back(an);
 
-  while (decimal_part > 0 && parts.size() < STD_CONT_FRA_MAX-1) {
+  while (!near_zero(decimal_part) && parts.size() < STD_CONT_FRA_MAX-1) {
     decimal_part = 1.0 / decimal_part;
     decimal_part = std::modf(decimal_part, &an);
     parts.push_back(an);
@@ -410,4 +412,8 @@ long mdc_euc(long a, long b) {
     b = rest;
   }
   return a;
+}
+
+bool near_zero(double n){
+  return (0.0 - kTolerance <= n && 0.0 + kTolerance >= n );
 }
