@@ -111,7 +111,6 @@ TEST(RationalBasics, Inverse){
   EXPECT_EQ(r.numerator(), r.inverse().denominator());
   EXPECT_EQ(r.denominator(), r.inverse().numerator());
   EXPECT_EQ(r.inverse(), Rational(7, 3));
-
 }
 
 TEST(RationalBasics, UpdateDenominator){
@@ -119,6 +118,27 @@ TEST(RationalBasics, UpdateDenominator){
   r.update_denominator(r.denominator() + Rational(1, 3));
 
   EXPECT_EQ(r, Rational(3, 22));
+}
+
+TEST(RationalBasics, Sum){
+  Rational n1, n2;
+
+  n1 = Rational(1, 2);
+  n2 = Rational(3, 2);
+  EXPECT_EQ(n1 + n2, Rational(4, 2));
+  EXPECT_EQ(n1 + n2, Rational(2));
+
+  n1 = Rational(7);
+  n2 = Rational(3);
+  EXPECT_EQ(n1 + n2, Rational(10));
+  n2 = Rational(-3);
+  EXPECT_EQ(n1 + n2, Rational(4));
+
+  n1 = Rational(0.75);
+  n2 = Rational(0.25);
+  EXPECT_EQ(n1 + n2, Rational(1));
+  n2 = Rational(-0.25);
+  EXPECT_EQ(n1 + n2, Rational(0.5));
 }
 
 TEST(RationalBasics, Simplify){
