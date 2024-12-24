@@ -104,6 +104,16 @@ TEST(RationalBasics, IsPositive){
   EXPECT_FALSE(r.is_positive());
 }
 
+TEST(RationalBasics, Inverse){
+  Rational r;
+
+  r = Rational(3,7);
+  EXPECT_EQ(r.numerator(), r.inverse().denominator());
+  EXPECT_EQ(r.denominator(), r.inverse().numerator());
+  EXPECT_EQ(r.inverse(), Rational(7, 3));
+
+}
+
 TEST(RationalBasics, UpdateDenominator){
   Rational r(1, 7);
   r.update_denominator(r.denominator() + Rational(1, 3));
