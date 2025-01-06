@@ -59,6 +59,7 @@ private:
   unsigned long q;
   bool sign;
 
+  void init_attr(long p, long q);
   void check_is_valid() const;
   bool same_sign(const Rational &) const;
 
