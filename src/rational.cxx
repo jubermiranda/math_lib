@@ -15,21 +15,13 @@ bool near_zero(double n);
 
 Rational::Rational() : p(0), q(1), sign(true){};
 
-Rational::Rational(long p, long q){
-  init_attr(p, q);
-}
+Rational::Rational(long p, long q) { init_attr(p, q); }
 
-Rational::Rational(int p, long q) : sign((p * q >= 0)) {
-  init_attr(p, q);
-}
+Rational::Rational(int p, long q) : sign((p * q >= 0)) { init_attr(p, q); }
 
-Rational::Rational(long p, int q) {
-  init_attr(p, q);
-}
+Rational::Rational(long p, int q) { init_attr(p, q); }
 
-Rational::Rational(int p, int q){
-  init_attr(p, q);
-}
+Rational::Rational(int p, int q) { init_attr(p, q); }
 
 Rational::Rational(unsigned p, unsigned q) : p(p), q(q), sign(true) {
   check_is_valid();
@@ -68,13 +60,13 @@ Rational::Rational(unsigned n) {
 
 Rational::Rational(long n) {
   this->sign = (n >= 0);
-  p = (n >=0)?n:-n;
+  p = (n >= 0) ? n : -n;
   q = 1;
 }
 
 Rational::Rational(int n) {
   this->sign = (n >= 0);
-  p = (n >=0)?n:-n;
+  p = (n >= 0) ? n : -n;
   q = 1;
 }
 
@@ -129,7 +121,7 @@ std::string Rational::to_s() const {
 }
 
 Rational Rational::inverse() const {
-  if(numerator() == 0)
+  if (numerator() == 0)
     return (Rational(0));
 
   Rational result;
@@ -142,10 +134,10 @@ Rational Rational::inverse() const {
   return result;
 }
 
-void Rational::update_denominator(const Rational& r){
-  if(r == 0)
+void Rational::update_denominator(const Rational &r) {
+  if (r == 0)
     throw std::runtime_error("division by 0 not allowed");
-  if(p == 0)
+  if (p == 0)
     return;
 
   sign = (sign == r.sign);
@@ -245,10 +237,10 @@ bool Rational::operator!=(const Rational &other) const {
 
 // private
 
-void Rational::init_attr(long p, long q){
-  this->sign = (p*q >= 0);
-  this->p = (p >=0)?p:p*-1;
-  this->q = (q >=0)?q:q*-1;
+void Rational::init_attr(long p, long q) {
+  this->sign = (p * q >= 0);
+  this->p = (p >= 0) ? p : p * -1;
+  this->q = (q >= 0) ? q : q * -1;
   check_is_valid();
   simplify();
 }
@@ -263,7 +255,7 @@ bool Rational::same_sign(const Rational &other) const {
 }
 
 void Rational::simplify() {
-  if(p == 0)
+  if (p == 0)
     return;
 
   long mdc = mdc_euc(p, q);
@@ -285,25 +277,25 @@ Rational Rational::double_to_rational(double n) const {
   double decimal_part;
   decimal_part = std::modf(n, &a0);
   Rational result((long)a0);
-  if(near_zero(decimal_part))
+  if (near_zero(decimal_part))
     return result;
 
   double an;
   decimal_part = 1.0 / decimal_part;
   decimal_part = std::modf(decimal_part, &an);
-  if(near_zero(decimal_part))
+  if (near_zero(decimal_part))
     return (result + Rational(1, (long)an));
 
   vector<double> parts = vector<double>();
   parts.push_back(an);
 
-  while (!near_zero(decimal_part) && parts.size() < STD_CONT_FRA_MAX-1) {
+  while (!near_zero(decimal_part) && parts.size() < STD_CONT_FRA_MAX - 1) {
     decimal_part = 1 / decimal_part;
     decimal_part = std::modf(decimal_part, &an);
     parts.push_back(an);
   }
 
-  Rational aux((long)(parts.at(parts.size()-1)));
+  Rational aux((long)(parts.at(parts.size() - 1)));
   for (int i = parts.size() - 2; i >= 0; i--) {
     aux = parts.at(i) + Rational(1, aux);
   }
@@ -399,6 +391,15 @@ bool operator==(int i, const Rational &r) { return ((long)i == r); }
 bool operator==(const Rational &r, double d) { return (r.to_d() == d); }
 bool operator==(double d, const Rational &r) { return (r == d); }
 
+bool operator!=(const Rational &r, int i) { return !(r == i); }
+bool operator!=(int i, const Rational &r) { return r != i; }
+
+bool operator!=(const Rational &r, long l) { return !(r == l); }
+bool operator!=(long l, const Rational &r) { return r != l; }
+
+bool operator!=(const Rational &r, double d) { return !(r == d); }
+bool operator!=(double d, const Rational &r) { return r != d; }
+
 long mdc_euc(long a, long b) {
   while (b != 0) {
     long rest = a % b;
@@ -408,6 +409,6 @@ long mdc_euc(long a, long b) {
   return a;
 }
 
-bool near_zero(double n){
-  return (0.0 - kTolerance <= n && 0.0 + kTolerance >= n );
+bool near_zero(double n) {
+  return (0.0 - kTolerance <= n && 0.0 + kTolerance >= n);
 }
