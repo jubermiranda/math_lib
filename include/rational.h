@@ -6,22 +6,18 @@
 class Rational {
 public:
   Rational();
-  Rational(int p, int q);
-  Rational(int p, long q);
-  Rational(long p, int q);
-  Rational(long p, long q);
-  Rational(unsigned p, unsigned q);
 
-  Rational(int p, const Rational &q);
+  Rational(long p, long q);
+  Rational(long unsigned p, long unsigned q);
+
   Rational(long p, const Rational &q);
-  Rational(double p, const Rational &q);
+  Rational(long unsigned p, const Rational &q);
   Rational(const Rational &p, const Rational &q);
 
-  Rational(unsigned);
-  Rational(int);
   Rational(long);
+  Rational(long unsigned);
   Rational(double);
-  Rational(float);
+  Rational(const Rational&);
 
   long numerator() const;
   long denominator() const;
