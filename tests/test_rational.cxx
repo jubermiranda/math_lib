@@ -62,7 +62,7 @@ TEST(RationalBasics, NumeratorDenominator){
 
 TEST(RationalBasics, Decimal){
   // Rational.decimal should return the decimal part of the represented number p/q (converted to double)
-  // sometimes, to_d() couldn't return the exact representation. so maybe its a approximation
+  // sometimes double couldn't represent the exact value. so maybe its a approximation
   Rational r;
 
   double n = 3.14159265359;
@@ -90,6 +90,11 @@ TEST(RationalBasics, Convertions){
   EXPECT_EQ(static_cast<long>(r), 1);
   EXPECT_EQ(static_cast<double>(r), 1.25);
   EXPECT_EQ(r.to_s(), "5/4");
+
+  r = Rational(-5, 4);
+  EXPECT_EQ(static_cast<long>(r), -1);
+  EXPECT_EQ(static_cast<double>(r), -1.25);
+  EXPECT_EQ(r.to_s(), "-5/4");
 }
 
 TEST(RationalBasics, IsPositive){
