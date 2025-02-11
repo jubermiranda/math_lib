@@ -76,6 +76,9 @@ Rational::operator double() const {
 }
 
 std::string Rational::to_s() const {
+  if(this->p == 0)
+    return std::string("0");
+
   return (((sign) ? "" : "-") + std::to_string(p) + "/" + std::to_string(q));
 }
 

@@ -95,6 +95,16 @@ TEST(RationalBasics, Convertions){
   EXPECT_EQ(static_cast<long>(r), -1);
   EXPECT_EQ(static_cast<double>(r), -1.25);
   EXPECT_EQ(r.to_s(), "-5/4");
+
+  r = Rational(0, 4);
+  EXPECT_EQ(static_cast<long>(r), (long)0);
+  EXPECT_EQ(static_cast<double>(r), (double)0.0);
+  EXPECT_EQ(r.to_s(), "0");
+
+  r = Rational(0, -2);
+  EXPECT_EQ(static_cast<long>(r), (long)0);
+  EXPECT_EQ(static_cast<double>(r), (double)0.0);
+  EXPECT_EQ(r.to_s(), "0");
 }
 
 TEST(RationalBasics, IsPositive){
