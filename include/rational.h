@@ -6,28 +6,20 @@
 class Rational {
 public:
   Rational();
+  Rational(const Rational&);
 
   Rational(long p, long q);
-  Rational(long unsigned p, long unsigned q);
-
   Rational(long p, const Rational &q);
-  Rational(long unsigned p, const Rational &q);
   Rational(const Rational &p, const Rational &q);
 
-  Rational(long);
-  Rational(long unsigned);
-  Rational(double);
-  Rational(const Rational&);
+  explicit Rational(int);
+  explicit Rational(long);
+  explicit Rational(double);
 
   long numerator() const;
   long denominator() const;
   double decimal() const;
 
-  long to_i() const;
-  long to_l() const;
-  float to_f() const;
-  double to_d() const;
-  long double to_ld() const;
   std::string to_s() const;
 
   bool is_positive() const { return sign; };
@@ -47,7 +39,10 @@ public:
   bool operator==(const Rational &) const;
   bool operator!=(const Rational &) const;
 
-  Rational double_to_rational(double) const;
+  explicit operator long() const;
+  explicit operator unsigned long() const;
+  explicit operator double() const;
+
 
 private:
   unsigned long p;
@@ -57,78 +52,38 @@ private:
   void init_attr(long p, long q);
   void check_is_valid() const;
   bool same_sign(const Rational &) const;
+  Rational double_to_rational(double) const;
 
   void simplify();
 };
 
-Rational operator+(long, const Rational &);
-Rational operator+(const Rational &, long);
-Rational operator+(int, const Rational &);
-Rational operator+(const Rational &, int);
 Rational operator+(double, const Rational &);
 Rational operator+(const Rational &, double);
 
-Rational operator-(long, const Rational &);
-Rational operator-(const Rational &, long);
-Rational operator-(int, const Rational &);
-Rational operator-(const Rational &, int);
 Rational operator-(double, const Rational &);
 Rational operator-(const Rational &, double);
-Rational operator-(const Rational &);
 
-Rational operator*(long, const Rational &);
-Rational operator*(const Rational &, long);
-Rational operator*(int, const Rational &);
-Rational operator*(const Rational &, int);
 Rational operator*(double, const Rational &);
 Rational operator*(const Rational &, double);
 
-Rational operator/(long, const Rational &);
-Rational operator/(const Rational &, long);
-Rational operator/(int, const Rational &);
-Rational operator/(const Rational &, int);
 Rational operator/(double, const Rational &);
 Rational operator/(const Rational &, double);
 
-bool operator>(const Rational &, int);
-bool operator>(int, const Rational &);
-bool operator>(const Rational &, long);
-bool operator>(long, const Rational &);
 bool operator>(const Rational &, double);
 bool operator>(double, const Rational &);
 
-bool operator>=(const Rational &, int);
-bool operator>=(int, const Rational &);
-bool operator>=(const Rational &, long);
-bool operator>=(long, const Rational &);
 bool operator>=(const Rational &, double);
 bool operator>=(double, const Rational &);
 
-bool operator<(const Rational &, int);
-bool operator<(int, const Rational &);
-bool operator<(const Rational &, long);
-bool operator<(long, const Rational &);
 bool operator<(const Rational &, double);
 bool operator<(double, const Rational &);
 
-bool operator<=(const Rational &, int);
-bool operator<=(int, const Rational &);
-bool operator<=(const Rational &, long);
-bool operator<=(long, const Rational &);
 bool operator<=(const Rational &, double);
 bool operator<=(double, const Rational &);
 
-bool operator==(const Rational &, int);
-bool operator==(int, const Rational &);
-bool operator==(const Rational &, long);
-bool operator==(long, const Rational &);
 bool operator==(const Rational &, double);
 bool operator==(double, const Rational &);
 
-bool operator!=(const Rational &, int);
-bool operator!=(int, const Rational &);
-bool operator!=(const Rational &, long);
-bool operator!=(long, const Rational &);
 bool operator!=(const Rational &, double);
 bool operator!=(double, const Rational &);
 

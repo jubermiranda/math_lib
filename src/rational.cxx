@@ -15,23 +15,17 @@ bool near_zero(double n);
 
 Rational::Rational() : p(0), q(1), sign(true){};
 
+Rational::Rational(const Rational &other)
+    : p(other.p), q(other.q), sign(other.sign){};
+
 Rational::Rational(long p, long q) { init_attr(p, q); }
 
-Rational::Rational(int p, long q) : sign((p * q >= 0)) { init_attr(p, q); }
-
-Rational::Rational(long p, int q) { init_attr(p, q); }
-
-Rational::Rational(int p, int q) { init_attr(p, q); }
-
-Rational::Rational(unsigned p, unsigned q) : p(p), q(q), sign(true) {
-  check_is_valid();
-}
-
-Rational::Rational(int p, const Rational &q) { *this = Rational((long)p, q); }
-
 Rational::Rational(long p, const Rational &q) {
-  if (p == 0 || q == 0) {
-    *this = Rational(0);
+  if (q == (long)0)
+    throw std::runtime_error("division by 0 not allowed");
+
+  if (p == 0) {
+    *this = Rational();
     return;
   }
 
@@ -41,21 +35,11 @@ Rational::Rational(long p, const Rational &q) {
   simplify();
 }
 
-Rational::Rational(double p, const Rational &q) {
-  *this = Rational(Rational(p), q);
-}
-
 Rational::Rational(const Rational &p, const Rational &q) {
   this->sign = (p.sign == q.sign);
   this->p = p.p * q.q;
   this->q = p.q * q.p;
   simplify();
-}
-
-Rational::Rational(unsigned n) {
-  this->sign = true;
-  p = n;
-  q = 1;
 }
 
 Rational::Rational(long n) {
@@ -64,21 +48,9 @@ Rational::Rational(long n) {
   q = 1;
 }
 
-Rational::Rational(int n) {
-  this->sign = (n >= 0);
-  p = (n >= 0) ? n : -n;
-  q = 1;
-}
+Rational::Rational(int n) { (*this) = Rational((long)n); }
 
-Rational::Rational(double n) {
-  Rational result = double_to_rational(n);
-  (*this) = result;
-}
-
-Rational::Rational(float n) {
-  Rational result = double_to_rational(n);
-  (*this) = result;
-}
+Rational::Rational(double n) { *this = double_to_rational(n); }
 
 long Rational::numerator() const { return p; }
 
@@ -86,33 +58,20 @@ long Rational::denominator() const { return q; }
 
 double Rational::decimal() const {
   double int_part;
-  double decimal_part = std::modf((to_d()), &int_part);
+  double decimal_part = std::modf(static_cast<double>(*this), &int_part);
 
   return decimal_part;
 }
 
-long Rational::to_i() const {
-  int result = p / q;
-  return (sign) ? result : -result;
-}
-
-long Rational::to_l() const {
+Rational::operator long() const {
   long result = p / q;
   return (sign) ? result : -result;
 }
 
-double Rational::to_d() const {
+Rational::operator unsigned long() const { return (unsigned long)(p / q); }
+
+Rational::operator double() const {
   double result = (double)p / q;
-  return (sign) ? result : -result;
-}
-
-long double Rational::to_ld() const {
-  long double result = (long double)p / q;
-  return (sign) ? result : -result;
-}
-
-float Rational::to_f() const {
-  float result = (float)p / q;
   return (sign) ? result : -result;
 }
 
@@ -122,7 +81,7 @@ std::string Rational::to_s() const {
 
 Rational Rational::inverse() const {
   if (numerator() == 0)
-    return (Rational(0));
+    return (Rational());
 
   Rational result;
 
@@ -135,7 +94,7 @@ Rational Rational::inverse() const {
 }
 
 void Rational::update_denominator(const Rational &r) {
-  if (r == 0)
+  if (r == (long)0)
     throw std::runtime_error("division by 0 not allowed");
   if (p == 0)
     return;
@@ -212,19 +171,19 @@ Rational Rational::operator/(const Rational &other) const {
 }
 
 bool Rational::operator>(const Rational &other) const {
-  return (this->to_ld() > other.to_ld());
+  return (static_cast<double>(*this) > static_cast<double>(other));
 }
 
 bool Rational::operator>=(const Rational &other) const {
-  return (this->to_ld() >= other.to_ld());
+  return (this->operator>(other) || this->operator==(other));
 }
 
 bool Rational::operator<(const Rational &other) const {
-  return (this->to_ld() < other.to_ld());
+  return (static_cast<double>(*this) < static_cast<double>(other));
 }
 
 bool Rational::operator<=(const Rational &other) const {
-  return (this->to_ld() <= other.to_ld());
+  return (this->operator<(other) || this->operator==(other));
 }
 
 bool Rational::operator==(const Rational &other) const {
@@ -232,7 +191,7 @@ bool Rational::operator==(const Rational &other) const {
 }
 
 bool Rational::operator!=(const Rational &other) const {
-  return !(*this == other);
+  return !(this->operator==(other));
 }
 
 // private
@@ -247,7 +206,7 @@ void Rational::init_attr(long p, long q) {
 
 void Rational::check_is_valid() const {
   if (this->q == 0)
-    throw std::runtime_error("division by zero error");
+    throw std::runtime_error("denominator cannot be 0");
 }
 
 bool Rational::same_sign(const Rational &other) const {
@@ -303,99 +262,50 @@ Rational Rational::double_to_rational(double n) const {
   return result;
 }
 
-// aux
-
-Rational operator+(long l, const Rational &r) { return (Rational(l) + r); }
-Rational operator+(const Rational &r, long l) { return (l + r); }
-
-Rational operator+(int i, const Rational &r) { return (Rational(i) + r); }
-Rational operator+(const Rational &r, int i) { return (i + r); }
-
 Rational operator+(double d, const Rational &r) { return (Rational(d) + r); }
 Rational operator+(const Rational &r, double d) { return (d + r); }
-
-Rational operator-(long l, const Rational &r) { return (Rational(l) - r); }
-Rational operator-(const Rational &r, long l) { return (r - Rational(l)); }
-
-Rational operator-(int i, const Rational &r) { return (Rational(i) - r); }
-Rational operator-(const Rational &r, int i) { return (r - Rational(i)); }
 
 Rational operator-(double d, const Rational &r) { return (Rational(d) - r); }
 Rational operator-(const Rational &r, double d) { return (r - Rational(d)); }
 
-Rational operator*(long l, const Rational &r) { return (Rational(l) * r); }
-Rational operator*(const Rational &r, long l) { return (Rational(l) * r); }
-
-Rational operator*(int i, const Rational &r) { return (Rational(i) * r); }
-Rational operator*(const Rational &r, int i) { return (Rational(i) * r); }
-
 Rational operator*(double d, const Rational &r) { return (Rational(d) * r); }
 Rational operator*(const Rational &r, double d) { return (Rational(d) * r); }
-
-Rational operator/(long l, const Rational &r) { return (Rational(l) / r); }
-Rational operator/(const Rational &r, long l) { return (r / Rational(l)); }
-
-Rational operator/(int i, const Rational &r) { return (Rational(i) / r); }
-Rational operator/(const Rational &r, int i) { return (r / Rational(i)); }
 
 Rational operator/(double d, const Rational &r) { return (Rational(d) / r); }
 Rational operator/(const Rational &r, double d) { return (r / Rational(d)); }
 
-bool operator>(const Rational &r, long l) {
-  return (r.to_l() > l || (r.to_l() == l && r.decimal() != 0));
+bool operator>(const Rational &r, double d) {
+  return (static_cast<double>(r) > d);
 }
-bool operator>(long l, const Rational &r) { return (l > r.to_l()); }
-
-bool operator>(const Rational &r, int i) { return (r > (long)i); }
-bool operator>(int i, const Rational &r) { return ((long)i > r); }
-
-bool operator>(const Rational &r, double d) { return (r.to_d() > d); }
-bool operator>(double d, const Rational &r) { return (d > r.to_d()); }
-
-bool operator>=(const Rational &r, int i) { return (r.to_l() >= i); }
-bool operator>=(int i, const Rational &r) { return (i > r.to_l() || i == r); }
-
-bool operator>=(const Rational &r, long l) { return (r.to_l() >= l); }
-bool operator>=(long l, const Rational &r) { return (l > r.to_l() || l == r); }
-
-bool operator>=(const Rational &r, double d) { return (r.to_d() >= d); }
-bool operator>=(double d, const Rational &r) { return (d >= r.to_d()); }
-
-bool operator<(const Rational &r, long l) { return (r.to_l() < l); }
-bool operator<(long l, const Rational &r) {
-  return ((l < r.to_l()) || (l == r.to_l() && r.decimal() != 0));
+bool operator>(double d, const Rational &r) {
+  return (d > static_cast<double>(r));
 }
-bool operator<(const Rational &r, int i) { return (r < (long)i); }
-bool operator<(int i, const Rational &r) { return ((long)i < r); }
 
-bool operator<(const Rational &r, double d) { return (r.to_d() < d); }
-bool operator<(double d, const Rational &r) { return (d < r.to_d()); }
-
-bool operator<=(const Rational &r, long l) { return (r.to_l() < l || r == l); }
-bool operator<=(long l, const Rational &r) { return (l < r.to_l() || l == r); }
-
-bool operator<=(const Rational &r, int i) { return (r <= (long)i); }
-bool operator<=(int i, const Rational &r) { return ((long)i <= r); }
-
-bool operator<=(const Rational &r, double d) { return (r.to_d() <= d); }
-bool operator<=(double d, const Rational &r) { return (d <= r.to_d()); }
-
-bool operator==(const Rational &r, long l) {
-  return (r.to_l() == l && r.decimal() == 0);
+bool operator>=(const Rational &r, double d) {
+  return (static_cast<double>(r) >= d);
 }
-bool operator==(long l, const Rational &r) { return (r == l); }
+bool operator>=(double d, const Rational &r) {
+  return (d >= static_cast<double>(r));
+}
 
-bool operator==(const Rational &r, int i) { return (r == (long)i); }
-bool operator==(int i, const Rational &r) { return ((long)i == r); }
+bool operator<(const Rational &r, double d) {
+  return (static_cast<double>(r) < d);
+}
+bool operator<(double d, const Rational &r) {
+  return (d < static_cast<double>(r));
+}
 
-bool operator==(const Rational &r, double d) { return (r.to_d() == d); }
+bool operator<=(const Rational &r, double d) {
+  return (static_cast<double>(r) <= d);
+}
+bool operator<=(double d, const Rational &r) {
+  return (d <= static_cast<double>(r));
+}
+
+bool operator==(const Rational &r, double d) {
+  return (static_cast<double>(r) == d);
+}
 bool operator==(double d, const Rational &r) { return (r == d); }
-
-bool operator!=(const Rational &r, int i) { return !(r == i); }
-bool operator!=(int i, const Rational &r) { return r != i; }
-
-bool operator!=(const Rational &r, long l) { return !(r == l); }
-bool operator!=(long l, const Rational &r) { return r != l; }
 
 bool operator!=(const Rational &r, double d) { return !(r == d); }
 bool operator!=(double d, const Rational &r) { return r != d; }

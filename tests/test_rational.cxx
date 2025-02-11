@@ -24,7 +24,10 @@ TEST(RationalBasics, Constructors) {
   // decimal
   r = Rational(3.14159265359);
 
-  //TODO:("others constructors")
+  // others
+  r = Rational( Rational(1, 2) );
+  r = Rational( 4, Rational(1, 3) );
+  r = Rational( Rational(1,2), Rational(3,4) );
 }
 
 TEST(RationalBasics, NumeratorDenominator){
@@ -84,8 +87,8 @@ TEST(RationalBasics, Convertions){
   Rational r;
 
   r = Rational(5, 4);
-  EXPECT_EQ(r.to_i(), 1);
-  EXPECT_EQ(r.to_d(), 1.25);
+  EXPECT_EQ(static_cast<long>(r), 1);
+  EXPECT_EQ(static_cast<double>(r), 1.25);
   EXPECT_EQ(r.to_s(), "5/4");
 }
 
@@ -153,12 +156,3 @@ TEST(RationalBasics, Simplify){
   EXPECT_EQ(r.denominator(), 7);
 }
 
-TEST(RationalBasics, OutPut) {
-  Rational r;
-
-  r = Rational(1, 2);
-  EXPECT_EQ(r.to_d(), 1/2.0);
-  EXPECT_EQ(r.to_f(), (float)(1/2.0));
-  EXPECT_EQ(r.to_l(), 1/2);
-  EXPECT_EQ(r.to_s(), "1/2");
-}
