@@ -321,11 +321,9 @@ template <typename T> void Matrix<T>::init_mtr() {
 template <typename T> void Matrix<T>::clear_mtr() {
   if (this->mtr != nullptr) {
     for (int i = 0; i < this->rows; i++)
-      if (this->mtr[i] != nullptr) {
+      if (this->mtr[i] != nullptr)
         delete[](this->mtr[i]);
-
-        delete[](this->mtr);
-      }
+    delete[](this->mtr);
   }
 }
 
