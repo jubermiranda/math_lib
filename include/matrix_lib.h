@@ -72,4 +72,6 @@ private:
   Matrix<T> gen_compl_mtr(size_t suppr_r, size_t suppr_c) const;
 };
 
+#include "matrix_lib.tpp"
+
 #endif
