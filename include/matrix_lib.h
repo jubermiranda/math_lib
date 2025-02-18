@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+// TODO: add template support
 class Matrix {
 public:
   Matrix(unsigned rows, unsigned columns);
