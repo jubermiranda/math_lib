@@ -6,70 +6,70 @@
 #include <string>
 #include <vector>
 
-// TODO: add template support
-class Matrix {
+template <typename T> class Matrix {
 public:
-  Matrix(unsigned rows, unsigned columns);
-  Matrix(const Matrix &other);
+  Matrix(size_t rows, size_t columns);
+  Matrix(const Matrix<T> &other);
   ~Matrix();
 
-  void set_elements(const float *el); // TODO
-  void set_elements(const std::vector<float>);
-  void set_elements_stdin(); // TODO
-  void update_el(unsigned row, unsigned column, float new_el);
-  float at(unsigned row, unsigned column) const;
+  void set_elements(const std::vector<T>);
+  const T &at(size_t row, size_t column) const;
+  T &at(size_t row, size_t column);
 
-  unsigned row_size() const;
-  unsigned column_size() const;
+  size_t row_size() const;
+  size_t column_size() const;
 
-  bool is_identity() const;
-  bool is_square() const;
-  bool is_null() const;
-  bool is_column() const;
-  bool is_row() const;
-  bool is_diagonal() const;
-  bool is_upper_tri() const;
-  bool is_lower_tri() const;
-  bool is_symmetric() const;
-  bool is_antisymmetric() const;
-  bool is_scalar() const;
+  Matrix<T> transpose() const;
+  T stroke() const;
+  T det() const;
+  T minor_comp(size_t, size_t) const;
+  T cofactor(size_t, size_t) const;
 
-  Matrix transpose() const;
-  double stroke() const;
-  double det() const; // TODO
-  double minor_comp(unsigned, unsigned) const;
-  double cofactor(unsigned, unsigned) const;
+  Matrix<T> &operator=(const Matrix<T> &other);
+  Matrix<T> operator+(const Matrix<T> &other) const;
+  Matrix<T> operator-(const Matrix<T> &other) const;
+  Matrix<T> operator*(const double scalar) const;
+  Matrix<T> operator*(const Matrix<T> &other) const;
+  Matrix<T> operator^(int) const;
 
-  Matrix &operator=(const Matrix &other);
-  Matrix operator+(const Matrix &other) const;
-  Matrix operator-(const Matrix &other) const;
-  Matrix operator*(const float scalar) const;
-  Matrix operator*(const Matrix &other) const;
-  bool operator==(const Matrix &other) const;
+  bool operator==(const Matrix<T> &other) const;
+  bool operator!=(const Matrix<T> &other) const;
 
   std::stringstream print() const;
-  std::stringstream print_class() const;
-  std::stringstream describe() const; // TODO
+  std::stringstream print_classes() const;
+  std::string to_s() const; // TODO
+
+  static bool is_identity(const Matrix<T> &);
+  static bool is_square(const Matrix<T> &);
+  static bool is_null(const Matrix<T> &);
+  static bool is_column(const Matrix<T> &);
+  static bool is_row(const Matrix<T> &);
+  static bool is_diagonal(const Matrix<T> &);
+  static bool is_upper_tri(const Matrix<T> &);
+  static bool is_lower_tri(const Matrix<T> &);
+  static bool is_symmetric(const Matrix<T> &);
+  static bool is_antisymmetric(const Matrix<T> &);
+  static bool is_scalar(const Matrix<T> &);
+  static bool same_order(const Matrix<T> &, const Matrix<T> &);
 
 private:
-  unsigned rows;
-  unsigned columns;
-  float **mtr;
+  size_t rows;
+  size_t columns;
+  T **mtr;
 
   void init_mtr();
   void clear_mtr();
-  void copy_elements_to(Matrix &) const;
+  void copy_elements_to(Matrix<T> &) const;
 
   double det_order_2() const;
   double det_order_3() const;
   double det_order_n() const;
 
-  bool vector_can_fill_mtr(const std::vector<float>) const;
-  void check_mtr() const;
-  bool is_valid_position(unsigned row, unsigned column) const;
-  bool same_size_as(const Matrix&) const;
-  bool has_zero_line() const;
-  Matrix gen_compl_mtr(unsigned suppr_r, unsigned suppr_c) const;
+  bool vector_can_fill_mtr(const std::vector<T>) const;
+  void throw_if_null() const;
+  bool is_valid_position(size_t row, size_t column) const;
+  bool has_line_equals_zero() const;
+  Matrix<T> gen_compl_mtr(size_t suppr_r, size_t suppr_c) const;
 };
 
 #endif
