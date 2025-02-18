@@ -2,17 +2,18 @@
 #define MATRIX_LIB_H_
 
 #include <math.h>
-#include <sstream>
 #include <string>
 #include <vector>
+#include <cstddef>
 
 template <typename T> class Matrix {
 public:
   Matrix(size_t rows, size_t columns);
   Matrix(const Matrix<T> &other);
+  Matrix();
   ~Matrix();
 
-  void set_elements(const std::vector<T>);
+  void set_elements(const std::vector<T>&);
   const T &at(size_t row, size_t column) const;
   T &at(size_t row, size_t column);
 
@@ -34,10 +35,6 @@ public:
 
   bool operator==(const Matrix<T> &other) const;
   bool operator!=(const Matrix<T> &other) const;
-
-  std::stringstream print() const;
-  std::stringstream print_classes() const;
-  std::string to_s() const; // TODO
 
   static bool is_identity(const Matrix<T> &);
   static bool is_square(const Matrix<T> &);
@@ -61,11 +58,11 @@ private:
   void clear_mtr();
   void copy_elements_to(Matrix<T> &) const;
 
-  double det_order_2() const;
-  double det_order_3() const;
-  double det_order_n() const;
+  T det_order_2() const;
+  T det_order_3() const;
+  T det_order_n() const;
 
-  bool vector_can_fill_mtr(const std::vector<T>) const;
+  bool vector_can_fill_mtr(const std::vector<T>&) const;
   void throw_if_null() const;
   bool is_valid_position(size_t row, size_t column) const;
   bool has_line_equals_zero() const;
