@@ -5,6 +5,8 @@
 
 enum class VectorRelation { PARALLEL, ORTHOGONAL, COLLINEAR, NONE };
 
+// TODO: add template support
+
 class Vector {
 public:
   Vector();
