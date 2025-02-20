@@ -331,10 +331,10 @@ template <typename T> void Matrix<T>::clear_mtr() {
 template <typename T> void Matrix<T>::copy_elements_to(Matrix<T> &other) const {
   other.throw_if_null();
   if (!(Matrix::same_order(*this, other))) {
-    this->clear_mtr();
-    this->rows = other.rows;
-    this->columns = other.columns;
-    this->init_mtr();
+    other.clear_mtr();
+    other.rows = this->rows;
+    other.columns = this->columns;
+    other.init_mtr();
   }
 
   for (int i = 0; i < this->rows; i++)
