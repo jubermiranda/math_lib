@@ -1,15 +1,19 @@
 #ifndef POINT_H_
 #define POINT_H_
 
-class Point {
-public:
-  double x;
-  double y;
-  double z;
+#include <array>
+#include <cstddef>
 
-  Point() : x(0), y(0), z(0){};
-  Point(double x, double y, double z) : x(x), y(y), z(z){};
-  Point(const Point &p) : x(p.x), y(p.y), z(p.z){};
+template <size_t DIM> class Point {
+public:
+  std::array<double, DIM> coords;
+
+  template <typename... Args>
+  Point(Args... args) : coords{static_cast<double>(args)...} {
+    static_assert(sizeof...(args) == DIM, "Invalid number of arguments");
+  }
+  Point(const Point &);
+  Point();
 
   Point &operator=(const Point &);
   Point operator-(const Point &) const;
@@ -18,5 +22,7 @@ public:
   bool operator==(const Point &) const;
   bool operator!=(const Point &) const;
 };
+
+// TODO: include tpp impl file
 
 #endif /* ifndef POINT_H_ */
