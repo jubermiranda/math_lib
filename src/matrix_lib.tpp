@@ -14,7 +14,6 @@ template <typename T>
 Matrix<T>::Matrix(const Matrix<T> &other)
     : rows(other.rows), columns(other.columns) {
 
-  // TODO free old memory if exist
   this->init_mtr();
   other.copy_elements_to(*this);
 }
@@ -22,9 +21,10 @@ Matrix<T>::Matrix(const Matrix<T> &other)
 template <typename T> Matrix<T>::~Matrix() { this->clear_mtr(); }
 
 template <typename T> void Matrix<T>::set_elements(const std::vector<T> &vec) {
-  this->throw_if_null();
   if (!vector_can_fill_mtr(vec))
     throw std::runtime_error("bad vector size. cannot fill mtr");
+  if(vec.size() > 0)
+    this->throw_if_null();
 
   for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
@@ -318,7 +318,7 @@ template <typename T> void Matrix<T>::init_mtr() {
       this->mtr[i] = new T[columns];
     }
   } else {
-    throw std::runtime_error("null matrix dimentions");
+    this->mtr = nullptr;
   }
 }
 
