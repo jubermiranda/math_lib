@@ -305,6 +305,10 @@ template <typename T> bool Matrix<T>::operator==(const Matrix<T> &other) const {
   return true;
 }
 
+template <typename T> bool Matrix<T>::operator!=(const Matrix<T> &other) const {
+  return !(this->operator==(other));
+}
+
 // --- private
 
 template <typename T> void Matrix<T>::init_mtr() {
