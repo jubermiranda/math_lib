@@ -12,17 +12,20 @@ public:
   Point(Args... args) : coords{static_cast<double>(args)...} {
     static_assert(sizeof...(args) == DIM, "Invalid number of arguments");
   }
-  Point(const Point &);
-  Point();
+  Point(const Point<DIM> &);
+  Point(){};
 
-  Point &operator=(const Point &);
-  Point operator-(const Point &) const;
-  Point operator+(const Point &) const;
-  Point operator*(double scalar) const;
-  bool operator==(const Point &) const;
-  bool operator!=(const Point &) const;
+  double operator[](size_t i);
+  const double operator[](size_t i) const;
+
+  Point<DIM> &operator=(const Point<DIM> &);
+  Point<DIM> operator-(const Point<DIM> &) const;
+  Point<DIM> operator+(const Point<DIM> &) const;
+  Point<DIM> operator*(double scalar) const;
+  bool operator==(const Point<DIM> &) const;
+  bool operator!=(const Point<DIM> &) const;
 };
 
-// TODO: include tpp impl file
+#include "point.tpp"
 
 #endif /* ifndef POINT_H_ */
