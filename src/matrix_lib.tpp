@@ -23,7 +23,7 @@ template <typename T> Matrix<T>::~Matrix() { this->clear_mtr(); }
 template <typename T> void Matrix<T>::set_elements(const std::vector<T> &vec) {
   if (!vector_can_fill_mtr(vec))
     throw std::runtime_error("bad vector size. cannot fill mtr");
-  if(vec.size() > 0)
+  if (vec.size() > 0)
     this->throw_if_null();
 
   for (int i = 0; i < this->rows; i++)
@@ -224,14 +224,8 @@ template <typename T> T Matrix<T>::cofactor(size_t line, size_t column) const {
 }
 
 template <typename T> Matrix<T> &Matrix<T>::operator=(const Matrix<T> &other) {
-  if (this != &other) {
-    this->clear_mtr();
-
-    this->rows = other.rows;
-    this->columns = other.columns;
-    this->init_mtr();
+  if (this != &other)
     other.copy_elements_to(*this);
-  }
   return *this;
 }
 
@@ -332,10 +326,13 @@ template <typename T> void Matrix<T>::clear_mtr() {
 }
 
 template <typename T> void Matrix<T>::copy_elements_to(Matrix<T> &other) const {
-  this->throw_if_null();
   other.throw_if_null();
-  if (!Matrix::same_order(*this, other))
-    throw std::runtime_error("cannot copy. diferent sizes");
+  if (!(Matrix::same_order(*this, other))) {
+    this->clear_mtr();
+    this->rows = other.rows;
+    this->columns = other.columns;
+    this->init_mtr();
+  }
 
   for (int i = 0; i < this->rows; i++)
     for (int j = 0; j < this->columns; j++)
@@ -391,8 +388,9 @@ bool Matrix<T>::vector_can_fill_mtr(const std::vector<T> &vec) const {
 }
 
 template <typename T> void Matrix<T>::throw_if_null() const {
-  if (this->mtr == nullptr)
-    throw std::runtime_error("null matrix exception");
+  if(this->rows > 0 && this->columns > 0)
+    if (this->mtr == nullptr)
+      throw std::runtime_error("null matrix exception");
 }
 
 template <typename T>
