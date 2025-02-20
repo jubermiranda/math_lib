@@ -12,9 +12,8 @@ template <typename T> Matrix<T>::Matrix() : rows(0), columns(0), mtr(nullptr) {}
 
 template <typename T>
 Matrix<T>::Matrix(const Matrix<T> &other)
-    : rows(other.rows), columns(other.columns) {
+    : rows(0), columns(0), mtr(nullptr) {
 
-  this->init_mtr();
   other.copy_elements_to(*this);
 }
 
@@ -322,6 +321,10 @@ template <typename T> void Matrix<T>::clear_mtr() {
       if (this->mtr[i] != nullptr)
         delete[](this->mtr[i]);
     delete[](this->mtr);
+
+    this->mtr = nullptr;
+    this->rows = 0;
+    this->columns = 0;
   }
 }
 
