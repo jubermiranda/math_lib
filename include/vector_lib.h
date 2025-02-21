@@ -11,6 +11,7 @@ public:
   Vector();
   Vector(const Point<DIM> &);
   Vector(const Point<DIM> &, const Point<DIM> &);
+  template <typename... Args> Vector(Args... args);
 
   double mod() const;
   double mod_square() const;

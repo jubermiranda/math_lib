@@ -13,13 +13,18 @@ template <size_t DIM> Vector<DIM>::Vector(const Point<DIM> &p) : p(p) {}
 template <size_t DIM>
 Vector<DIM>::Vector(const Point<DIM> &a, const Point<DIM> &b) : p(b - a) {}
 
+template <size_t DIM> 
+template <typename... Args> Vector<DIM>::Vector(Args... args) : p(args...) {
+  static_assert(sizeof...(args) == DIM, "Invalid number of arguments");
+}
+
 template <size_t DIM> double Vector<DIM>::mod() const {
   return std::sqrt(mod_square());
 }
 
 template <size_t DIM> double Vector<DIM>::mod_square() const {
   double result = 1;
-  for (size_t i = 0; i < p.size(); i++)
+  for (size_t i = 0; i < DIM; i++)
     result += p[i] * p[i];
   return result;
 }

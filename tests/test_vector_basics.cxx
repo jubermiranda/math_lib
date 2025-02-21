@@ -35,35 +35,35 @@ TEST(VectorBasics, Constructors) {
   EXPECT_EQ(vec.coord(2), q[2] - p[2]);
 }
 
-/*
 TEST(VectorBasics, Module) {
-  Vector vec;
+  Vector<STD_V_DIM> vec;
 
-  vec = Vector(0, 0, 0);
+  vec = Vector<STD_V_DIM>(0, 0, 0);
   EXPECT_EQ(vec.mod(), 0);
 
-  vec = Vector(2.4, 0, 0);
+  vec = Vector<STD_V_DIM>(2.4, 0, 0);
   EXPECT_EQ(vec.mod(), 2.4);
-  vec = Vector(4.2, 0, 0);
+  vec = Vector<STD_V_DIM>(4.2, 0, 0);
   EXPECT_EQ(vec.mod(), 4.2);
 
-  vec = Vector(0, 2, 0);
+  vec = Vector<STD_V_DIM>(0, 2, 0);
   EXPECT_EQ(vec.mod(), 2.0);
-  vec = Vector(0, 4, 0);
+  vec = Vector<STD_V_DIM>(0, 4, 0);
   EXPECT_EQ(vec.mod(), 4.0);
 
-  vec = Vector(0, 0, 2.2);
+  vec = Vector<STD_V_DIM>(0, 0, 2.2);
   EXPECT_EQ(vec.mod(), 2.2);
-  vec = Vector(0, 0, 4.4);
+  vec = Vector<STD_V_DIM>(0, 0, 4.4);
   EXPECT_EQ(vec.mod(), 4.4);
 
-  vec = Vector(1, 2, 2);
+  vec = Vector<STD_V_DIM>(1, 2, 2);
   EXPECT_EQ(vec.mod(), 3.0);
 
-  vec = Vector(-3, -4, 0);
+  vec = Vector<STD_V_DIM>(-3, -4, 0);
   EXPECT_EQ(vec.mod(), 5.0);
 }
 
+/*
 TEST(VectorBasics, ModuleSquare) {
   Vector vec;
 
