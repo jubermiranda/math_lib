@@ -57,17 +57,15 @@ template <size_t DIM> Vector<DIM> Vector<DIM>::scale(double factor) const {
 template <size_t DIM> Vector<DIM> Vector<DIM>::direction_cossines() const {
   double mod = this->mod();
   Vector<DIM> result;
-
   for (size_t i = 0; i < DIM; i++)
-    result[i] = this->operator[](i) / mod;
-
+    result.p[i] = this->p[i] / mod;
   return result;
 }
 
 template <size_t DIM> Vector<DIM> Vector<DIM>::opposite() const {
   Vector<DIM> result;
   for (size_t i = 0; i < DIM; i++)
-    result[i] = this->operator[](i) * -1;
+    result.p[i] = (this->p[i] * -1.0);
   return result;
 }
 
@@ -86,7 +84,7 @@ template <size_t DIM>
 Vector<DIM> Vector<DIM>::operator+(const Vector<DIM> &other) const {
   Vector<DIM> result;
   for (size_t i = 0; i < DIM; i++)
-    result[i] = this->operator[](i) + other[i];
+    result.p[i] = this->p[i] + other.p[i];
   return result;
 }
 
@@ -94,7 +92,7 @@ template <size_t DIM>
 Vector<DIM> Vector<DIM>::operator-(const Vector<DIM> &other) const {
   Vector<DIM> result;
   for (size_t i = 0; i < DIM; i++)
-    result[i] = this->operator[](i) - other[i];
+    result.p[i] = this->p[i] - other.p[i];
   return result;
 }
 
@@ -112,12 +110,16 @@ template <size_t DIM>
 double Vector<DIM>::operator*(const Vector<DIM> &other) const {
   double result = 0;
   for (size_t i = 0; i < DIM; i++)
-    result += this->operator[](i) * other[i];
+    result += this->p[i] * other.p[i];
   return result;
 }
 
 template <size_t DIM> Vector<DIM> Vector<DIM>::operator*(double k) const {
   return (Vector<DIM>(this->p * k));
+}
+
+template <size_t DIM> Vector<DIM> Vector<DIM>::operator/(double k) const {
+  return (Vector<DIM>(this->p * (1/k)));
 }
 
 template <size_t DIM>

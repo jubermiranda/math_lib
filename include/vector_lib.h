@@ -29,6 +29,7 @@ public:
   Vector<DIM> operator+(const Vector<DIM> &) const;
   Vector<DIM> operator-(const Vector<DIM> &) const;
   Vector<DIM> operator*(double) const;
+  Vector<DIM> operator/(double) const;
   double operator*(const Vector<DIM> &) const; // <- scalar product
   bool operator==(const Vector<DIM> &) const;
   bool operator!=(const Vector<DIM> &) const;
