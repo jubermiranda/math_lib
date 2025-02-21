@@ -13,7 +13,7 @@ public:
     static_assert(sizeof...(args) == DIM, "Invalid number of arguments");
   }
   Point(const Point<DIM> &);
-  Point(){};
+  Point();
 
   size_t size() { return coords.size(); }
 
