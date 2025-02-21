@@ -13,8 +13,9 @@ template <size_t DIM> Vector<DIM>::Vector(const Point<DIM> &p) : p(p) {}
 template <size_t DIM>
 Vector<DIM>::Vector(const Point<DIM> &a, const Point<DIM> &b) : p(b - a) {}
 
-template <size_t DIM> 
-template <typename... Args> Vector<DIM>::Vector(Args... args) : p(args...) {
+template <size_t DIM>
+template <typename... Args>
+Vector<DIM>::Vector(Args... args) : p(Point<DIM>(args...)) {
   static_assert(sizeof...(args) == DIM, "Invalid number of arguments");
 }
 
@@ -23,14 +24,14 @@ template <size_t DIM> double Vector<DIM>::mod() const {
 }
 
 template <size_t DIM> double Vector<DIM>::mod_square() const {
-  double result = 1;
+  double result = 0;
   for (size_t i = 0; i < DIM; i++)
     result += p[i] * p[i];
   return result;
 }
 
 template <size_t DIM> double Vector<DIM>::coord(size_t i) const {
-  if(i > DIM)
+  if (i > DIM)
     throw std::runtime_error("invalid index");
   return this->p[i];
 }
