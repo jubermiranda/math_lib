@@ -6,7 +6,7 @@
 template <size_t DIM>
 Point<DIM>::Point(const Point<DIM> &other) : coords(other.coords) {}
 
-template <size_t DIM> double Point<DIM>::operator[](size_t i) {
+template <size_t DIM> double &Point<DIM>::operator[](size_t i) {
   return this->coords.at(i);
 }
 

@@ -5,37 +5,37 @@
 #include <vector>
 
 #include "utils.h"
-/*
 #include "vector_lib.h"
 
 using std::string;
 const double kTolerance = 1e-10;
 
+const size_t STD_V_DIM = 3;
+
 TEST(VectorBasics, Constructors) {
-  Vector vec;
-  Point p, q;
+  Vector<STD_V_DIM> vec;
+  Point<STD_V_DIM> p, q;
 
   // empty constructor
-  vec = Vector();
-  EXPECT_EQ(vec.x(), 0.0);
-  EXPECT_EQ(vec.y(), 0.0);
-  EXPECT_EQ(vec.z(), 0.0);
+  vec = Vector<STD_V_DIM>();
+  EXPECT_EQ(vec.coord(0), 0.0);
+  EXPECT_EQ(vec.coord(1), 0.0);
+  EXPECT_EQ(vec.coord(2), 0.0);
   EXPECT_TRUE(vec.is_null());
 
   // point constructor 
-  p = Point(1, 2, 3);
-  q = Point(5, 5, 5);
-  EXPECT_EQ(Vector(p, q), Vector(q - p));
-
-  vec = Vector(p, q);
-  EXPECT_EQ(vec.x(), q.x - p.x);
-  EXPECT_EQ(vec.y(), q.y - p.y);
-  EXPECT_EQ(vec.z(), q.z - p.z);
-
-  // using a point to create a vector is the same that use x,y,z as param
-  EXPECT_EQ( Vector(Point(7, 7, 7)), Vector(7, 7, 7) );
+  p = Point<STD_V_DIM>(1, 2, 3);
+  q = Point<STD_V_DIM>(5, 5, 5);
+  
+  // using 2 points, vector result is p2 - p1
+  vec = Vector<STD_V_DIM>(p, q);
+  EXPECT_EQ(vec, Vector<STD_V_DIM>(q - p));
+  EXPECT_EQ(vec.coord(0), q[0] - p[0]);
+  EXPECT_EQ(vec.coord(1), q[1] - p[1]);
+  EXPECT_EQ(vec.coord(2), q[2] - p[2]);
 }
 
+/*
 TEST(VectorBasics, Module) {
   Vector vec;
 

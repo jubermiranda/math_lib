@@ -14,6 +14,7 @@ public:
 
   double mod() const;
   double mod_square() const;
+  double coord(size_t) const;
 
   Vector<DIM> unit() const;
   Vector<DIM> scale(double factor) const;

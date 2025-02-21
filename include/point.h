@@ -17,7 +17,7 @@ public:
 
   size_t size() { return coords.size(); }
 
-  double operator[](size_t i);
+  double &operator[](size_t i);
   const double operator[](size_t i) const;
 
   Point<DIM> &operator=(const Point<DIM> &);

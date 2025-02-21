@@ -8,24 +8,30 @@ using std::sin;
 
 template <size_t DIM> Vector<DIM>::Vector() : p(Point<DIM>()) {}
 
-template <size_t DIM> Vector<DIM>::Vector(const Point &p) : p(p) {}
+template <size_t DIM> Vector<DIM>::Vector(const Point<DIM> &p) : p(p) {}
 
 template <size_t DIM>
-Vector<DIM>::Vector(const Point &a, const Point &b) : p(b - a) {}
+Vector<DIM>::Vector(const Point<DIM> &a, const Point<DIM> &b) : p(b - a) {}
 
 template <size_t DIM> double Vector<DIM>::mod() const {
   return std::sqrt(mod_square());
 }
 
-template <size_t DIM> double Vector::mod_square() const {
+template <size_t DIM> double Vector<DIM>::mod_square() const {
   double result = 1;
   for (size_t i = 0; i < p.size(); i++)
     result += p[i] * p[i];
   return result;
 }
 
+template <size_t DIM> double Vector<DIM>::coord(size_t i) const {
+  if(i > DIM)
+    throw std::runtime_error("invalid index");
+  return this->p[i];
+}
+
 template <size_t DIM> bool Vector<DIM>::is_null() const {
-  for (size_t i = 0; i < p.size(); i++)
+  for (size_t i = 0; i < DIM; i++)
     if (p[i] != 0)
       return false;
   return true;
@@ -109,7 +115,7 @@ template <size_t DIM> Vector<DIM> Vector<DIM>::operator*(double k) const {
 }
 
 template <size_t DIM>
-double Vector<DIM>::angle(const Vector<DIM> &v1, const Vector<DIM> &v2) const {
+double Vector<DIM>::angle(const Vector<DIM> &v1, const Vector<DIM> &v2) {
   long double r = (v1 * v2) / (v1.mod() * v2.mod());
   long double rad = std::acos(r);
   return (rad * (180.0 / M_PIl));
