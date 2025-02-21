@@ -9,8 +9,8 @@ enum class VectorRelation { PARALLEL, ORTHOGONAL, COLLINEAR, NONE };
 template <size_t DIM> class Vector {
 public:
   Vector();
-  Vector(Point p);
-  Vector(Point a, Point b);
+  Vector(const Point<DIM> &);
+  Vector(const Point<DIM> &, const Point<DIM> &);
 
   double mod() const;
   double mod_square() const;
@@ -26,7 +26,8 @@ public:
 
   Vector<DIM> operator+(const Vector<DIM> &) const;
   Vector<DIM> operator-(const Vector<DIM> &) const;
-  double operator*(const Vector<DIM> &) const;
+  Vector<DIM> operator*(double) const;
+  double operator*(const Vector<DIM> &) const; // <- scalar product
   bool operator==(const Vector<DIM> &) const;
   bool operator!=(const Vector<DIM> &) const;
 
@@ -38,7 +39,6 @@ private:
   Point<DIM> p;
 };
 
-Vector<DIM> operator*(double, const Vector<DIM> &);
-Vector<DIM> operator*(const Vector<DIM> &, double);
+#include "vector_lib.tpp"
 
 #endif
