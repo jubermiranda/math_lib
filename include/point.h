@@ -1,22 +1,33 @@
 #ifndef POINT_H_
 #define POINT_H_
 
-class Point {
+#include <array>
+#include <cstddef>
+
+template <size_t DIM> class Point {
 public:
-  double x;
-  double y;
-  double z;
+  std::array<double, DIM> coords;
 
-  Point() : x(0), y(0), z(0){};
-  Point(double x, double y, double z) : x(x), y(y), z(z){};
-  Point(const Point &p) : x(p.x), y(p.y), z(p.z){};
+  template <typename... Args>
+  Point(Args... args) : coords{static_cast<double>(args)...} {
+    static_assert(sizeof...(args) == DIM, "Invalid number of arguments");
+  }
+  Point(const Point<DIM> &);
+  Point();
 
-  Point &operator=(const Point &);
-  Point operator-(const Point &) const;
-  Point operator+(const Point &) const;
-  Point operator*(double scalar) const;
-  bool operator==(const Point &) const;
-  bool operator!=(const Point &) const;
+  size_t size() { return coords.size(); }
+
+  double &operator[](size_t i);
+  const double operator[](size_t i) const;
+
+  Point<DIM> &operator=(const Point<DIM> &);
+  Point<DIM> operator-(const Point<DIM> &) const;
+  Point<DIM> operator+(const Point<DIM> &) const;
+  Point<DIM> operator*(double scalar) const;
+  bool operator==(const Point<DIM> &) const;
+  bool operator!=(const Point<DIM> &) const;
 };
+
+#include "point.tpp"
 
 #endif /* ifndef POINT_H_ */

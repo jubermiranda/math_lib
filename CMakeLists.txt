@@ -11,6 +11,7 @@ option(BUILD_TESTS "Build project tests (with gtest)" ON)
 enable_testing()
 
 include_directories(include)
+include_directories(src)
 
 if(BUILD_PROJECT)
     add_executable(

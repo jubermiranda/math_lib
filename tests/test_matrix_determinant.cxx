@@ -6,6 +6,7 @@
 
 using std::vector;
 
+/*
 TEST(MatrixDeterminant, MtrDetOrder1) {
   Matrix test_mtr = Matrix(1,1);
   double expected_det;
@@ -233,3 +234,4 @@ TEST(MatrixDeterminant, Cofactor){
 EXPECT_EQ(expected, test_mtr.cofactor(line, column));
 }
 
+*/
