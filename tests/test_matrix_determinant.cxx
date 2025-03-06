@@ -6,12 +6,11 @@
 
 using std::vector;
 
-/*
 TEST(MatrixDeterminant, MtrDetOrder1) {
-  Matrix test_mtr = Matrix(1,1);
+  Matrix<int> test_mtr = Matrix<int>(1,1);
   double expected_det;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       40
       });
   expected_det = 40;
@@ -20,10 +19,10 @@ TEST(MatrixDeterminant, MtrDetOrder1) {
 }
 
 TEST(MatrixDeterminant, MtrDetOrder2) {
-  Matrix test_mtr = Matrix(2,2);
+  Matrix<int> test_mtr = Matrix<int>(2,2);
   double expected_det;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       22, 11,
       2,  5
       });
@@ -33,10 +32,10 @@ TEST(MatrixDeterminant, MtrDetOrder2) {
 }
 
 TEST(MatrixDeterminant, MtrDetOrder3) {
-  Matrix test_mtr(3,3);
+  Matrix<int> test_mtr(3,3);
   double expected_det;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1,2,3,
       4,5,6,
       7,8,9
@@ -44,7 +43,7 @@ TEST(MatrixDeterminant, MtrDetOrder3) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       6, 1,  1,
       4, -2, 5,
       2, 8,  7
@@ -52,7 +51,7 @@ TEST(MatrixDeterminant, MtrDetOrder3) {
   expected_det = -306;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       10, -7, 3,
       -3, 6, 2,
       5, 8, 9
@@ -61,7 +60,7 @@ TEST(MatrixDeterminant, MtrDetOrder3) {
   EXPECT_EQ(expected_det, test_mtr.det());
 
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1, 0, 0,
       0, 1, 0,
       0, 0, 1
@@ -71,10 +70,10 @@ TEST(MatrixDeterminant, MtrDetOrder3) {
 }
 
 TEST(MatrixDeterminant, MtrDetOrder4){
-  Matrix test_mtr(4,4);
+  Matrix<int> test_mtr(4,4);
   double expected;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1, 2, 3, 4,
       5, 6, 7, 8,
       9, 10, 11, 12,
@@ -84,7 +83,7 @@ TEST(MatrixDeterminant, MtrDetOrder4){
 
   EXPECT_EQ(expected, test_mtr.det());
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1, 3, 1, 3,
       4, 1, -1, 0,
       0, 2, 2, 1,
@@ -95,7 +94,7 @@ TEST(MatrixDeterminant, MtrDetOrder4){
   EXPECT_EQ(expected, test_mtr.det());
 
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       4, 5, -3, 0,
       2, -1, 3, 1,
       1, -3, 2, 1,
@@ -107,10 +106,10 @@ TEST(MatrixDeterminant, MtrDetOrder4){
 }
 
 TEST(MatrixDeterminant, MtrDetOrder5){
-  Matrix test_mtr(5,5);
+  Matrix<int> test_mtr(5,5);
   double expected;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1, 2, 3, -3, 1,
       0, 4, 0, 0, 0,
       0, 1, 0, 1, 1,
@@ -120,7 +119,7 @@ TEST(MatrixDeterminant, MtrDetOrder5){
   expected = -48;
   EXPECT_EQ(expected, test_mtr.det());
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1, 3, 1, 3, 5,
       4, 1, -1, 0, 2,
       0, 2, 2, 1, 0,
@@ -133,10 +132,10 @@ TEST(MatrixDeterminant, MtrDetOrder5){
 }
 
 TEST(MatrixDeterminant, MtrDetOrder10){
-  Matrix test_mtr(10, 10);
+  Matrix<int> test_mtr(10, 10);
   double expected;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1,  3,  4,  2,  5,  7,  11, -9, 7,  1,
       0,  -5, 1,  1,  9, -4,  1,  3,  1,  1,
       -2, 3,  4,  2,  5,  7,  -4, 4,  7,  -1,
@@ -155,10 +154,10 @@ TEST(MatrixDeterminant, MtrDetOrder10){
 
 
 TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
-  Matrix test_mtr(4,4);
+  Matrix<int> test_mtr(4,4);
   double expected_det;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       0, 0, 0, 0,
       5, 6, 7, 8,
       9, 10, 11, 12,
@@ -167,7 +166,7 @@ TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       0, 2, 3, 4,
       0, 6, 7, 8,
       0, 10, 11, 12,
@@ -176,7 +175,7 @@ TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
   expected_det = 0;
   EXPECT_EQ(expected_det, test_mtr.det());
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       1, 1, 0, 1,
       1, 1, 0, 1,
       1, 1, 0, 1,
@@ -190,11 +189,11 @@ TEST(MatrixDeterminant, LineOrColumnZeroDetIsZero) {
 
 
 TEST(MatrixDeterminant, MinorComplementaryOrder3){
-  Matrix test_mtr(3,3);
+  Matrix<int> test_mtr(3,3);
   double expected;
   unsigned line, column;
 
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       2, 1, 3,
       -1, -2, 4,
       1, 0, -3,
@@ -212,10 +211,10 @@ TEST(MatrixDeterminant, MinorComplementaryOrder3){
 }
 
 TEST(MatrixDeterminant, Cofactor){
-  Matrix test_mtr(3,3);
+  Matrix<int> test_mtr(3,3);
   double expected;
   unsigned line, column;
-  test_mtr.set_elements(vector<float>{
+  test_mtr.set_elements(vector<int>{
       2, 1, 3,
       -1, -2, 4,
       1, 0, -3,
@@ -234,4 +233,3 @@ TEST(MatrixDeterminant, Cofactor){
 EXPECT_EQ(expected, test_mtr.cofactor(line, column));
 }
 
-*/

@@ -179,7 +179,7 @@ template <typename T> T Matrix<T>::stroke() const {
 }
 
 template <typename T> T Matrix<T>::det() const {
-  if (!Matrix<T>::is_square(this))
+  if (!Matrix<T>::is_square(*this))
     throw std::runtime_error(
         "Cannot calculate the determinant of a non-square matrix");
 
