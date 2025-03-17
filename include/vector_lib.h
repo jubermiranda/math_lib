@@ -42,6 +42,8 @@ private:
   Point<DIM> p;
 };
 
+template <size_t DIM> Vector<DIM> operator*(const double, const Vector<DIM> &);
+
 #include "vector_lib.tpp"
 
 #endif
