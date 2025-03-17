@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "utils.h"
+#include "../utils.h"
 #include "vector_lib.h"
 
 using std::string;
