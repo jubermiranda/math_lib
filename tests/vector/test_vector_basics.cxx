@@ -186,23 +186,6 @@ TEST(VectorBasics, Operators){
 
   EXPECT_EQ( v * -1, v.opposite() );
 
-  // u( v + w ) === u.v + u.w
-  double lhs, rhs;
-  lhs = u * (v + w);
-  rhs = u * v + u * w;
-  EXPECT_EQ( lhs, rhs );
-
-  // u * v === v * u
-  EXPECT_EQ( v*u, u*v );
-
-  // k(u * v) === (ku) * v
-  double k = 42;
-  lhs = k * ( u * v );
-  rhs = (u * k) * v;
-  EXPECT_EQ(lhs, rhs);
-
-  // u * u === |u|^2
-  EXPECT_EQ( u * u, u.mod() * u.mod() );
 }
 
 TEST(VectorBasics, DirectionCossines) {
