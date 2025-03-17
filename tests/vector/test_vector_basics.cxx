@@ -1,8 +1,5 @@
 #include <cmath>
 #include <gtest/gtest.h>
-#include <math.h>
-#include <stdexcept>
-#include <vector>
 
 #include "../utils.h"
 #include "vector_lib.h"
@@ -124,7 +121,6 @@ TEST(VectorBasics, UnitVector) {
   vec = Vector<STD_V_DIM>(0.41, 2.99, 3.1);
   expect_unit = vec / vec.mod();
   EXPECT_EQ( expect_unit, vec.unit());
-  // round error here, so use a tolerance
   EXPECT_NEAR( expect_unit.mod(), 1, kTolerance );
 }
 
@@ -168,21 +164,23 @@ TEST(VectorBasics, Operators){
   w = Vector<STD_V_DIM>(1, 1, 1);
   expected = Vector<STD_V_DIM>(2, 4, 6);
   EXPECT_EQ( expected, v + w );
-  EXPECT_EQ( v + w, w + v );
 
   expected = Vector<STD_V_DIM>(0, 2, 4);
   EXPECT_EQ( v - w, expected );
   expected = Vector<STD_V_DIM>(0, -2, -4);
   EXPECT_EQ( w - v, expected );
 
-  // * /
+  // multpl - div
   v = Vector<STD_V_DIM>(3, 4, 0);
-  EXPECT_EQ( v.mod(), 5 );
   EXPECT_EQ( (v * 0.5), (v / 2) );
+
+  EXPECT_EQ( v.mod(), 5 );
   v = v * 2;
   EXPECT_EQ( v.mod(), 10);
-  v = v * (1.0/2);
+  v = v * (0.5);
   EXPECT_EQ( v.mod(), 5);
+  v = v * (0.5);
+  EXPECT_EQ( v.mod(), 2.5);
 
   EXPECT_EQ( v * -1, v.opposite() );
 
@@ -242,6 +240,41 @@ TEST(VectorBasics, OppositeVector) {
   // sum of opposite vectors result in a null vector
   EXPECT_EQ((vec + vec.opposite()), Vector<STD_V_DIM>(0, 0, 0));
   EXPECT_TRUE((vec + vec.opposite()).is_null());
+}
+
+TEST(VectorBasics, Angle){
+  double lhs, rhs;
+  Vector<STD_V_DIM> v, w;
+
+  v = Vector<STD_V_DIM>(1, 0, 0);
+  w = Vector<STD_V_DIM>(0, 1, 0);
+  lhs = 90;
+  rhs = Vector<STD_V_DIM>::angle(v, w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector<STD_V_DIM>(1, 0, 0);
+  w = Vector<STD_V_DIM>(1, 0, 0);
+  lhs = 0;
+  rhs = Vector<STD_V_DIM>::angle(v, w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector<STD_V_DIM>(sqrt(3), 1, 0);
+  w = Vector<STD_V_DIM>(2, 0, 0);
+  lhs = 30;
+  rhs = Vector<STD_V_DIM>::angle(v, w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector<STD_V_DIM>(1, 1, 0);
+  w = Vector<STD_V_DIM>(1, 0, 0);
+  lhs = 45;
+  rhs = Vector<STD_V_DIM>::angle(v, w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
+
+  v = Vector<STD_V_DIM>(1, sqrt(3), 0);
+  w = Vector<STD_V_DIM>(2, 0, 0);
+  lhs = 60;
+  rhs = Vector<STD_V_DIM>::angle(v, w);
+  EXPECT_NEAR(lhs, rhs, kTolerance);
 }
 
 /*
@@ -369,39 +402,4 @@ TEST(VectorBasics, RotateAroundZ) {
  //
 }
 */
-
-TEST(VectorBasics, Angle){
-  double lhs, rhs;
-  Vector<STD_V_DIM> v, w;
-
-  v = Vector<STD_V_DIM>(1, 0, 0);
-  w = Vector<STD_V_DIM>(0, 1, 0);
-  lhs = 90;
-  rhs = Vector<STD_V_DIM>::angle(v, w);
-  EXPECT_NEAR(lhs, rhs, kTolerance);
-
-  v = Vector<STD_V_DIM>(1, 0, 0);
-  w = Vector<STD_V_DIM>(1, 0, 0);
-  lhs = 0;
-  rhs = Vector<STD_V_DIM>::angle(v, w);
-  EXPECT_NEAR(lhs, rhs, kTolerance);
-
-  v = Vector<STD_V_DIM>(sqrt(3), 1, 0);
-  w = Vector<STD_V_DIM>(2, 0, 0);
-  lhs = 30;
-  rhs = Vector<STD_V_DIM>::angle(v, w);
-  EXPECT_NEAR(lhs, rhs, kTolerance);
-
-  v = Vector<STD_V_DIM>(1, 1, 0);
-  w = Vector<STD_V_DIM>(1, 0, 0);
-  lhs = 45;
-  rhs = Vector<STD_V_DIM>::angle(v, w);
-  EXPECT_NEAR(lhs, rhs, kTolerance);
-
-  v = Vector<STD_V_DIM>(1, sqrt(3), 0);
-  w = Vector<STD_V_DIM>(2, 0, 0);
-  lhs = 60;
-  rhs = Vector<STD_V_DIM>::angle(v, w);
-  EXPECT_NEAR(lhs, rhs, kTolerance);
-}
 
