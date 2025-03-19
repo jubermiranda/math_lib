@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "rational.h"
-#include "utils.h"
+#include "../utils.h"
 
 using std::string;
 

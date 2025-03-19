@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "matrix_lib.h"
-#include "utils.h"
+#include "../utils.h"
 
 using std::vector;
 using std::string;

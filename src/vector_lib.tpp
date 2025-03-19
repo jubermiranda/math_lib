@@ -129,6 +129,11 @@ double Vector<DIM>::angle(const Vector<DIM> &v1, const Vector<DIM> &v2) {
   return (rad * (180.0 / M_PIl));
 }
 
+template <size_t DIM> 
+Vector<DIM> operator*(const double x, const Vector<DIM>&vec){
+  return vec*x;
+}
+
 /* VectorRelation: TODO
 static bool is_parallel(const Vector &, const Vector &);
 static bool is_ortogonal(const Vector &, const Vector &);
