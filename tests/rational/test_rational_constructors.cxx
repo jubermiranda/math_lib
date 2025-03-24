@@ -117,3 +117,22 @@ TEST(RationalConstructors, LongRationalParams) {
   ASSERT_EQ(r.numerator(), 4);
   ASSERT_EQ(r.denominator(), 1);
 }
+
+// similar to p: long, q: Rational, it also supports p: Rational, q: Rational
+TEST(RationalConstructors, RationalRationalParams) {
+  Rational p, q, r;
+
+  p = Rational(1, 2);
+  q = Rational(2, 1);
+
+  r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 1);
+  ASSERT_EQ(r.denominator(), 4);
+
+  p = Rational(22, 7);
+  q = Rational(333, 106);
+
+  r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 22 * 106);
+  ASSERT_EQ(r.denominator(), 7 * 333);
+}
