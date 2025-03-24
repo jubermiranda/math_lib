@@ -230,12 +230,6 @@ void Rational::simplify() {
   }
 
   long mdc = mdc_euc(p, q);
-  if (mdc == q) {
-    p = p / q;
-    q = 1;
-    return;
-  }
-
   if (mdc == 1)
     return;
 
