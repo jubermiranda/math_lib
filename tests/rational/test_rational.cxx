@@ -7,6 +7,8 @@ using std::string;
 
 const double kTolerance = 1e-10;
 
+// TODO: improve rational tests
+
 TEST(RationalBasics, Constructors) {
   Rational r;
 
