@@ -40,8 +40,10 @@ TEST(RationalBasics, NumeratorDenominator){
 }
 
 TEST(RationalBasics, Decimal){
-  // Rational.decimal should return the decimal part of the represented number p/q (converted to double)
-  // sometimes double couldn't represent the exact value. so maybe its a approximation
+  // Rational.decimal should return the decimal part 
+  // of the represented number p/q (converted to double)
+  // sometimes double couldn't represent the exact value. 
+  // so maybe its a approximation
   Rational r;
 
   double n = 3.14159265359;
