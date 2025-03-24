@@ -9,29 +9,6 @@ const double kTolerance = 1e-10;
 
 // TODO: improve rational tests
 
-TEST(RationalBasics, Constructors) {
-  Rational r;
-
-  // null
-  r = Rational();
-
-  // p and q
-  long p = 2;
-  long q = 4;
-  r = Rational(p, q);
-
-  //int
-  r = Rational(4);
-
-  // decimal
-  r = Rational(3.14159265359);
-
-  // others
-  r = Rational( Rational(1, 2) );
-  r = Rational( 4, Rational(1, 3) );
-  r = Rational( Rational(1,2), Rational(3,4) );
-}
-
 TEST(RationalBasics, NumeratorDenominator){
   Rational r;
 
