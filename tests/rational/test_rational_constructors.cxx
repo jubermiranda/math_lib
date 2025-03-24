@@ -136,3 +136,23 @@ TEST(RationalConstructors, RationalRationalParams) {
   ASSERT_EQ(r.numerator(), 22 * 106);
   ASSERT_EQ(r.denominator(), 7 * 333);
 }
+
+// TODO: improve
+// this class allows creating a Rational from a double.
+// Note: Maybe its an approximation
+TEST(RationalConstructors, DoubleParam) {
+  Rational r;
+  double n;
+
+  n = 0.5;
+  r = Rational(n);
+  ASSERT_EQ(r.numerator(), 1);
+  ASSERT_EQ(r.denominator(), 2);
+
+  // In some cases, the resulting Rational may be an approximation, 
+  n = 3.14159265359;
+  r = Rational(n);
+  double r_to_double = static_cast<double>(r);
+  EXPECT_NEAR(r_to_double, n, kTolerance);
+
+}
