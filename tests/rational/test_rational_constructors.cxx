@@ -103,3 +103,17 @@ TEST(RationalConstructors, IntegerDiferentParams) {
   ASSERT_EQ(r.denominator(), 2);
   ASSERT_TRUE(r.is_positive());
 }
+
+
+// this class allows create a rational in form:
+// p / q; where p: long, q: Rational
+TEST(RationalConstructors, LongRationalParams) {
+  long p;
+  Rational q;
+
+  p = 2;
+  q = Rational(1, 2);
+  Rational r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 4);
+  ASSERT_EQ(r.denominator(), 1);
+}
