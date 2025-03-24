@@ -217,8 +217,11 @@ bool Rational::same_sign(const Rational &other) const {
 }
 
 void Rational::simplify() {
-  if (p == 0)
+  if (p == 0){
+    sign = true;
+    q = 1;
     return;
+  }
 
   long mdc = mdc_euc(p, q);
   if (mdc == q) {
