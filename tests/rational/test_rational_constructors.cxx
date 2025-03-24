@@ -3,7 +3,17 @@
 #include "../utils.h"
 #include "rational.h"
 
-using std::string;
+/*
+ * Rational class represents a rational number in form: p/q
+ *
+ * - some constructors with parameters of basic numeric types(long, double, etc)
+ *   and/or other obj of this class.
+ *
+ * - Any p/q representation will be simplified to its most resuced form
+ *   with the resulting sign stored separately;
+ *   thus, p and q are always unsigned numbers.
+ *
+ */
 
 const double kTolerance = 1e-10;
 
