@@ -73,4 +73,33 @@ TEST(RationalConstructors, IntegerDiferentParams) {
   r = Rational(p, q);
   ASSERT_EQ(r.numerator(), 0);
   ASSERT_EQ(r.denominator(), 1);
+
+  // sign tests
+  p = -1;
+  q = 2;
+  r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 1);
+  ASSERT_EQ(r.denominator(), 2);
+  ASSERT_FALSE(r.is_positive());
+
+  p = 1;
+  q = -2;
+  r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 1);
+  ASSERT_EQ(r.denominator(), 2);
+  ASSERT_FALSE(r.is_positive());
+
+  p = 1;
+  q = 2;
+  r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 1);
+  ASSERT_EQ(r.denominator(), 2);
+  ASSERT_TRUE(r.is_positive());
+
+  p = -1;
+  q = -2;
+  r = Rational(p, q);
+  ASSERT_EQ(r.numerator(), 1);
+  ASSERT_EQ(r.denominator(), 2);
+  ASSERT_TRUE(r.is_positive());
 }
