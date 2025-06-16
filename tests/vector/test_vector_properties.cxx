@@ -2,8 +2,6 @@
 #include <cmath>
 #include <gtest/gtest.h>
 #include <math.h>
-#include <stdexcept>
-#include <vector>
 
 #include "vector_lib.h"
 

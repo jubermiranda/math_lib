@@ -1,7 +1,6 @@
 #pragma once
 
 #include <math.h>
-#include <string>
 #include <vector>
 #include <cstddef>
 
@@ -69,4 +68,3 @@ private:
 };
 
 #include "matrix_lib.tpp"
-

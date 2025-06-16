@@ -2,7 +2,6 @@
 
 #include "rational.h"
 #include <cmath>
-#include <numbers>
 #include <stdexcept>
 #include <string>
 #include <vector>
