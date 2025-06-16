@@ -1,10 +1,9 @@
-#include <cmath>
-#include <numbers>
-#include <stdexcept>
-#include <type_traits>
+#pragma once
 
-using std::cos;
-using std::sin;
+#include "vector_lib.h"
+
+#include <cmath>
+#include <stdexcept>
 
 template <size_t DIM> Vector<DIM>::Vector() : p(Point<DIM>()) {}
 
@@ -69,17 +68,6 @@ template <size_t DIM> Vector<DIM> Vector<DIM>::opposite() const {
   return result;
 }
 
-/* TODO
-template <size_t DIM> Vector<DIM> Vector<DIM>::rotate_around_x(double angle)
-const { long double radians = angle * M_PIl / 180.0;
-
-  long double new_y = (p.y * cos(radians)) + (p.z * -sin(radians));
-  long double new_z = (p.y * sin(radians)) + (p.z * cos(radians));
-
-  return Vector(p.x, new_y, new_z);
-}
-*/
-
 template <size_t DIM>
 Vector<DIM> Vector<DIM>::operator+(const Vector<DIM> &other) const {
   Vector<DIM> result;
@@ -133,11 +121,3 @@ template <size_t DIM>
 Vector<DIM> operator*(const double x, const Vector<DIM>&vec){
   return vec*x;
 }
-
-/* VectorRelation: TODO
-static bool is_parallel(const Vector &, const Vector &);
-static bool is_ortogonal(const Vector &, const Vector &);
-static bool is_opposite(const Vector &, const Vector &);
-static bool is_collinear(const Vector &, const Vector &);
-static bool is_coplanar(const Vector &, const Vector &);
-*/

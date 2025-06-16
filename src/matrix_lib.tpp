@@ -1,7 +1,8 @@
-#ifndef MATRIX_LIB_TPP_
-#define MATRIX_LIB_TPP_
+#pragma once
 
+#include "matrix_lib.h"
 #include <cstddef>
+#include <stdexcept>
 
 template <typename T>
 Matrix<T>::Matrix(size_t rows, size_t columns) : rows(rows), columns(columns) {
@@ -453,5 +454,3 @@ Matrix<T> Matrix<T>::gen_compl_mtr(size_t suppr_r, size_t suppr_c) const {
             this->mtr[i][j];
   return aux;
 }
-
-#endif /* ifndef MATRIX_LIB_TPP_  */

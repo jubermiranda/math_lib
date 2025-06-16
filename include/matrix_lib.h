@@ -1,8 +1,6 @@
-#ifndef MATRIX_LIB_H_
-#define MATRIX_LIB_H_
+#pragma once
 
 #include <math.h>
-#include <string>
 #include <vector>
 #include <cstddef>
 
@@ -70,5 +68,3 @@ private:
 };
 
 #include "matrix_lib.tpp"
-
-#endif

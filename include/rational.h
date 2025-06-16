@@ -1,5 +1,4 @@
-#ifndef RATIONAL_H_
-#define RATIONAL_H_
+#pragma once
 
 #include <string>
 
@@ -87,4 +86,3 @@ bool operator==(double, const Rational &);
 bool operator!=(const Rational &, double);
 bool operator!=(double, const Rational &);
 
-#endif

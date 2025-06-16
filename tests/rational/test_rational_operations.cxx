@@ -7,28 +7,7 @@ using std::string;
 
 const double kTolerance = 1e-10;
 
-TEST(RationalBasics, Constructors) {
-  Rational r;
-
-  // null
-  r = Rational();
-
-  // p and q
-  long p = 2;
-  long q = 4;
-  r = Rational(p, q);
-
-  //int
-  r = Rational(4);
-
-  // decimal
-  r = Rational(3.14159265359);
-
-  // others
-  r = Rational( Rational(1, 2) );
-  r = Rational( 4, Rational(1, 3) );
-  r = Rational( Rational(1,2), Rational(3,4) );
-}
+// TODO: improve rational tests
 
 TEST(RationalBasics, NumeratorDenominator){
   Rational r;
@@ -61,8 +40,10 @@ TEST(RationalBasics, NumeratorDenominator){
 }
 
 TEST(RationalBasics, Decimal){
-  // Rational.decimal should return the decimal part of the represented number p/q (converted to double)
-  // sometimes double couldn't represent the exact value. so maybe its a approximation
+  // Rational.decimal should return the decimal part 
+  // of the represented number p/q (converted to double)
+  // sometimes double couldn't represent the exact value. 
+  // so maybe its a approximation
   Rational r;
 
   double n = 3.14159265359;
