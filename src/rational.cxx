@@ -200,7 +200,7 @@ bool Rational::operator!=(const Rational &other) const {
 // private
 
 void Rational::init_attr(long p, long q) {
-  this->sign = (p * q >= 0);
+  this->sign = (p >= 0?(q>=0?1:0):(q<0?1:0));
   this->p = (p >= 0) ? p : p * -1;
   this->q = (q >= 0) ? q : q * -1;
   check_is_valid();
@@ -238,34 +238,14 @@ void Rational::simplify() {
 }
 
 Rational Rational::double_to_rational(double n) const {
-  double a0;
-  double decimal_part;
-  decimal_part = std::modf(n, &a0);
-  Rational result((long)a0);
-  if (near_zero(decimal_part))
-    return result;
-
-  double an;
-  decimal_part = 1.0 / decimal_part;
-  decimal_part = std::modf(decimal_part, &an);
-  if (near_zero(decimal_part))
-    return (result + Rational(1, (long)an));
-
-  vector<double> parts = vector<double>();
-  parts.push_back(an);
-
-  while (!near_zero(decimal_part) && parts.size() < STD_CONT_FRA_MAX - 1) {
-    decimal_part = 1 / decimal_part;
-    decimal_part = std::modf(decimal_part, &an);
-    parts.push_back(an);
+  long p, q = 1;
+  while( n != std::floor(n)){
+    n *= 10;
+    q *= 10;
   }
-
-  Rational aux((long)(parts.at(parts.size() - 1)));
-  for (int i = parts.size() - 2; i >= 0; i--) {
-    aux = parts.at(i) + Rational(1, aux);
-  }
-  result = result + Rational(1, aux);
-  return result;
+  p = n;
+  Rational r =  Rational(p, q);
+  return r;
 }
 
 Rational operator+(double d, const Rational &r) { return (Rational(d) + r); }
@@ -327,4 +307,35 @@ long mdc_euc(long a, long b) {
 
 bool near_zero(double n) {
   return (0.0 - kTolerance <= n && 0.0 + kTolerance >= n);
+}
+
+Rational double_to_r_continuous_fraction(double n){
+  double a0;
+  double decimal_part;
+  decimal_part = std::modf(n, &a0);
+  Rational result((long)a0);
+  if (near_zero(decimal_part))
+    return result;
+
+  double an;
+  decimal_part = 1.0 / decimal_part;
+  decimal_part = std::modf(decimal_part, &an);
+  if (near_zero(decimal_part))
+    return (result + Rational(1, (long)an));
+
+  vector<double> parts = vector<double>();
+  parts.push_back(an);
+
+  while (!near_zero(decimal_part) && parts.size() < STD_CONT_FRA_MAX - 1) {
+    decimal_part = 1 / decimal_part;
+    decimal_part = std::modf(decimal_part, &an);
+    parts.push_back(an);
+  }
+
+  Rational aux((long)(parts.at(parts.size() - 1)));
+  for (int i = parts.size() - 2; i >= 0; i--) {
+    aux = parts.at(i) + Rational(1, aux);
+  }
+  result = result + Rational(1, aux);
+  return result;
 }
