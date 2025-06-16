@@ -1,5 +1,4 @@
-#ifndef POINT_LIB_TPP_
-#define POINT_LIB_TPP_
+#pragma once
 
 #include <cstddef>
 
@@ -63,5 +62,3 @@ template <size_t DIM>
 bool Point<DIM>::operator!=(const Point<DIM> &other) const {
   return !(this->operator==(other));
 }
-
-#endif /* ifndef POINT_LIB_TPP_ */

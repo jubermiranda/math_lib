@@ -1,5 +1,4 @@
-#ifndef POINT_H_
-#define POINT_H_
+#pragma once
 
 #include <array>
 #include <cstddef>
@@ -30,4 +29,3 @@ public:
 
 #include "point.tpp"
 
-#endif /* ifndef POINT_H_ */

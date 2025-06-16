@@ -1,5 +1,4 @@
-#ifndef MATRIX_LIB_TPP_
-#define MATRIX_LIB_TPP_
+#pragma once
 
 #include <cstddef>
 
@@ -454,4 +453,3 @@ Matrix<T> Matrix<T>::gen_compl_mtr(size_t suppr_r, size_t suppr_c) const {
   return aux;
 }
 
-#endif /* ifndef MATRIX_LIB_TPP_  */

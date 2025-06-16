@@ -1,5 +1,4 @@
-#ifndef VECTOR_LIB_H_
-#define VECTOR_LIB_H_
+#pragma once
 
 #include "point.h"
 #include <cstddef>
@@ -46,4 +45,3 @@ template <size_t DIM> Vector<DIM> operator*(const double, const Vector<DIM> &);
 
 #include "vector_lib.tpp"
 
-#endif

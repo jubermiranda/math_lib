@@ -1,3 +1,5 @@
+#pragma once
+
 #include "rational.h"
 #include <cmath>
 #include <numbers>

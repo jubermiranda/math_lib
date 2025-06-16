@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cmath>
 #include <numbers>
 #include <stdexcept>
@@ -133,11 +135,3 @@ template <size_t DIM>
 Vector<DIM> operator*(const double x, const Vector<DIM>&vec){
   return vec*x;
 }
-
-/* VectorRelation: TODO
-static bool is_parallel(const Vector &, const Vector &);
-static bool is_ortogonal(const Vector &, const Vector &);
-static bool is_opposite(const Vector &, const Vector &);
-static bool is_collinear(const Vector &, const Vector &);
-static bool is_coplanar(const Vector &, const Vector &);
-*/
