@@ -12,6 +12,7 @@ public:
   ~Matrix();
 
   void set_elements(const std::vector<T>&);
+
   const T &at(size_t row, size_t column) const;
   T &at(size_t row, size_t column);
 

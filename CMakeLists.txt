@@ -16,7 +16,7 @@ include_directories(src)
 if(BUILD_PROJECT)
     add_executable(
         matrix_lib
-        src/matrix_lib.cxx
+        src/main.cpp
     )
 endif(BUILD_PROJECT)
 
