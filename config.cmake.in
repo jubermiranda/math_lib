@@ -1,0 +1,11 @@
+configure_package_config_file(
+  "config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/math_lib-config.cmake"
+  INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/math_lib"
+)
+
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/math_lib-config.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/math_lib-config-version.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/math_lib"
+)

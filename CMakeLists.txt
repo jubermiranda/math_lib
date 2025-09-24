@@ -1,27 +1,53 @@
-cmake_minimum_required(VERSION 3.14)
-project(matrix_lib)
+cmake_minimum_required(VERSION 3.15)
+project(math_lib VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-option(BUILD_PROJECT "Build the main project" OFF)
+add_library(math_lib
+    src/rational.cxx
+)
+
+add_library(MathLib::math_lib ALIAS math_lib)
+
+set_property(TARGET math_lib PROPERTY CXX_STANDARD 20)
+set_property(TARGET math_lib PROPERTY CXX_STANDARD_REQUIRED ON)
+
+target_include_directories(math_lib
+    PUBLIC
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
 option(BUILD_TESTS "Build project tests (with gtest)" ON)
 
-enable_testing()
-
-file(GLOB_RECURSE IMPL_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cxx" )
-
-if(BUILD_PROJECT)
-    add_executable(
-        matrix_lib
-        IMPL_SOURCE
-    )
-
-    target_include_directories(${PROJECT_NAME} PUBLIC include)
-endif(BUILD_PROJECT)
-
 if(BUILD_TESTS)
+    enable_testing()
     add_subdirectory(tests)
-    add_test(NAME test_matrix_lib COMMAND test_matrix_lib)
-endif(BUILD_TESTS)
+endif()
+
+# --- INSTALL AND EXPORT ---
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+install(TARGETS math_lib
+  EXPORT math_lib-targets
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(DIRECTORY include/
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(EXPORT math_lib-targets
+  FILE        math_lib-targets.cmake
+  NAMESPACE   MathLib::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/math_lib
+)
+
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/math_lib-config-version.cmake"
+  VERSION "${PROJECT_VERSION}"
+  COMPATIBILITY AnyNewerVersion
+)

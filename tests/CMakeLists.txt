@@ -1,30 +1,29 @@
-# Gtest setup
 find_package(GTest REQUIRED)
-enable_testing()
 include(GoogleTest)
 
-file(GLOB_RECURSE TEST_SOURCE
-  "utils.cxx"
-  "test_utils.cxx"
-  "${CMAKE_CURRENT_SOURCE_DIR}/**/test_*.cxx"
+add_executable(run_tests
+  # test sources
+  matrix/test_matrix_basics.cxx
+  matrix/test_matrix_classification.cxx
+  matrix/test_matrix_determinant.cxx
+  point/test_point.cxx
+  rational/test_double_to_rational.cxx
+  rational/test_rational_constructors.cxx
+  rational/test_rational_operations.cxx
+  vector/test_vector_basics.cxx
+  vector/test_vector_dimentions.cxx
+  vector/test_vector_properties.cxx
+
+  # utility files for testes
+  utils.h
+  utils.cxx
+  test_utils.cxx
 )
 
-file(GLOB IMPL_SOURCE
-  "${PROJECT_SOURCE_DIR}/src/*.cxx"
-)
-
-add_executable(test_${PROJECT_NAME}
-  ${IMPL_SOURCE}
-  ${TEST_SOURCE}
-)
-
-target_link_libraries(
-    test_${PROJECT_NAME}
-    GTest::gtest
-    GTest::gtest_main
-)
-
-target_include_directories(test_${PROJECT_NAME}
+target_link_libraries(run_tests
   PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
+    GTest::gtest_main
+    math_lib
 )
+
+gtest_discover_tests(run_tests)
