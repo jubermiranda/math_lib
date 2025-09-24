@@ -10,16 +10,16 @@ option(BUILD_TESTS "Build project tests (with gtest)" ON)
 
 enable_testing()
 
-include_directories(include)
-include_directories(src)
+file(GLOB_RECURSE IMPL_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cxx" )
 
 if(BUILD_PROJECT)
     add_executable(
         matrix_lib
-        src/main.cpp
+        IMPL_SOURCE
     )
-endif(BUILD_PROJECT)
 
+    target_include_directories(${PROJECT_NAME} PUBLIC include)
+endif(BUILD_PROJECT)
 
 if(BUILD_TESTS)
     add_subdirectory(tests)
