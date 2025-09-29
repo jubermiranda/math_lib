@@ -1,0 +1,8 @@
+# set "CUSTOM_PATH"
+cmake -S . -B .build -DCMAKE_INSTALL_PREFIX="CUSTOM_PATH"
+cmake --build .build
+cmake --install .build
+
+
+# in the target proj
+cmake -S . -B .build -DCMAKE_PREFIX_PATH="CUSTOM_PATH"
