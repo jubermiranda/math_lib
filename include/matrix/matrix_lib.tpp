@@ -373,11 +373,6 @@ template <typename T> T Matrix<T>::det_order_n() const {
 
   size_t n = this->rows;
 
-  // If a matrix has an entire line equals to 0
-  // then the determinant is 0
-  // if (has_zero_line())
-  //   return 0;
-
   T result = 0;
   for (int i = 0; i < n; i++) {
     result += (this->mtr[0][i] * this->cofactor(0, i));
