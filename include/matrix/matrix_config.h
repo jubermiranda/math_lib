@@ -1,10 +1,11 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 
-namespace ML_ETC {
+namespace MATH_LIB {
 
-enum class DetCalcType {
+enum class DetAlgorithm {
   // Uses the classic cofactor expansion.
   // Recommended for small matrices (<= 3x3) due to its O(n!) complexity.
   COFACTOR_EXPANSION,
@@ -15,11 +16,16 @@ enum class DetCalcType {
   LU_DECOMPOSITION
 };
 
+enum class CalcOptions : std::uint32_t {
+  NONE = 0,
+  PARALLELIZE = 1 << 0,
+  OPTIMIZATIONS = 1 << 1,
+  GPU_ACCELERATION = 1 << 2
+};
+
 typedef struct {
-  size_t row_len;
-  size_t col_len;
-
-
-} MATRIX_CONFIG;
+  DetAlgorithm detAlgorithm;
+  CalcOptions options;
+} MatrixConfig;
 
 }
