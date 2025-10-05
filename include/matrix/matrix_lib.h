@@ -4,9 +4,18 @@
 #include <vector>
 #include <cstddef>
 
+# include "matrix_config.h"
+
+namespace MATH_LIB {
+
+static MatrixConfig DEFAULT_CONFIG = {
+  DetAlgorithm::COFACTOR_EXPANSION,
+  CalcOptions::NONE
+};
+
 template <typename T> class Matrix {
 public:
-  Matrix(size_t rows, size_t columns);
+  Matrix(size_t rows, size_t columns, MatrixConfig config = DEFAULT_CONFIG);
   Matrix(const Matrix<T> &other);
   Matrix();
   ~Matrix();
@@ -52,6 +61,7 @@ private:
   size_t rows;
   size_t columns;
   T **mtr;
+  MatrixConfig config;
 
   void init_mtr();
   void clear_mtr();
@@ -67,5 +77,7 @@ private:
   bool has_line_equals_zero() const;
   Matrix<T> gen_compl_mtr(size_t suppr_r, size_t suppr_c) const;
 };
+
+}; // namespace MATH_LIB
 
 #include "matrix_lib.tpp"

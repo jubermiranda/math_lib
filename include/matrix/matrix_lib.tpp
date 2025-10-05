@@ -4,17 +4,21 @@
 #include <cstddef>
 #include <stdexcept>
 
-template <typename T>
-Matrix<T>::Matrix(size_t rows, size_t columns) : rows(rows), columns(columns) {
+namespace MATH_LIB {
+
+template <typename T> Matrix<T>::Matrix(
+    size_t rows,
+    size_t columns,
+    MatrixConfig config
+) : rows(rows), columns(columns), config(config), mtr(nullptr) {
   this->init_mtr();
 }
 
-template <typename T> Matrix<T>::Matrix() : rows(0), columns(0), mtr(nullptr) {}
+template <typename T> Matrix<T>::Matrix()
+    : rows(0), columns(0), config(DEFAULT_CONFIG), mtr(nullptr) {}
 
-template <typename T>
-Matrix<T>::Matrix(const Matrix<T> &other)
-    : rows(0), columns(0), mtr(nullptr) {
-
+template <typename T> Matrix<T>::Matrix(const Matrix<T> &other)
+    : rows(0), columns(0), config(DEFAULT_CONFIG), mtr(nullptr) {
   other.copy_elements_to(*this);
 }
 
@@ -329,12 +333,14 @@ template <typename T> void Matrix<T>::clear_mtr() {
   }
 }
 
-template <typename T> void Matrix<T>::copy_elements_to(Matrix<T> &other) const {
+template <typename T>
+void Matrix<T>::copy_elements_to(Matrix<T> &other) const {
   other.throw_if_null();
   if (!(Matrix::same_order(*this, other))) {
     other.clear_mtr();
     other.rows = this->rows;
     other.columns = this->columns;
+    other.config = this->config;
     other.init_mtr();
   }
 
@@ -448,4 +454,6 @@ Matrix<T> Matrix<T>::gen_compl_mtr(size_t suppr_r, size_t suppr_c) const {
         aux.at(((i < suppr_r) ? i : i - 1), ((j < suppr_c) ? j : j - 1)) =
             this->mtr[i][j];
   return aux;
-}
+};
+
+};

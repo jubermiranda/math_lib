@@ -4,6 +4,7 @@
 #include "matrix/matrix_lib.h"
 #include "../utils.h"
 
+using namespace MATH_LIB;
 
 TEST(MatrixBasics, GetLineColumn) {
   Matrix<int> test_mtr = Matrix<int>(4,2);
