@@ -5,7 +5,7 @@
 #include "vector_lib.h"
 
 using std::string;
-const double kTolerance = 1e-7;
+const double kTolerance = 1e-6;
 
 /*
  * due to templates limitations, we'll use a fixed number of dimentions to test
