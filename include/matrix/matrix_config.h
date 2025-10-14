@@ -1,9 +1,8 @@
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
+#include "core/execution_policy.h"
 
-namespace MATH_LIB {
+namespace MathLib::Matrix {
 
 enum class DetAlgorithm {
   // Uses the classic cofactor expansion.
@@ -16,16 +15,9 @@ enum class DetAlgorithm {
   LU_DECOMPOSITION
 };
 
-enum class CalcOptions : std::uint32_t {
-  NONE = 0,
-  PARALLELIZE = 1 << 0,
-  OPTIMIZATIONS = 1 << 1,
-  GPU_ACCELERATION = 1 << 2
-};
-
 typedef struct {
   DetAlgorithm detAlgorithm;
-  CalcOptions options;
-} MatrixConfig;
+  MathLib::Core::ExecutionPolicy options;
+} MatrixCreateInfo;
 
 }

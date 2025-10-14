@@ -1,15 +1,16 @@
 #pragma once
 
+#include "matrix/matrix_config.h"
 #include "matrix_lib.h"
 #include <cstddef>
 #include <stdexcept>
 
-namespace MATH_LIB {
+namespace MathLib::Matrix {
 
 template <typename T> Matrix<T>::Matrix(
     size_t rows,
     size_t columns,
-    MatrixConfig config
+    MatrixCreateInfo config
 ) : rows(rows), columns(columns), config(config), mtr(nullptr) {
   this->init_mtr();
 }

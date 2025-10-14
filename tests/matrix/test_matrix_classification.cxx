@@ -5,7 +5,7 @@
 
 using std::vector;
 using std::string;
-using namespace MATH_LIB;
+using namespace MATH_LIB::Matrix;
 
 
 TEST(MatrixClassification, Identity) {

@@ -4,18 +4,19 @@
 #include <vector>
 #include <cstddef>
 
-# include "matrix_config.h"
+#include "matrix_config.h"
+#include "core/execution_policy.h"
 
-namespace MATH_LIB {
+namespace MathLib::Matrix {
 
-static MatrixConfig DEFAULT_CONFIG = {
+static MatrixCreateInfo DEFAULT_CONFIG = {
   DetAlgorithm::COFACTOR_EXPANSION,
-  CalcOptions::NONE
+  Core::ExecutionPolicy::NONE
 };
 
 template <typename T> class Matrix {
 public:
-  Matrix(size_t rows, size_t columns, MatrixConfig config = DEFAULT_CONFIG);
+  Matrix(size_t rows, size_t columns, MatrixCreateInfo config = DEFAULT_CONFIG);
   Matrix(const Matrix<T> &other);
   Matrix();
   ~Matrix();
@@ -61,7 +62,7 @@ private:
   size_t rows;
   size_t columns;
   T **mtr;
-  MatrixConfig config;
+  MatrixCreateInfo config;
 
   void init_mtr();
   void clear_mtr();
@@ -78,6 +79,6 @@ private:
   Matrix<T> gen_compl_mtr(size_t suppr_r, size_t suppr_c) const;
 };
 
-}; // namespace MATH_LIB
+}; // namespace MathLib
 
 #include "matrix_lib.tpp"
