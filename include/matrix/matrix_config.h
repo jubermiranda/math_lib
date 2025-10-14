@@ -2,7 +2,7 @@
 
 #include "core/execution_policy.h"
 
-namespace MathLib::Matrix {
+namespace math_lib::matrix {
 
 enum class DetAlgorithm {
   // Uses the classic cofactor expansion.
@@ -17,7 +17,7 @@ enum class DetAlgorithm {
 
 typedef struct {
   DetAlgorithm detAlgorithm;
-  MathLib::Core::ExecutionPolicy options;
+  math_lib::core::ExecutionPolicy options;
 } MatrixCreateInfo;
 
 }

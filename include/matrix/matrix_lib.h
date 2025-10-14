@@ -7,11 +7,11 @@
 #include "matrix_config.h"
 #include "core/execution_policy.h"
 
-namespace MathLib::Matrix {
+namespace math_lib::matrix {
 
 static MatrixCreateInfo DEFAULT_CONFIG = {
   DetAlgorithm::COFACTOR_EXPANSION,
-  Core::ExecutionPolicy::NONE
+  core::ExecutionPolicy::NONE
 };
 
 template <typename T> class Matrix {

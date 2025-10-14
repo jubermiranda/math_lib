@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <stdexcept>
 
-namespace MathLib::Matrix {
+namespace math_lib::matrix {
 
 template <typename T> Matrix<T>::Matrix(
     size_t rows,

@@ -5,7 +5,7 @@
 #include "../utils.h"
 
 using std::vector;
-using namespace MATH_LIB::Matrix;
+using namespace math_lib::matrix;
 
 TEST(MatrixDeterminant, MtrDetOrder1) {
   Matrix<int> test_mtr = Matrix<int>(1,1);

@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace MathLib::Core {
+namespace math_lib::core {
 
 enum class ExecutionPolicy : std::uint32_t {
   NONE = 0,
