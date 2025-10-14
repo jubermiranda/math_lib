@@ -62,10 +62,10 @@ namespace analysis{
     double stddev(const std::vector<double>& data) const;
 
   private:
-    explicit Analyzer(const AnalysisCreateInfo& createInfo);
+    explicit Analyzer(const AnalysisCreateInfo& info);
 
     core::ExecutionPolicy m_policy;
-    PercentileMethod m_percentileMethod;
+    PercentileMethod m_percentile_method;
   };
 
 }// namespace Analysis
