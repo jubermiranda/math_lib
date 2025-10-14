@@ -27,10 +27,10 @@ namespace dist {
 
   double exp(rand::RandomProvider& rand, double mean);
   double norm(rand::RandomProvider& rand, double mean, double stddev);
-  double triang(rand::RandomProvider& rand, double min, double mode, double max);
+  double triangular(rand::RandomProvider& rand, double min, double mode, double max);
   double uniform(rand::RandomProvider& rand, double min, double max);
   int uniform_int(rand::RandomProvider& rand, int min, int max);
-  size_t weighted(rand::RandomProvider& rand, std::vector<double> weights);
+  size_t weighted_discrete(rand::RandomProvider& rand, const std::vector<double>& weights);
   double lognorm(rand::RandomProvider& rand, double mean, double stddev);
 
 } // namespace Dist
@@ -44,7 +44,7 @@ namespace analysis{
   };
 
   struct AnalysisCreateInfo {
-    PercentileMethod percentileMethod = PercentileMethod::LINEAR_INTERPOLATION;
+    PercentileMethod percentile_method = PercentileMethod::LINEAR_INTERPOLATION;
     core::ExecutionPolicy policy = core::ExecutionPolicy::NONE;
   };
 
@@ -53,15 +53,13 @@ namespace analysis{
     Analyzer(const Analyzer&) = delete;
     Analyzer& operator=(const Analyzer&) = delete;
 
-    static std::unique_ptr<Analyzer> create(const AnalysisCreateInfo& createInfo);
+    static std::unique_ptr<Analyzer> create(const AnalysisCreateInfo& create_info);
 
     // ---
 
-    template <typename DataType>
-    double mean(const std::vector<DataType>& data) const;
+    double mean(const std::vector<double>& data) const;
 
-    template <typename DataType>
-    double stddev(const std::vector<DataType>& data) const;
+    double stddev(const std::vector<double>& data) const;
 
   private:
     explicit Analyzer(const AnalysisCreateInfo& createInfo);
