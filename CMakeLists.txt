@@ -5,6 +5,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library(math_lib
     src/rational.cxx
+    src/analysis/analysis.cxx
 )
 
 add_library(MathLib::math_lib ALIAS math_lib)
