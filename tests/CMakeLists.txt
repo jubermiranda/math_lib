@@ -6,6 +6,8 @@ add_executable(run_tests
   matrix/test_matrix_basics.cxx
   matrix/test_matrix_classification.cxx
   matrix/test_matrix_determinant.cxx
+  analysis/test_analyzer_basics.cxx
+  analysis/test_distributions.cxx
   point/test_point.cxx
   rational/test_double_to_rational.cxx
   rational/test_rational_constructors.cxx
